@@ -85,8 +85,23 @@ export function Hero({ copy }: Props) {
           sizes="100vw"
           className="object-cover object-[48%_22%] brightness-[1.18] contrast-[1.05] saturate-[1.12] md:object-[50%_18%]"
         />
+        {/* Mobile: vertical wash — photo stays full-bleed, text stays readable */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 md:hidden"
+          style={{
+            background: `
+              linear-gradient(180deg,
+                rgba(247,244,239,0.78) 0%,
+                rgba(247,244,239,0.42) 22%,
+                rgba(247,244,239,0.12) 42%,
+                rgba(247,244,239,0.08) 62%,
+                rgba(247,244,239,0.55) 100%)
+            `,
+          }}
+        />
+        {/* Desktop: side + vertical wash */}
+        <div
+          className="absolute inset-0 hidden md:block"
           style={{
             background: isHe
               ? `
@@ -131,7 +146,7 @@ export function Hero({ copy }: Props) {
           </h1>
 
           <p
-            className="mc-hero-in mt-2 max-w-[32ch] text-[0.95rem] leading-snug text-ink/80 sm:mt-2.5 sm:max-w-[38ch] sm:text-base"
+            className="mc-hero-in mt-2.5 max-w-[34ch] text-[1rem] leading-snug text-ink/80 sm:mt-2.5 sm:max-w-[38ch] sm:text-base"
             style={{ "--d": "420ms" } as CSSProperties}
           >
             {copy.hero.h2}

@@ -252,7 +252,7 @@ export function ScrollRoadmap({ copy }: Props) {
             </div>
             <a
               href="#lead"
-              className="relative z-10 mt-5 inline-flex shrink-0 items-center rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-[#1a1612] shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-transform hover:scale-[1.02]"
+              className="relative z-10 mt-4 inline-flex min-h-11 shrink-0 items-center touch-manipulation rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-[#1a1612] shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-transform hover:scale-[1.02] md:mt-5"
             >
               {copy.craft.cta}
             </a>
@@ -303,14 +303,14 @@ export function ScrollRoadmap({ copy }: Props) {
                         }}
                       />
                       {/* Title always above the bottom strip */}
-                      <span className="absolute inset-x-0 bottom-8 px-2 text-center md:bottom-9">
-                        <span className="block truncate text-micro font-bold text-white md:text-caption">
+                      <span className="absolute inset-x-0 bottom-6 px-1 text-center sm:px-2 md:bottom-9">
+                        <span className="block truncate text-[0.5625rem] font-bold leading-tight text-white sm:text-micro md:text-caption">
                           {s.title}
                         </span>
                       </span>
                       {/* Bottom strip: gold + number when active, dark + number when not */}
                       <span
-                        className="absolute inset-x-0 bottom-0 flex h-7 items-center justify-center md:h-8"
+                        className="absolute inset-x-0 bottom-0 flex h-6 items-center justify-center md:h-8"
                         style={{
                           background: on ? GOLD : "rgba(0,0,0,0.55)",
                         }}

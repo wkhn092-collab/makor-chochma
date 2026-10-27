@@ -207,7 +207,7 @@ export function LeadForm({ copy }: Props) {
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full rounded-[var(--radius-md)] border border-stone bg-surface px-4 py-3 text-ink outline-none ring-accent focus:ring-2"
+          className="min-h-12 w-full rounded-[var(--radius-md)] border border-stone bg-surface px-4 py-3 text-base text-ink outline-none ring-accent touch-manipulation focus:ring-2"
         />
       </div>
       <div>
@@ -224,7 +224,7 @@ export function LeadForm({ copy }: Props) {
           dir="ltr"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          className="w-full rounded-[var(--radius-md)] border border-stone bg-surface px-4 py-3 text-ink outline-none ring-accent focus:ring-2"
+          className="min-h-12 w-full rounded-[var(--radius-md)] border border-stone bg-surface px-4 py-3 text-base text-ink outline-none ring-accent touch-manipulation focus:ring-2"
           placeholder="05X-XXX-XXXX"
         />
       </div>
@@ -240,7 +240,7 @@ export function LeadForm({ copy }: Props) {
           dir="ltr"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-[var(--radius-md)] border border-stone bg-surface px-4 py-3 text-ink outline-none ring-accent focus:ring-2"
+          className="min-h-12 w-full rounded-[var(--radius-md)] border border-stone bg-surface px-4 py-3 text-base text-ink outline-none ring-accent touch-manipulation focus:ring-2"
         />
       </div>
       <div>
@@ -251,7 +251,7 @@ export function LeadForm({ copy }: Props) {
           id="lead-interest"
           value={interest ?? "general"}
           onChange={(e) => setInterest(e.target.value as InterestId)}
-          className="w-full rounded-[var(--radius-md)] border border-stone bg-surface px-4 py-3 text-ink outline-none ring-accent focus:ring-2"
+          className="min-h-12 w-full rounded-[var(--radius-md)] border border-stone bg-surface px-4 py-3 text-base text-ink outline-none ring-accent touch-manipulation focus:ring-2"
         >
           {INTERESTS.map((i) => (
             <option key={i.id} value={i.id}>

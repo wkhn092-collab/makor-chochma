@@ -67,7 +67,7 @@ export function Services({ copy }: Props) {
                   }}
                   aria-pressed={selected}
                   className={clsx(
-                    "group grid w-full grid-cols-[auto_1fr] items-center gap-4 border-b border-ink/10 py-5 text-start transition-colors duration-300 sm:grid-cols-[auto_5.5rem_1fr_auto] sm:gap-6 sm:py-6 md:gap-8",
+                    "group grid w-full grid-cols-[auto_3.25rem_1fr] items-center gap-3 border-b border-ink/10 py-4 text-start transition-colors duration-300 touch-manipulation sm:grid-cols-[auto_5.5rem_1fr_auto] sm:gap-6 sm:py-6 md:gap-8",
                     selected ? "bg-ink/[0.03]" : "hover:bg-ink/[0.02]",
                   )}
                 >
@@ -80,13 +80,13 @@ export function Services({ copy }: Props) {
                     {n}
                   </span>
 
-                  <span className="relative hidden aspect-[4/5] w-[5.5rem] overflow-hidden rounded-sm sm:block">
+                  <span className="relative aspect-[4/5] w-[3.25rem] overflow-hidden rounded-sm sm:w-[5.5rem]">
                     {src ? (
                       <Image
                         src={src}
                         alt=""
                         fill
-                        sizes="88px"
+                        sizes="(max-width: 640px) 52px, 88px"
                         className={clsx(
                           "object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
                           selected ? "scale-105" : "group-hover:scale-105",
@@ -102,27 +102,39 @@ export function Services({ copy }: Props) {
                     />
                   </span>
 
-                  <span className="min-w-0">
-                    <span className="font-display text-[clamp(1.2rem,2.4vw,1.65rem)] font-bold leading-tight tracking-[-0.02em] text-ink">
-                      {title}
+                  <span className="min-w-0 sm:contents">
+                    <span className="min-w-0 sm:block">
+                      <span className="font-display text-[clamp(1.15rem,2.4vw,1.65rem)] font-bold leading-tight tracking-[-0.02em] text-ink">
+                        {title}
+                      </span>
+                      <span className="mt-1 block max-w-xl text-[0.875rem] leading-relaxed text-ink/65 sm:mt-1.5 md:text-[0.95rem]">
+                        {blurb}
+                      </span>
+                      <span
+                        className={clsx(
+                          "mt-2 block text-sm font-semibold tracking-wide transition-colors sm:hidden",
+                          selected ? "text-gold" : "text-ink/45",
+                        )}
+                      >
+                        {selected ? copy.services.selected : cta}
+                        <span aria-hidden className="ms-1.5 inline-block rtl:rotate-180">
+                          →
+                        </span>
+                      </span>
                     </span>
-                    <span className="mt-1.5 block max-w-xl text-sm leading-relaxed text-ink/65 md:text-[0.95rem]">
-                      {blurb}
-                    </span>
-                  </span>
-
-                  <span
-                    className={clsx(
-                      "col-span-2 justify-self-start text-sm font-semibold tracking-wide transition-colors sm:col-span-1 sm:justify-self-end",
-                      selected ? "text-gold" : "text-ink/45 group-hover:text-ink",
-                    )}
-                  >
-                    {selected ? copy.services.selected : cta}
                     <span
-                      aria-hidden
-                      className="ms-1.5 inline-block transition-transform duration-300 group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5"
+                      className={clsx(
+                        "hidden text-sm font-semibold tracking-wide transition-colors sm:block sm:justify-self-end",
+                        selected ? "text-gold" : "text-ink/45 group-hover:text-ink",
+                      )}
                     >
-                      →
+                      {selected ? copy.services.selected : cta}
+                      <span
+                        aria-hidden
+                        className="ms-1.5 inline-block transition-transform duration-300 group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5"
+                      >
+                        →
+                      </span>
                     </span>
                   </span>
                 </button>

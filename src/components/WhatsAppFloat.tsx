@@ -55,7 +55,7 @@ export function WhatsAppFloat({ copy }: Props) {
       rel="noopener noreferrer"
       aria-label={copy.sticky.wa}
       data-analytics="whatsapp_click"
-      className="shadow-contact fixed z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white bottom-[5.5rem] end-4 md:bottom-6 md:end-6"
+      className="shadow-contact fixed z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white bottom-[calc(5.75rem+env(safe-area-inset-bottom))] end-3 touch-manipulation md:bottom-6 md:end-6"
       style={{ opacity: 0 }}
     >
       <svg viewBox="0 0 24 24" className="h-7 w-7 fill-current" aria-hidden>

@@ -49,10 +49,10 @@ export function StickyCta({ copy }: Props) {
       style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
       aria-hidden={!stickyVisible}
     >
-      <div className="mx-auto flex max-w-lg gap-2 pb-[env(safe-area-inset-bottom)]">
+      <div className="mx-auto flex max-w-lg gap-2.5 pb-[env(safe-area-inset-bottom)]">
         <a
           href={telHref}
-          className="flex flex-1 items-center justify-center rounded-[var(--radius-md)] bg-accent px-3 py-3 text-center text-sm font-semibold text-white shadow-contact transition-colors hover:bg-accent-hover"
+          className="btn-primary flex-1 !min-h-12 !px-4 text-sm"
           data-analytics="phone_click"
         >
           {copy.sticky.call}
@@ -61,7 +61,7 @@ export function StickyCta({ copy }: Props) {
           href={whatsappUrl(waText)}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-1 items-center justify-center rounded-[var(--radius-md)] border border-stone bg-surface px-3 py-3 text-sm font-semibold text-ink"
+          className="btn-secondary flex-1 !min-h-12 !px-4 text-sm"
           data-analytics="whatsapp_click"
         >
           {copy.sticky.wa}

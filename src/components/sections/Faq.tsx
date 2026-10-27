@@ -70,11 +70,13 @@ export function Faq({ copy }: Props) {
                   <div className="rounded-[var(--radius-md)] border border-stone bg-surface shadow-contact">
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between gap-4 px-4 py-4 text-start"
+                      className="flex min-h-12 w-full items-center justify-between gap-3 px-3.5 py-3.5 text-start touch-manipulation sm:gap-4 sm:px-4 sm:py-4"
                       aria-expanded={isOpen}
                       onClick={() => setOpen(isOpen ? null : i)}
                     >
-                      <span className="font-medium text-ink">{item.q}</span>
+                      <span className="text-[0.95rem] font-medium leading-snug text-ink sm:text-base">
+                        {item.q}
+                      </span>
                       <span
                         className={clsx(
                           "text-bronze transition-transform duration-300",

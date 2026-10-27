@@ -20,7 +20,7 @@ export function About({ copy }: Props) {
   return (
     <section id="about" className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
       <div className="grid items-stretch gap-10 md:grid-cols-2 md:gap-14 lg:gap-16">
-        <Reveal y={20} scale={0.99} className="relative isolate min-h-[22rem] overflow-hidden rounded-[var(--radius-md)] md:min-h-[28rem]">
+        <Reveal y={20} scale={0.99} className="relative isolate aspect-[4/5] min-h-[20rem] overflow-hidden rounded-[var(--radius-md)] sm:aspect-auto sm:min-h-[22rem] md:min-h-[28rem]">
           <Image
             src={photo.src}
             alt={photoAlt}
@@ -38,7 +38,7 @@ export function About({ copy }: Props) {
           </span>
 
           {/* Stats rail — luminous cream glass, not a black slab */}
-          <aside className="absolute inset-y-0 end-0 flex w-[5.75rem] flex-col justify-center gap-7 border-s border-ink/10 bg-parchment/88 px-3 py-6 backdrop-blur-md md:w-[6.5rem] md:gap-9 md:px-3.5">
+          <aside className="absolute inset-y-0 end-0 flex w-[5.25rem] flex-col justify-center gap-5 border-s border-ink/10 bg-parchment/88 px-2.5 py-5 backdrop-blur-md sm:w-[5.75rem] sm:gap-7 sm:px-3 sm:py-6 md:w-[6.5rem] md:gap-9 md:px-3.5">
             <YearsCounter label={copy.about.yearsLabel} />
             <div>
               <p className="font-display text-[clamp(1.75rem,4vw,2.5rem)] font-bold leading-none tracking-[-0.03em] text-gold">

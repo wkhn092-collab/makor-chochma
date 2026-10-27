@@ -26,7 +26,7 @@ export function SiteFooter({ copy }: Props) {
 
   return (
     <footer
-      className="border-t border-stone/70 bg-parchment-deep"
+      className="border-t border-stone/70 bg-parchment-deep pb-[calc(5.5rem+env(safe-area-inset-bottom))] md:pb-0"
       role="contentinfo"
       aria-label={copy.locale === "he" ? "כותרת תחתית" : "Site footer"}
     >

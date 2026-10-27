@@ -243,10 +243,10 @@ export function SiteHeader({ copy }: Props) {
             href={telHref}
             data-analytics="phone_click"
             onClick={closeMenu}
-            className="flex w-full items-center justify-center rounded-[var(--radius-md)] bg-accent px-6 py-3.5 text-base font-semibold text-white shadow-contact"
+            className="btn-primary w-full text-base"
           >
             {copy.nav.ctaCall}
-            <span className="ms-2 font-normal opacity-90" dir="ltr">
+            <span className="ms-2 font-semibold opacity-80" dir="ltr">
               <bdi>{SITE.phoneDisplay}</bdi>
             </span>
           </a>

@@ -41,9 +41,9 @@ export function WhyUs({ copy }: Props) {
 
         <Reveal delay={0.1} y={18} className="mt-10">
           <div className="overflow-hidden rounded-[var(--radius-md)] border border-stone/80 bg-surface">
-            <div className="grid grid-cols-[1fr_1.15fr] border-b border-stone/70 bg-parchment/80 text-xs font-semibold tracking-wide text-bronze sm:text-sm">
-              <p className="px-3 py-3 sm:px-5">{copy.whyUs.themLabel}</p>
-              <p className="border-s border-stone/70 px-3 py-3 text-ink sm:px-5">
+            <div className="grid grid-cols-[1fr_1.2fr] border-b border-stone/70 bg-parchment/80 text-[0.6875rem] font-semibold tracking-wide text-bronze sm:grid-cols-[1fr_1.15fr] sm:text-sm">
+              <p className="px-2.5 py-2.5 sm:px-5 sm:py-3">{copy.whyUs.themLabel}</p>
+              <p className="border-s border-stone/70 px-2.5 py-2.5 text-ink sm:px-5 sm:py-3">
                 {copy.whyUs.usLabel}
               </p>
             </div>
@@ -51,12 +51,12 @@ export function WhyUs({ copy }: Props) {
               {copy.whyUs.rows.map((row) => (
                 <li
                   key={row.us}
-                  className="grid grid-cols-[1fr_1.15fr] border-b border-stone/50 last:border-b-0"
+                  className="grid grid-cols-[1fr_1.2fr] border-b border-stone/50 last:border-b-0 sm:grid-cols-[1fr_1.15fr]"
                 >
-                  <p className="px-3 py-3.5 text-sm leading-snug text-ink/55 sm:px-5 sm:py-4 sm:text-[0.95rem]">
+                  <p className="px-2.5 py-3 text-[0.8125rem] leading-snug text-ink/55 sm:px-5 sm:py-4 sm:text-[0.95rem]">
                     {row.them}
                   </p>
-                  <p className="border-s border-stone/50 bg-parchment/35 px-3 py-3.5 text-sm font-medium leading-snug text-ink sm:px-5 sm:py-4 sm:text-[0.95rem]">
+                  <p className="border-s border-stone/50 bg-parchment/35 px-2.5 py-3 text-[0.8125rem] font-medium leading-snug text-ink sm:px-5 sm:py-4 sm:text-[0.95rem]">
                     {row.us}
                   </p>
                 </li>
