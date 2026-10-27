@@ -246,15 +246,15 @@ export function ScrollRoadmap({ copy }: Props) {
                 <p className="mt-2.5 max-w-md text-sm leading-relaxed text-white/88 md:text-[0.95rem]">
                   {stage.body}
                 </p>
-                <a
-                  href="#lead"
-                  className="mt-5 inline-flex items-center rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-[#1a1612] shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-transform hover:scale-[1.02]"
-                >
-                  {copy.craft.cta}
-                </a>
               </motion.div>
             </AnimatePresence>
           </div>
+          <a
+            href="#lead"
+            className="mt-5 inline-flex items-center rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-[#1a1612] shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-transform hover:scale-[1.02]"
+          >
+            {copy.craft.cta}
+          </a>
         </div>
 
         {/* Thumbs + path — lawyer width (max-w-5xl) */}
