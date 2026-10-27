@@ -5,79 +5,10 @@ import { SITE_IMAGES } from "@/content/images";
 import { SITE } from "@/content/site";
 import { waPrefill, whatsappUrl } from "@/lib/whatsapp";
 import { Marquee } from "@/motion/Marquee";
+import { HeroFan } from "@/components/sections/HeroFan";
 import "./hero-fan.css";
 
 type Props = { copy: Copy };
-
-type FanCardData = {
-  src: string;
-  titleHe: string;
-  titleEn: string;
-  focus: string;
-  dark?: boolean;
-};
-
-/** Same fan arc as RideWithYoav (r + sink). Mobile CSS shows nth 4–6. */
-const FAN = [
-  { r: -7, sink: 18, dark: true },
-  { r: -5, sink: 12, dark: false },
-  { r: -3, sink: 6, dark: false },
-  { r: -1.5, sink: 2, dark: false },
-  { r: 0, sink: 0, dark: false },
-  { r: 1.5, sink: 2, dark: false },
-  { r: 3, sink: 6, dark: false },
-  { r: 5, sink: 12, dark: false },
-  { r: 7, sink: 18, dark: true },
-] as const;
-
-const FAN_CARDS: FanCardData[] = [
-  { src: SITE_IMAGES.craft[0]!.src, titleHe: "שיחת ייעוץ", titleEn: "Consultation", focus: "object-[center_40%]", dark: true },
-  { src: SITE_IMAGES.craft[1]!.src, titleHe: "קלף ודיו", titleEn: "Ink & parchment", focus: "object-[center_42%]" },
-  { src: SITE_IMAGES.craft[2]!.src, titleHe: "הגהה", titleEn: "Proofing", focus: "object-[center_38%]" },
-  { src: SITE_IMAGES.portfolio[0]!.src, titleHe: "תפילין", titleEn: "Tefillin", focus: "object-[center_32%]" },
-  { src: SITE_IMAGES.hero.src, titleHe: "מקור חכמה", titleEn: "Makor Chochma", focus: "object-[center_22%]" },
-  { src: SITE_IMAGES.portfolio[1]!.src, titleHe: "מזוזות", titleEn: "Mezuzot", focus: "object-[center_45%]" },
-  { src: SITE_IMAGES.portfolio[2]!.src, titleHe: "מגילות", titleEn: "Megillot", focus: "object-[center_28%]" },
-  { src: SITE_IMAGES.portfolio[3]!.src, titleHe: "ספרי תורה", titleEn: "Sifrei Torah", focus: "object-[center_35%]" },
-  { src: SITE_IMAGES.craft[3]!.src, titleHe: "פגישה באלעד", titleEn: "Meeting in Elad", focus: "object-[center_40%]", dark: true },
-];
-
-function FanCard({ card, index, locale }: { card: FanCardData; index: number; locale: "he" | "en" }) {
-  const title = locale === "he" ? card.titleHe : card.titleEn;
-  const fan = FAN[index] ?? FAN[2]!;
-  return (
-    <article
-      className={`mc-hero-fan-card ${fan.dark ? "mc-hero-fan-card--dark" : "mc-hero-fan-card--light"}`}
-      style={
-        {
-          "--r": fan.r,
-          "--sink": `${fan.sink}px`,
-          "--i": index,
-        } as CSSProperties
-      }
-    >
-      <div className="mc-hero-fan-chrome">
-        <div className="mc-hero-fan-dots" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
-        <p className="mc-hero-fan-title">{title}</p>
-      </div>
-      <div className="mc-hero-fan-photo">
-        <Image
-          src={card.src}
-          alt=""
-          fill
-          quality={68}
-          loading="lazy"
-          sizes="(max-width: 639px) 32vw, (max-width: 767px) 28vw, 11vw"
-          className={`object-cover ${card.focus}`}
-        />
-      </div>
-    </article>
-  );
-}
 
 function FactsStrip({ facts }: { facts: string[] }) {
   return (
@@ -101,14 +32,14 @@ function FactsStrip({ facts }: { facts: string[] }) {
 }
 
 /**
- * Yoav-style hero geometry for Makor Chochma: full-bleed photo, centered copy,
- * 9 fan cards (3 on mobile) + dark facts strip. Props unchanged ({ copy }).
+ * Full-bleed LCP photo + centered copy + responsive fan (3 mobile / 9 desktop).
  */
 export function Hero({ copy }: Props) {
   const waHref = whatsappUrl(waPrefill(copy.locale));
   const telHref = `tel:+${SITE.phoneE164}`;
   const brand = copy.locale === "he" ? SITE.brand : SITE.brandEn;
-  const heroAlt = copy.locale === "he" ? SITE_IMAGES.hero.altHe : SITE_IMAGES.hero.altEn;
+  const heroAlt =
+    copy.locale === "he" ? SITE_IMAGES.hero.altHe : SITE_IMAGES.hero.altEn;
   const isHe = copy.locale === "he";
 
   const facts =
@@ -145,7 +76,7 @@ export function Hero({ copy }: Props) {
           fill
           priority
           fetchPriority="high"
-          quality={78}
+          quality={70}
           sizes="100vw"
           className="object-cover object-[48%_22%] brightness-[1.18] contrast-[1.05] saturate-[1.12] md:object-[50%_18%]"
         />
@@ -170,7 +101,6 @@ export function Hero({ copy }: Props) {
         {copy.hero.simulation}
       </span>
 
-      {/* Copy stays above the fan — own layer, never under the cards */}
       <div className="relative z-30 mx-auto flex w-full max-w-[1180px] shrink-0 flex-col px-4 pt-[calc(var(--mc-header-h)+0.85rem)] sm:px-6 sm:pt-[calc(var(--mc-header-h)+0.5rem)]">
         <div className="flex flex-col items-center text-center">
           <p
@@ -237,7 +167,6 @@ export function Hero({ copy }: Props) {
         </div>
       </div>
 
-      {/* Flexible gap — keeps copy and fan apart on every viewport */}
       <div className="min-h-8 flex-1 sm:min-h-12" aria-hidden="true" />
 
       <div className="relative z-20 mt-auto w-full shrink-0">
@@ -245,11 +174,7 @@ export function Hero({ copy }: Props) {
           className="mc-hero-fan-slot mc-hero-in"
           style={{ "--d": "900ms" } as CSSProperties}
         >
-          <div className="mc-hero-fan" aria-hidden="true">
-            {FAN_CARDS.map((card, index) => (
-              <FanCard key={`${card.src}-${index}`} card={card} index={index} locale={copy.locale} />
-            ))}
-          </div>
+          <HeroFan locale={copy.locale} />
           <p className="sr-only">
             {isHe
               ? "רגעים מהסדנה: ייעוץ, כתיבה, הגהה ופגישה"

@@ -4,7 +4,7 @@
  */
 export const SITE_IMAGES = {
   hero: {
-    src: "/images/hero-real-v3.jpg",
+    src: "/images/hero-lcp.webp",
     altHe: "ארון קודש עם ספרי תורה — צילום להמחשה",
     altEn: "Holy Ark with Torah scrolls — illustrative photo",
   },
@@ -42,7 +42,7 @@ export const SITE_IMAGES = {
   },
   /** About photo — bright full Sephardi tik (not dark museum crop) */
   about: {
-    src: "/images/sefer-tik-full-v6.jpg",
+    src: "/images/about-lcp.webp",
     altHe: "ספר תורה ספרדי בתיק כסף על בד בהיר — צילום להמחשה",
     altEn: "Sephardic Sefer Torah in silver tik on light cloth — illustrative photo",
   },

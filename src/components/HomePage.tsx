@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import type { Locale } from "@/content/copy";
 import { getCopy } from "@/content/copy";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -7,11 +8,7 @@ import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { WhyUs } from "@/components/sections/WhyUs";
-import { StatsMoment } from "@/components/sections/StatsMoment";
-import { ScrollRoadmap } from "@/components/sections/ScrollRoadmap";
 import { Services } from "@/components/sections/Services";
-import { Portfolio } from "@/components/sections/Portfolio";
-import { Testimonials } from "@/components/sections/Testimonials";
 import { Faq } from "@/components/sections/Faq";
 import { LeadSection } from "@/components/sections/LeadSection";
 import { Analytics } from "@/components/Analytics";
@@ -22,6 +19,27 @@ import { ScrollProgress } from "@/components/motion/ScrollProgress";
 import { SkipLink } from "@/components/SkipLink";
 import { JsonLd } from "@/components/JsonLd";
 import { PromoBanner } from "@/components/PromoBanner";
+
+/** Heavy GSAP sections — defer client bundle until after first paint. */
+const StatsMoment = dynamic(
+  () =>
+    import("@/components/sections/StatsMoment").then((m) => m.StatsMoment),
+  { ssr: true },
+);
+const ScrollRoadmap = dynamic(
+  () =>
+    import("@/components/sections/ScrollRoadmap").then((m) => m.ScrollRoadmap),
+  { ssr: true },
+);
+const Portfolio = dynamic(
+  () => import("@/components/sections/Portfolio").then((m) => m.Portfolio),
+  { ssr: true },
+);
+const Testimonials = dynamic(
+  () =>
+    import("@/components/sections/Testimonials").then((m) => m.Testimonials),
+  { ssr: true },
+);
 
 export function HomePage({ locale }: { locale: Locale }) {
   const copy = getCopy(locale);

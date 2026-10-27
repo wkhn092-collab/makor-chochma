@@ -2,7 +2,8 @@ import type { NextConfig } from "next";
 
 const cspReportOnly = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://www.googletagmanager.com https://www.clarity.ms",
+  // Report-Only: no unsafe-eval. unsafe-inline remains until nonce Enforce (BRIEF).
+  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com https://www.clarity.ms",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "media-src 'self' blob: https: https://res.cloudinary.com",

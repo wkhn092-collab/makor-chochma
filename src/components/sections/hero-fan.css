@@ -156,7 +156,7 @@
   }
 }
 
-/* Phone: 3 cards (nth 4–6) */
+/* Phone: only 3 cards mounted (HeroFan) — show all children */
 @media (max-width: 639px) {
   .mc-hero-stage {
     --mc-fan-gap: 0.5rem;
@@ -174,19 +174,14 @@
     padding-inline: 0.75rem;
   }
   .mc-hero-fan-card {
-    display: none !important;
+    display: flex !important;
     flex: 0 0 var(--mc-card-w) !important;
     width: var(--mc-card-w) !important;
   }
-  .mc-hero-fan-card:nth-child(4),
-  .mc-hero-fan-card:nth-child(5),
-  .mc-hero-fan-card:nth-child(6) {
-    display: flex !important;
-  }
-  .mc-hero-fan-card:nth-child(4) {
+  .mc-hero-fan-card:nth-child(1) {
     transform: translate3d(0, 8px, 0) rotate(-4deg);
   }
-  .mc-hero-fan-card:nth-child(6) {
+  .mc-hero-fan-card:nth-child(3) {
     transform: translate3d(0, 8px, 0) rotate(4deg);
   }
   .mc-hero-fan-title {

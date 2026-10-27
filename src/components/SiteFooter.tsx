@@ -25,7 +25,11 @@ export function SiteFooter({ copy }: Props) {
   ];
 
   return (
-    <footer className="border-t border-stone/70 bg-parchment-deep">
+    <footer
+      className="border-t border-stone/70 bg-parchment-deep"
+      role="contentinfo"
+      aria-label={copy.locale === "he" ? "כותרת תחתית" : "Site footer"}
+    >
       {/* Closing band — full-bleed craft photo as background, CTA on top */}
       <Reveal>
         <div className="relative isolate overflow-hidden border-b border-stone/50">
