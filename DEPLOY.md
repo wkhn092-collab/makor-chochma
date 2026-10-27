@@ -30,6 +30,8 @@
 | `SANITY_API_WRITE_TOKEN` | token עם create |
 | `NEXT_PUBLIC_SITE_URL` | URL פרודקשן (CORS/metadata) |
 | `LEAD_ALLOW_DEGRADED` | אופציונלי · `true` רק לשיגור רך בלי Resend/Turnstile (ברירת מחדל: fail-closed) |
+| `UPSTASH_REDIS_REST_URL` | אופציונלי · rate limit מבוזר |
+| `UPSTASH_REDIS_REST_TOKEN` | אופציונלי · יחד עם URL |
 | `NEXT_PUBLIC_GA_ID` | אופציונלי |
 | `NEXT_PUBLIC_CLARITY_ID` | אופציונלי |
 

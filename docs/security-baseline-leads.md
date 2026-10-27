@@ -19,7 +19,7 @@
 | 1 | Cart / Price tampering | **N/A** — אין מחירים |
 | 2 | Payment webhooks | **N/A** |
 | 3 | Headers + CSP-RO + proxy | ✅ `src/proxy.ts` + `next.config` |
-| 4 | Rate limit לידים | ✅ IP + טלפון (in-memory; Upstash אופציונלי בהמשך) |
+| 4 | Rate limit לידים | ✅ IP + טלפון · Upstash כשמוגדר env, אחרת in-memory (`src/lib/rate-limit.ts`) |
 | 5 | Input sanitize | ✅ שם/כותרות מייל |
 | 6 | Secure Server Action | ✅ Zod + Origin + Turnstile + honeypot |
 | 7 | IDOR / חשבונות | **N/A** — אין לקוחות מחוברים |
@@ -31,7 +31,7 @@
 | 13 | XSS / redirects | ✅ בלי dangerouslySetInnerHTML · מייל escape |
 | 14 | Bot | ✅ Turnstile + honeypot |
 | 15 | Health | ✅ `/api/health` → OK |
-| 16 | 2FA accounts | ⬜ נוהל — ראה שאלות בסוף |
+| 16 | 2FA accounts | ⬜ נוהל ידני — `docs/ops-security-checklist.md` |
 
 ### מה כל שכבה מגנה / לא מגנה
 

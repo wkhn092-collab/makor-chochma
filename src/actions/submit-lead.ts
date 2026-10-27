@@ -62,7 +62,9 @@ export async function submitLead(
   const ua = h.get("user-agent");
 
   const phoneKey = normalizeIlPhone(data.phone);
-  if (!rateLimitOk(`lead:phone:${phoneKey}`) || !rateLimitOk(`lead:ip:${ip}`)) {
+  const phoneOk = await rateLimitOk(`lead:phone:${phoneKey}`);
+  const ipOk = await rateLimitOk(`lead:ip:${ip}`);
+  if (!phoneOk || !ipOk) {
     return { ok: false, code: "rate" };
   }
 
