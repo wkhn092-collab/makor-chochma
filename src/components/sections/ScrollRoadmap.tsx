@@ -224,37 +224,39 @@ export function ScrollRoadmap({ copy }: Props) {
             {copy.locale === "he" ? "ארבעה שלבים" : "Four stages"}
           </p>
 
-          <div className="relative mt-4 w-full min-h-[9.25rem] md:min-h-[10rem]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={stage.n}
-                initial={reduce ? false : { opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={reduce ? undefined : { opacity: 0, y: -10 }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-x-0 top-0 flex flex-col items-center"
-              >
-                <p className="font-display text-sm font-semibold tracking-[0.2em] text-gold md:text-base">
-                  {stage.n}
-                </p>
-                <h2
-                  id="roadmap-heading"
-                  className="font-display mt-2 max-w-xl text-[clamp(1.75rem,4vw,2.75rem)] font-bold leading-[1.12] tracking-[-0.03em] text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]"
+          <div className="relative mt-4 flex w-full flex-col items-center">
+            <div className="relative w-full min-h-[6.5rem] md:min-h-[7.25rem]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={stage.n}
+                  initial={reduce ? false : { opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={reduce ? undefined : { opacity: 0, y: -10 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-x-0 top-0 flex flex-col items-center"
                 >
-                  {stage.title}
-                </h2>
-                <p className="mt-2.5 max-w-md text-sm leading-relaxed text-white/88 md:text-[0.95rem]">
-                  {stage.body}
-                </p>
-              </motion.div>
-            </AnimatePresence>
+                  <p className="font-display text-sm font-semibold tracking-[0.2em] text-gold md:text-base">
+                    {stage.n}
+                  </p>
+                  <h2
+                    id="roadmap-heading"
+                    className="font-display mt-2 max-w-xl text-[clamp(1.75rem,4vw,2.75rem)] font-bold leading-[1.12] tracking-[-0.03em] text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]"
+                  >
+                    {stage.title}
+                  </h2>
+                  <p className="mt-2.5 max-w-md text-sm leading-relaxed text-white/88 md:text-[0.95rem]">
+                    {stage.body}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            <a
+              href="#lead"
+              className="relative z-10 mt-5 inline-flex shrink-0 items-center rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-[#1a1612] shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-transform hover:scale-[1.02]"
+            >
+              {copy.craft.cta}
+            </a>
           </div>
-          <a
-            href="#lead"
-            className="mt-5 inline-flex items-center rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-[#1a1612] shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-transform hover:scale-[1.02]"
-          >
-            {copy.craft.cta}
-          </a>
         </div>
 
         {/* Thumbs + path — lawyer width (max-w-5xl) */}
