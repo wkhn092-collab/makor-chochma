@@ -22,7 +22,7 @@
 | Tier | **Tier 1+** — one-pager לידים, GSAP/Framer Motion, בלי Image Sequence / WebGL | ✅ |
 | Stack מתוכנן | Next.js (App Router) + Tailwind + Sanity + Zustand (לידים/UI בלבד) | ✅ |
 | שפה ברירת מחדל | **עברית RTL** (`/`) · אנגלית ב־`/en` | ✅ |
-| דומיין | TBD — הלקוח יעדכן בהמשך. עד אז: Vercel Preview | ⚠️ |
+| דומיין | **https://makor-chochma.vercel.app/** (חי) · דומיין מותאם אישית TBD | ✅ Preview/Prod Vercel |
 | ריפו / תיקייה | `makor-chochma` (חדש, נפרד מ־aura-audio) | ✅ |
 | לוגו | קובץ WhatsApp מהלקוח — לוחות הברית + wordmark חום | ✅ |
 | מודל עסקי | **לידים בלבד** — אין מחירים, אין סליקה באתר | ✅ |
@@ -211,7 +211,7 @@ GA4 + Clarity נטענים אחרי הסכמה קלה או במצב פרטיות
 10. ✅ **סקריפט 2 · מודול ד׳** — Wedge «שיחה עם הסופר»; WhyUs; FAQ; `docs/retargeting-copy.md`  
 11. ✅ **סקריפט 3 · אבטחת לידים** — proxy headers, Origin+honeypot, env Zod, `/api/health`, security.txt, `docs/security-baseline-leads.md`  
 12. ✅ **סקריפט 3/4 · השקה+מסירה (מותאם לידים)** — JSON-LD, `docs/handoff/*`, launch checklist  
-13. ⏳ **שיגור Vercel** — env בפרויקט · דומיין בהמשך · צילומים אמיתיים מהלקוח
+13. ⏳ **שיגור מלא** — האתר חי ב־Vercel; **env (Resend/Turnstile/Sanity) רק אחרי אישור עיצוב מהלקוח** · דומיין מותאם + צילומים אמיתיים בהמשך
 
 ### סקריפט 3 — החלטות שיגור (אושר כהמלצה · Avishi · 27.10.2026)
 
