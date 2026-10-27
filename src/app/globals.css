@@ -1,0 +1,264 @@
+@import "tailwindcss";
+@import "../motion/motion.css";
+
+/*
+  PREMIUM LOCK — Quiet Luxury / Maison Atelier
+  Research: Cartier editorial · AURELIS · Peretz luxury jewellery audit (2025–26)
+  Rule: one accent only (champagne gold). Never muddy mid-brown washes.
+*/
+:root {
+  /* Surfaces */
+  --parchment: #f7f4ef;
+  --parchment-deep: #efebe3;
+  --surface: #ffffff;
+  --void: #050505;
+
+  /* Type */
+  --ink: #1a1814;
+  --bronze: #6b6560;
+
+  /* Lines */
+  --stone: #e4dfd6;
+
+  /* Single premium accent — champagne gold */
+  --gold: #c9a962;
+  --gold-soft: #d4b87a;
+  --gold-deep: #a8883f;
+
+  /* CTA = near-black (luxury audit winners), not brown */
+  --accent: #0a0a0a;
+  --accent-hover: #1f1f1f;
+
+  --success: #2f5d3a;
+  --danger: #8b2e2e;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --shadow-contact:
+    0 1px 0 rgb(26 24 20 / 0.04),
+    0 10px 28px rgb(26 24 20 / 0.06);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --tracking-display: -0.02em;
+  --background: var(--parchment);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-bronze: var(--bronze);
+  --color-stone: var(--stone);
+  --color-parchment: var(--parchment);
+  --color-parchment-deep: var(--parchment-deep);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-void: var(--void);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-display: var(--font-frank);
+  --font-body: var(--font-assistant);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .motion-safe-only {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+body {
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: var(--font-assistant), system-ui, sans-serif;
+}
+
+/* Skip link — visible on keyboard focus only */
+.mc-skip-link {
+  position: absolute;
+  inset-inline-start: 0.75rem;
+  top: 0.75rem;
+  z-index: 100;
+  transform: translateY(-160%);
+  border-radius: var(--radius-md);
+  background: var(--ink);
+  color: var(--parchment);
+  padding: 0.65rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s var(--ease-out-expo);
+}
+
+.mc-skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.font-display {
+  font-family: var(--font-frank), "Times New Roman", serif;
+  letter-spacing: var(--tracking-display);
+}
+
+.shadow-contact {
+  box-shadow: var(--shadow-contact);
+}
+
+.glass-bar {
+  background: color-mix(in srgb, var(--parchment) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(1.05);
+  -webkit-backdrop-filter: blur(14px) saturate(1.05);
+}
+
+.hero-wash {
+  background:
+    radial-gradient(ellipse 70% 50% at 75% 15%, rgb(201 169 98 / 0.1), transparent 55%),
+    linear-gradient(165deg, var(--parchment) 0%, var(--parchment-deep) 100%);
+}
+
+/* Yoav-style premium pills — used on hero CTAs */
+.btn-primary {
+  display: inline-flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  background: var(--gold);
+  padding-inline: 1.75rem;
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+  touch-action: manipulation;
+  box-shadow:
+    0 1px 0 rgb(26 24 20 / 0.06),
+    0 14px 36px rgb(201 169 98 / 0.35);
+  transition:
+    background-color 220ms var(--ease-out-expo),
+    transform 220ms var(--ease-out-expo),
+    box-shadow 280ms var(--ease-out-expo);
+}
+.btn-primary:hover {
+  background: var(--gold-soft);
+  box-shadow:
+    0 1px 0 rgb(26 24 20 / 0.06),
+    0 18px 44px rgb(201 169 98 / 0.42);
+}
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  border: 1.5px solid rgb(26 24 20 / 0.22);
+  background: rgb(255 255 255 / 0.55);
+  padding-inline: 1.75rem;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  touch-action: manipulation;
+  transition:
+    background-color 180ms linear,
+    border-color 180ms linear,
+    transform 220ms var(--ease-out-expo);
+}
+.btn-secondary:hover {
+  background: rgb(255 255 255 / 0.85);
+  border-color: rgb(26 24 20 / 0.4);
+}
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+@media (min-width: 768px) {
+  .btn-primary,
+  .btn-secondary {
+    min-height: 3.5rem;
+    padding-inline: 2rem;
+  }
+}
+
+.footer-link {
+  position: relative;
+  display: inline-block;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.footer-link::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: inline-start;
+  transition: transform 0.3s var(--ease-out-expo);
+}
+
+.footer-link:hover::after,
+.footer-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-link::after {
+    transition: none;
+  }
+}
+
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-hidden {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes roadmap-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [style*="roadmap-pulse"] {
+    animation: none !important;
+  }
+}
+
+/* Years numeral lives inline on photo rail — no floating black monument */

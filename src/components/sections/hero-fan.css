@@ -1,0 +1,234 @@
+/* Hero fan layout only — scoped styles for sections/Hero.tsx. Do not use elsewhere. */
+
+.mc-hero-stage {
+  --mc-header-h: 4rem;
+  --mc-fan-gap: clamp(0.3rem, 0.55vw, 0.5rem);
+  --mc-shadow-float:
+    0 1px 1px rgb(26 24 20 / 0.04),
+    0 4px 8px rgb(26 24 20 / 0.05),
+    0 16px 32px rgb(26 24 20 / 0.08),
+    0 40px 72px rgb(26 24 20 / 0.12);
+  --mc-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (min-width: 768px) {
+  .mc-hero-stage {
+    --mc-header-h: 4.5rem;
+  }
+}
+
+.mc-hero-display {
+  font-family: var(--font-frank), "Times New Roman", serif;
+  font-size: clamp(2rem, 1.35rem + 3.2vw, 4.75rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+.mc-hero-accent {
+  font-size: 1.12em;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--gold-deep);
+  text-shadow: 0 1px 18px rgb(247 244 239 / 0.75);
+}
+
+@keyframes mc-fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mc-hero-in {
+    animation: mc-fade-rise 1.1s var(--mc-ease) both;
+    animation-delay: var(--d, 0ms);
+  }
+}
+
+.mc-hero-fan-slot {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  pointer-events: none;
+  /* Secondary to CTA copy — less visual competition */
+  opacity: 0.9;
+}
+
+.mc-hero-fan {
+  --mc-card-w: calc((100% - 8 * var(--mc-fan-gap)) / 9);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--mc-fan-gap);
+  width: 100%;
+  height: auto;
+  padding-inline: clamp(0.2rem, 0.55vw, 0.45rem);
+  box-sizing: border-box;
+  /* Tuck into the facts strip so cards stay below the hero copy */
+  transform: translateY(18%);
+}
+
+.mc-hero-fan-card {
+  flex: 0 0 var(--mc-card-w);
+  width: var(--mc-card-w);
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+  padding: 0.4rem 0.4rem 0.45rem;
+  transform: translate3d(0, var(--sink, 0px), 0) rotate(calc(var(--r) * 1deg));
+  transform-origin: 50% 0%;
+  border-radius: 0.85rem;
+  overflow: hidden;
+  box-shadow: var(--mc-shadow-float);
+  animation: mc-fan-rise 0.9s var(--mc-ease) both;
+  animation-delay: calc(0.18s + var(--i) * 40ms);
+}
+.mc-hero-fan-card--light {
+  background: #fff;
+  color: var(--ink);
+  border: 1.5px solid rgb(255 255 255 / 0.95);
+}
+.mc-hero-fan-card--dark {
+  background: var(--ink);
+  color: var(--parchment);
+  border: 1.5px solid rgb(26 24 20 / 0.95);
+}
+.mc-hero-fan-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-width: 0;
+}
+.mc-hero-fan-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.16rem;
+  flex-shrink: 0;
+}
+.mc-hero-fan-dots span {
+  display: block;
+  width: 0.28rem;
+  height: 0.28rem;
+  border-radius: 999px;
+  background: rgb(26 24 20 / 0.22);
+}
+.mc-hero-fan-card--dark .mc-hero-fan-dots span {
+  background: rgb(247 244 239 / 0.32);
+}
+.mc-hero-fan-title {
+  margin: 0;
+  min-width: 0;
+  flex: 1;
+  font-family: var(--font-frank), "Times New Roman", serif;
+  font-size: clamp(0.58rem, 0.4rem + 0.4vw, 0.78rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mc-hero-fan-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  /* Quieter under the fold — CTA stays the first read */
+  max-height: min(16vh, 8.5rem);
+  overflow: hidden;
+  border-radius: 0.48rem;
+  background: rgb(26 24 20 / 0.08);
+}
+
+@keyframes mc-fan-rise {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* Phone: 3 cards (nth 4–6) */
+@media (max-width: 639px) {
+  .mc-hero-stage {
+    --mc-fan-gap: 0.5rem;
+  }
+  .mc-hero-display {
+    font-size: clamp(1.85rem, 7.5vw, 2.35rem);
+    line-height: 1.08;
+  }
+  .mc-hero-accent {
+    font-size: 1.08em;
+  }
+  .mc-hero-fan {
+    --mc-card-w: calc((100% - 2 * var(--mc-fan-gap)) / 3);
+    justify-content: center;
+    padding-inline: 0.75rem;
+  }
+  .mc-hero-fan-card {
+    display: none !important;
+    flex: 0 0 var(--mc-card-w) !important;
+    width: var(--mc-card-w) !important;
+  }
+  .mc-hero-fan-card:nth-child(4),
+  .mc-hero-fan-card:nth-child(5),
+  .mc-hero-fan-card:nth-child(6) {
+    display: flex !important;
+  }
+  .mc-hero-fan-card:nth-child(4) {
+    transform: translate3d(0, 8px, 0) rotate(-4deg);
+  }
+  .mc-hero-fan-card:nth-child(6) {
+    transform: translate3d(0, 8px, 0) rotate(4deg);
+  }
+  .mc-hero-fan-title {
+    font-size: 0.68rem;
+  }
+  .mc-hero-fan {
+    transform: translateY(10%);
+  }
+  .mc-hero-fan-photo {
+    max-height: min(18vh, 8.75rem);
+  }
+  .mc-hero-peek-marquee {
+    margin-top: -0.65rem;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .mc-hero-stage {
+    --mc-fan-gap: 0.55rem;
+  }
+  .mc-hero-fan {
+    --mc-card-w: calc((100% - 2 * var(--mc-fan-gap)) / 3.4);
+    justify-content: center;
+    padding-inline: 1rem;
+  }
+  .mc-hero-fan-card {
+    display: none !important;
+  }
+  .mc-hero-fan-card:nth-child(4),
+  .mc-hero-fan-card:nth-child(5),
+  .mc-hero-fan-card:nth-child(6) {
+    display: flex !important;
+  }
+  .mc-hero-fan-title {
+    font-size: 0.72rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mc-hero-fan-card,
+  .mc-hero-in {
+    animation: none;
+  }
+}
+

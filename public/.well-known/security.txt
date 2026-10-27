@@ -1,0 +1,4 @@
+Contact: mailto:y0548462387@gmail.com
+Preferred-Languages: he, en
+# Update Canonical to the live Vercel/custom domain after deploy
+Expires: 2027-10-27T00:00:00.000Z
