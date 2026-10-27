@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import type { Copy } from "@/content/copy";
@@ -41,7 +41,7 @@ export function QuoteBand({ copy }: Props) {
 
       <div className="relative z-10 mx-auto flex min-h-[28rem] max-w-6xl items-center px-4 py-20 md:min-h-[32rem] md:px-8 md:py-28">
         <div className="max-w-2xl md:ms-auto md:max-w-xl md:text-end">
-          <p className="mb-5 text-[11px] font-semibold tracking-[0.24em] text-gold uppercase md:text-end">
+          <p className="mb-5 text-caption font-semibold tracking-[0.24em] text-gold uppercase md:text-end">
             {isHe ? "מי כותב" : "Who writes"}
           </p>
 

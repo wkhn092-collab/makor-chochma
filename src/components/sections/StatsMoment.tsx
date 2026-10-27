@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef } from "react";
 import Image from "next/image";
@@ -138,7 +138,7 @@ export function StatsMoment({ copy }: Props) {
           <div className="rounded-[1.35rem] bg-parchment/92 p-2 shadow-[0_24px_64px_rgb(26_24_20/0.1)] ring-1 ring-ink/10 backdrop-blur-md sm:rounded-[1.75rem] sm:p-2.5 md:p-3.5">
             <div className="overflow-hidden rounded-[1.05rem] border border-ink/8 bg-gradient-to-b from-white/90 to-parchment/95 text-ink sm:rounded-[1.35rem]">
               <div className="flex items-center justify-between border-b border-ink/8 px-5 py-3 sm:px-6 sm:py-3.5 md:px-8">
-                <span className="flex items-center gap-2.5 text-[11px] font-semibold tracking-[0.14em] text-bronze uppercase">
+                <span className="flex items-center gap-2.5 text-caption font-semibold tracking-[0.14em] text-bronze uppercase">
                   <span className="relative flex size-2.5">
                     <span className="absolute inset-0 animate-ping rounded-full bg-gold/60 motion-reduce:hidden" />
                     <span className="relative size-2.5 rounded-full bg-gold" />
@@ -159,7 +159,7 @@ export function StatsMoment({ copy }: Props) {
                         : "",
                     ].join(" ")}
                   >
-                    <dt className="text-[11px] font-semibold tracking-[0.16em] text-bronze uppercase">
+                    <dt className="text-caption font-semibold tracking-[0.16em] text-bronze uppercase">
                       {s.title}
                     </dt>
                     <dd

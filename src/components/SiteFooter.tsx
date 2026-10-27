@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import Link from "next/link";
 import type { Copy } from "@/content/copy";
 import { SITE } from "@/content/site";
@@ -48,7 +48,7 @@ export function SiteFooter({ copy }: Props) {
           />
 
           <div className="relative mx-auto flex min-h-[18rem] max-w-6xl flex-col justify-center px-4 py-14 text-start md:min-h-[22rem] md:px-6 md:py-20">
-            <p className="text-[11px] font-semibold tracking-[0.22em] text-gold uppercase">
+            <p className="text-caption font-semibold tracking-[0.22em] text-gold uppercase">
               {copy.locale === "he" ? "הצעד הבא" : "Next step"}
             </p>
             <h2 className="font-display mt-3 max-w-[16ch] text-[clamp(1.65rem,3.5vw,2.45rem)] font-bold leading-[1.15] tracking-[-0.02em] text-ink">
@@ -74,7 +74,7 @@ export function SiteFooter({ copy }: Props) {
             </div>
           </div>
 
-          <span className="absolute bottom-3 start-3 z-10 rounded-sm bg-parchment/90 px-1.5 py-0.5 text-[9px] text-bronze backdrop-blur-sm">
+          <span className="absolute bottom-3 start-3 z-10 rounded-sm bg-parchment/90 px-1.5 py-0.5 text-tag text-bronze backdrop-blur-sm">
             {copy.hero.simulation}
           </span>
         </div>

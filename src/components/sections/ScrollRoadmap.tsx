@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useCallback, useMemo, useRef, useState } from "react";
@@ -220,7 +220,7 @@ export function ScrollRoadmap({ copy }: Props) {
       <div className="relative z-10 mx-auto flex h-[100svh] max-w-4xl flex-col justify-between px-4 py-8 md:px-6 md:py-10">
         {/* Story */}
         <div className="flex flex-col items-center pt-4 text-center md:pt-8">
-          <p className="text-[11px] font-medium tracking-[0.28em] text-gold uppercase">
+          <p className="text-caption font-medium tracking-[0.28em] text-gold uppercase">
             {copy.locale === "he" ? "ארבעה שלבים" : "Four stages"}
           </p>
 
@@ -302,7 +302,7 @@ export function ScrollRoadmap({ copy }: Props) {
                       />
                       {/* Title always above the bottom strip */}
                       <span className="absolute inset-x-0 bottom-8 px-2 text-center md:bottom-9">
-                        <span className="block truncate text-[10px] font-bold text-white md:text-[11px]">
+                        <span className="block truncate text-micro font-bold text-white md:text-caption">
                           {s.title}
                         </span>
                       </span>
@@ -314,7 +314,7 @@ export function ScrollRoadmap({ copy }: Props) {
                         }}
                       >
                         <span
-                          className="text-[11px] font-bold tracking-[0.14em] md:text-xs"
+                          className="text-caption font-bold tracking-[0.14em] md:text-xs"
                           style={{ color: on ? "#1a1612" : "rgba(255,255,255,0.75)" }}
                         >
                           {s.n}

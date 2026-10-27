@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { cdnUrl, cloudinaryPoster } from "@/lib/cdn";
@@ -157,7 +157,7 @@ export function CdnVideo({
 
           {duration ? (
             <span
-              className="absolute bottom-1.5 end-1.5 rounded-[var(--radius-sm)] bg-black/55 px-1.5 py-0.5 text-[10px] text-white tabular-nums"
+              className="absolute bottom-1.5 end-1.5 rounded-[var(--radius-sm)] bg-black/55 px-1.5 py-0.5 text-micro text-white tabular-nums"
               dir="ltr"
             >
               <bdi>{duration}</bdi>

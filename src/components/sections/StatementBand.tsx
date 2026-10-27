@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import type { Copy } from "@/content/copy";
 import { WordInkFill } from "@/components/motion/WordInkFill";
@@ -15,7 +15,7 @@ export function StatementBand({ copy }: Props) {
       aria-label={copy.locale === "he" ? "העקרון" : "Principle"}
     >
       <div className="mx-auto max-w-5xl">
-        <p className="text-[11px] font-semibold tracking-[0.22em] text-gold uppercase">
+        <p className="text-caption font-semibold tracking-[0.22em] text-gold uppercase">
           {copy.locale === "he" ? "אתם מכירים את החיפוש הזה." : "You know this search."}
         </p>
         <WordInkFill

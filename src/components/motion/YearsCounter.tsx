@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
@@ -60,7 +60,7 @@ export function YearsCounter({ label, className }: Props) {
       <span className="sr-only">
         <bdi>{SITE.yearsExperience}</bdi>
       </span>
-      <p className="mt-1.5 max-w-[7rem] text-[11px] leading-snug tracking-wide text-ink/55">
+      <p className="mt-1.5 max-w-[7rem] text-caption leading-snug tracking-wide text-ink/55">
         {label}
       </p>
     </div>

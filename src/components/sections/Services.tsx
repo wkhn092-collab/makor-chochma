@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import type { Copy } from "@/content/copy";
@@ -32,7 +32,7 @@ export function Services({ copy }: Props) {
     <section id="services" className="border-y border-stone/70 bg-parchment py-16 md:py-24">
       <div className="mx-auto max-w-5xl px-4 md:px-6">
         <div className="max-w-2xl">
-          <p className="text-[11px] font-semibold tracking-[0.22em] text-gold uppercase">
+          <p className="text-caption font-semibold tracking-[0.22em] text-gold uppercase">
             {copy.locale === "he" ? "הסדנה" : "The atelier"}
           </p>
           <InkReveal
@@ -42,7 +42,7 @@ export function Services({ copy }: Props) {
             {copy.services.h2}
           </InkReveal>
           <Reveal delay={0.06} y={16}>
-            <p className="mt-4 text-base leading-relaxed text-ink/70 md:text-[1.05rem]">
+            <p className="mt-4 text-base leading-relaxed text-ink/70 md:text-lead">
               {copy.services.lead}
             </p>
           </Reveal>

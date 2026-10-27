@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import type { Copy } from "@/content/copy";
 import { SITE } from "@/content/site";
 import { Reveal } from "@/motion/Reveal";
@@ -22,7 +22,7 @@ export function WhyUs({ copy }: Props) {
     >
       <div className="mx-auto max-w-5xl px-4 md:px-6">
         <div className="max-w-2xl">
-          <p className="text-[11px] font-semibold tracking-[0.22em] text-gold uppercase">
+          <p className="text-caption font-semibold tracking-[0.22em] text-gold uppercase">
             {copy.whyUs.eyebrow}
           </p>
           <InkReveal

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -45,7 +45,7 @@ export function Faq({ copy }: Props) {
                   aria-hidden
                   className="absolute inset-0 bg-gradient-to-t from-parchment/70 via-transparent to-transparent"
                 />
-                <span className="absolute bottom-3 start-3 rounded-sm bg-parchment/90 px-2 py-0.5 text-[10px] text-bronze backdrop-blur-sm">
+                <span className="absolute bottom-3 start-3 rounded-sm bg-parchment/90 px-2 py-0.5 text-micro text-bronze backdrop-blur-sm">
                   {copy.hero.simulation}
                 </span>
               </div>
@@ -148,7 +148,7 @@ export function Faq({ copy }: Props) {
                   sizes="(max-width: 640px) 100vw, 50vw"
                   className="object-cover object-[50%_40%]"
                 />
-                <span className="absolute bottom-2 start-2 rounded-sm bg-parchment/90 px-2 py-0.5 text-[10px] text-bronze">
+                <span className="absolute bottom-2 start-2 rounded-sm bg-parchment/90 px-2 py-0.5 text-micro text-bronze">
                   {copy.hero.simulation}
                 </span>
               </div>

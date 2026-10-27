@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import type { Copy } from "@/content/copy";
 import { SITE } from "@/content/site";
 import { SITE_IMAGES } from "@/content/images";
@@ -31,7 +31,7 @@ export function LeadSection({ copy }: Props) {
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="flex flex-col">
-            <p className="text-[11px] font-semibold tracking-[0.22em] text-gold uppercase">
+            <p className="text-caption font-semibold tracking-[0.22em] text-gold uppercase">
               {isHe ? "יצירת קשר" : "Contact"}
             </p>
             <InkReveal
@@ -67,7 +67,7 @@ export function LeadSection({ copy }: Props) {
                     {isHe ? "סופר סת״ם · אלעד" : "Sofer Stam · Elad"}
                   </p>
                 </div>
-                <span className="absolute top-3 start-3 rounded-sm bg-parchment/90 px-1.5 py-0.5 text-[9px] text-bronze backdrop-blur-sm">
+                <span className="absolute top-3 start-3 rounded-sm bg-parchment/90 px-1.5 py-0.5 text-tag text-bronze backdrop-blur-sm">
                   {copy.hero.simulation}
                 </span>
               </div>
@@ -104,7 +104,7 @@ export function LeadSection({ copy }: Props) {
 
           <Reveal delay={0.08} y={24} className="h-full">
             <div className="flex h-full flex-col rounded-[1.15rem] border border-ink/8 bg-gradient-to-b from-white to-parchment/80 p-5 shadow-[0_20px_50px_rgb(26_24_20/0.06)] md:p-8">
-              <p className="text-[11px] font-semibold tracking-[0.18em] text-bronze uppercase">
+              <p className="text-caption font-semibold tracking-[0.18em] text-bronze uppercase">
                 {isHe ? "השאירו פרטים" : "Leave your details"}
               </p>
               <div className="mt-5 flex-1">

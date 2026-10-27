@@ -26,7 +26,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "he_IL",
     siteName: "מכון מקור חכמה",
-    images: [{ url: "/logo.jpg", width: 1200, height: 630, alt: "מכון מקור חכמה" }],
+  },
+  twitter: {
+    card: "summary_large_image",
   },
   icons: {
     icon: "/favicon.ico",

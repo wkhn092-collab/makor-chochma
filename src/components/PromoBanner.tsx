@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useSyncExternalStore } from "react";
 import type { Locale } from "@/content/copy";
@@ -37,7 +37,7 @@ export function PromoBanner({ locale }: Props) {
         <p className="font-display text-sm font-semibold tracking-wide text-ink">{title}</p>
         {body ? <p className="text-xs leading-relaxed text-ink/70">{body}</p> : null}
         {promo.endsAt ? (
-          <p className="text-[10px] text-bronze">
+          <p className="text-micro text-bronze">
             {locale === "he" ? "בתוקף עד" : "Valid until"}{" "}
             <time dateTime={promo.endsAt}>
               {new Date(promo.endsAt).toLocaleDateString(

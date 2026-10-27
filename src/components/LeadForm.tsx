@@ -131,11 +131,24 @@ export function LeadForm({ copy }: Props) {
     const telHref = `tel:+${SITE.phoneE164}`;
     return (
       <div
+        id="lead-thanks"
         className="rounded-[var(--radius-md)] border border-success/30 bg-surface p-6 shadow-contact"
         role="status"
+        aria-live="polite"
       >
-        <p className="text-success">{copy.form.success}</p>
-        <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
+        <h3 className="font-display text-xl font-bold text-ink">{copy.form.successTitle}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-ink/75">{copy.form.success}</p>
+        <ol className="mt-5 space-y-2.5 border-t border-stone/80 pt-4">
+          {copy.form.successSteps.map((step, i) => (
+            <li key={step} className="flex gap-3 text-sm leading-snug text-ink/80">
+              <span className="font-display shrink-0 text-gold" aria-hidden>
+                {i + 1}.
+              </span>
+              {step}
+            </li>
+          ))}
+        </ol>
+        <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
           <a
             href={telHref}
             data-analytics="phone_click"
@@ -154,6 +167,12 @@ export function LeadForm({ copy }: Props) {
             className="btn-secondary w-full sm:w-auto"
           >
             {copy.form.successWa}
+          </a>
+          <a
+            href={copy.locale === "he" ? "/" : "/en"}
+            className="inline-flex min-h-12 items-center justify-center px-4 text-sm font-medium text-bronze underline-offset-2 hover:underline"
+          >
+            {copy.form.successHome}
           </a>
         </div>
       </div>

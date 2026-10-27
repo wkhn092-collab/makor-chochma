@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import type { CSSProperties } from "react";
 import type { Copy } from "@/content/copy";
 import { SITE_IMAGES } from "@/content/images";
@@ -88,7 +88,7 @@ function FactsStrip({ facts }: { facts: string[] }) {
           {facts.map((fact) => (
             <span
               key={fact}
-              className="flex items-center gap-5 font-display text-[1.05rem] font-medium tracking-[-0.01em] whitespace-nowrap text-ink sm:gap-8 sm:text-[clamp(1.05rem,0.9rem+1.1vw,1.6rem)]"
+              className="flex items-center gap-5 font-display text-lead font-medium tracking-[-0.01em] whitespace-nowrap text-ink sm:gap-8 sm:text-[clamp(1.05rem,0.9rem+1.1vw,1.6rem)]"
             >
               <bdi>{fact}</bdi>
               <span className="size-1.5 shrink-0 rounded-full bg-gold sm:size-2" />
@@ -166,7 +166,7 @@ export function Hero({ copy }: Props) {
       </div>
 
       <span className="sr-only">{heroAlt}</span>
-      <span className="pointer-events-none absolute bottom-3 start-3 z-30 rounded-sm bg-parchment/90 px-1.5 py-0.5 text-[9px] text-bronze backdrop-blur-sm md:bottom-4 md:start-4">
+      <span className="pointer-events-none absolute bottom-3 start-3 z-30 rounded-sm bg-parchment/90 px-1.5 py-0.5 text-tag text-bronze backdrop-blur-sm md:bottom-4 md:start-4">
         {copy.hero.simulation}
       </span>
 
@@ -174,7 +174,7 @@ export function Hero({ copy }: Props) {
       <div className="relative z-30 mx-auto flex w-full max-w-[1180px] shrink-0 flex-col px-4 pt-[calc(var(--mc-header-h)+0.85rem)] sm:px-6 sm:pt-[calc(var(--mc-header-h)+0.5rem)]">
         <div className="flex flex-col items-center text-center">
           <p
-            className="mc-hero-in text-[0.8125rem] font-semibold tracking-[0.06em] text-bronze"
+            className="mc-hero-in text-label font-semibold tracking-[0.06em] text-bronze"
             style={{ "--d": "80ms" } as CSSProperties}
           >
             {copy.hero.eyebrow}
@@ -229,7 +229,7 @@ export function Hero({ copy }: Props) {
             </a>
           </div>
           <p
-            className="mc-hero-in mt-2.5 max-w-sm text-center text-[11px] leading-relaxed text-ink/65 sm:text-xs"
+            className="mc-hero-in mt-2.5 max-w-sm text-center text-caption leading-relaxed text-ink/65 sm:text-xs"
             style={{ "--d": "640ms" } as CSSProperties}
           >
             {copy.hero.micro}

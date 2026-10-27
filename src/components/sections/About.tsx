@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import type { Copy } from "@/content/copy";
 import { SITE } from "@/content/site";
 import { SITE_IMAGES } from "@/content/images";
@@ -33,7 +33,7 @@ export function About({ copy }: Props) {
             aria-hidden
             className="absolute inset-0 bg-gradient-to-t from-parchment/55 via-transparent to-parchment/25"
           />
-          <span className="absolute bottom-4 start-4 rounded-sm bg-parchment/90 px-2 py-0.5 text-[10px] text-bronze backdrop-blur-sm">
+          <span className="absolute bottom-4 start-4 rounded-sm bg-parchment/90 px-2 py-0.5 text-micro text-bronze backdrop-blur-sm">
             {copy.hero.simulation}
           </span>
 
@@ -44,7 +44,7 @@ export function About({ copy }: Props) {
               <p className="font-display text-[clamp(1.75rem,4vw,2.5rem)] font-bold leading-none tracking-[-0.03em] text-gold">
                 2
               </p>
-              <p className="mt-1.5 text-[11px] leading-snug text-ink/55">
+              <p className="mt-1.5 text-caption leading-snug text-ink/55">
                 {copy.locale === "he" ? "הסמכות" : "certifications"}
               </p>
             </div>
@@ -52,7 +52,7 @@ export function About({ copy }: Props) {
               <p className="font-display text-[clamp(1.35rem,3vw,1.75rem)] font-bold leading-none tracking-[-0.02em] text-ink">
                 {copy.locale === "he" ? "אלעד" : "Elad"}
               </p>
-              <p className="mt-1.5 text-[11px] leading-snug text-ink/55">
+              <p className="mt-1.5 text-caption leading-snug text-ink/55">
                 {copy.locale === "he" ? "פגישות פנים אל פנים" : "in-person meetings"}
               </p>
             </div>
@@ -68,7 +68,7 @@ export function About({ copy }: Props) {
             {copy.about.h2}
           </InkReveal>
           <Reveal delay={0.08} y={16}>
-            <p className="mt-4 max-w-prose text-base leading-relaxed text-ink/75 md:text-[1.05rem]">
+            <p className="mt-4 max-w-prose text-base leading-relaxed text-ink/75 md:text-lead">
               {copy.about.body}
             </p>
           </Reveal>
@@ -82,14 +82,14 @@ export function About({ copy }: Props) {
             {SITE.certifications.map((c, i) => (
               <Reveal key={c.id} delay={0.06 * i} y={12} as="li">
                 <div className="flex gap-4 py-4">
-                  <span className="shrink-0 pt-0.5 text-[11px] font-semibold tracking-[0.18em] text-gold">
+                  <span className="shrink-0 pt-0.5 text-caption font-semibold tracking-[0.18em] text-gold">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
                     <p className="text-sm font-semibold text-ink md:text-[0.95rem]">
                       {copy.locale === "he" ? c.he : c.en}
                     </p>
-                    <p className="mt-1 text-[11px] tracking-wide text-ink/45">
+                    <p className="mt-1 text-caption tracking-wide text-ink/45">
                       {copy.about.certPending}
                     </p>
                   </div>

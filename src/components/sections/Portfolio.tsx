@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import type { Copy } from "@/content/copy";
 import { SITE_IMAGES } from "@/content/images";
 import { InkReveal } from "@/components/motion/InkReveal";
@@ -47,12 +47,12 @@ export function Portfolio({ copy }: Props) {
                         className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
                       />
                     ) : null}
-                    <span className="absolute bottom-2 start-2 rounded-sm bg-parchment/90 px-1.5 py-0.5 text-[9px] text-bronze backdrop-blur-sm">
+                    <span className="absolute bottom-2 start-2 rounded-sm bg-parchment/90 px-1.5 py-0.5 text-tag text-bronze backdrop-blur-sm">
                       {copy.hero.simulation}
                     </span>
                   </div>
                   <div className="flex flex-1 flex-col border-t border-ink/8 bg-gradient-to-b from-white to-parchment px-4 py-4 md:px-5 md:py-5">
-                    <span className="text-[11px] font-semibold tracking-[0.18em] text-gold">
+                    <span className="text-caption font-semibold tracking-[0.18em] text-gold">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <h3 className="font-display mt-2 text-lg font-bold leading-snug text-ink md:text-xl">

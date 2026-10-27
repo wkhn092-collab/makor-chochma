@@ -230,11 +230,24 @@ export function getCopy(locale: Locale) {
       interest: isHe ? "במה להתמקד? (אופציונלי)" : "Focus area (optional)",
       submit: isHe ? "שלחו, נחזור אליכם" : "Send, we’ll get back to you",
       submitting: isHe ? "שולחים…" : "Sending…",
+      successTitle: isHe ? "תודה — הפרטים אצלנו" : "Thank you — we have your details",
       success: isHe
-        ? "תודה. הפרטים אצלנו. ניצור קשר לתיאום השיחה — או התקשרו / וואטסאפ עכשיו אם נוח לכם."
-        : "Thank you. We have your details. We’ll call to schedule — or call / WhatsApp now if you prefer.",
+        ? "ניצור קשר לתיאום שיחת ייעוץ. אם נוח לכם עכשיו — התקשרו או כתבו בוואטסאפ."
+        : "We’ll call to schedule a consultation. Prefer now? Call or WhatsApp.",
+      successSteps: isHe
+        ? [
+            "שיחת ייעוץ קצרה (~15 דק׳), בלי התחייבות",
+            "אם זה מתאים — קובעים פגישה פנים־אל־פנים באלעד",
+            "סגירת פרטים והזמנה נעשית בפגישה, לא באתר",
+          ]
+        : [
+            "A short consultation call (~15 min), no obligation",
+            "If it’s a fit — we schedule an in-person meeting in Elad",
+            "Order details are finalized in the meeting, not on this site",
+          ],
       successCall: isHe ? "התקשרו עכשיו" : "Call now",
       successWa: isHe ? "וואטסאפ עכשיו" : "WhatsApp now",
+      successHome: isHe ? "חזרה לדף הבית" : "Back to home",
       errorPhone: isHe
         ? "בדקו את מספר הנייד (10 ספרות, מתחיל ב־05)."
         : "Check the mobile number (Israeli format).",

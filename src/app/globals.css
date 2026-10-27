@@ -113,6 +113,28 @@ body {
   letter-spacing: var(--tracking-display);
 }
 
+/* Type scale — prefer these over arbitrary text-[Npx] */
+.text-tag {
+  font-size: 0.5625rem; /* 9px — הדמיה badges */
+  line-height: 1.3;
+}
+.text-micro {
+  font-size: 0.625rem; /* 10px */
+  line-height: 1.35;
+}
+.text-caption {
+  font-size: 0.6875rem; /* 11px */
+  line-height: 1.4;
+}
+.text-label {
+  font-size: 0.8125rem; /* 13px */
+  line-height: 1.4;
+}
+.text-lead {
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
 .shadow-contact {
   box-shadow: var(--shadow-contact);
 }

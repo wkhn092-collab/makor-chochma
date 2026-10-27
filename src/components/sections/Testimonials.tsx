@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef, useState } from "react";
 import type { Copy } from "@/content/copy";
@@ -51,7 +51,7 @@ function TestimonialCard({
         onPlayRequest={onPlay}
       />
       <div className={isLarge ? "mt-3.5 flex flex-1 flex-col gap-1.5" : "mt-3 flex flex-1 flex-col gap-1"}>
-        <p className="text-[11px] font-semibold tracking-wide text-accent md:text-xs">
+        <p className="text-caption font-semibold tracking-wide text-accent md:text-xs">
           {topic}
         </p>
         <h3
