@@ -45,22 +45,30 @@ export function Hero({ copy }: Props) {
   const facts =
     copy.locale === "he"
       ? [
+          "תפילין",
+          "מזוזות",
+          "מגילות",
+          "ספרי תורה",
+          "פיטום הקטורת",
           brand,
           "אלעד",
-          `${SITE.yearsExperience} שנות ניסיון`,
+          `${SITE.yearsExperience} שנה על הקלף`,
           "משמרת סת״ם",
           "יד רפאל",
-          "תפילין · מזוזות · מגילות",
-          "שיחת ייעוץ לפני החלטה",
+          "שיחה לפני שסוגרים",
         ]
       : [
+          "Tefillin",
+          "Mezuzot",
+          "Megillot",
+          "Sifrei Torah",
+          "Pitum HaKetoret",
           brand,
           "Elad",
-          `${SITE.yearsExperience} years`,
+          `${SITE.yearsExperience} years on the parchment`,
           "Mishmeret Stam",
           "Yad Rafael",
-          "Tefillin · Mezuzot · Megillot",
-          "Consultation before you decide",
+          "A call before you close",
         ];
 
   return (

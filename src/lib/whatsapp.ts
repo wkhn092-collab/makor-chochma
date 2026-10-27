@@ -13,18 +13,18 @@ export function waPrefill(
 ): string {
   if (locale === "he") {
     if (interestLabel && secondaryLabel) {
-      return `שלום הרב יגאל, הגעתי מהאתר של מכון מקור חכמה. מתעניין ב־${interestLabel}, וגם אשמח לשאול על ${secondaryLabel}. אשמח לשיחת ייעוץ.`;
+      return `שלום הרב יגאל, הגעתי מהאתר של מכון מקור חכמה. מתעניין ב־${interestLabel}, וגם אשמח לשאול על ${secondaryLabel}. אשמח לשיחה.`;
     }
     if (interestLabel) {
-      return `שלום הרב יגאל, הגעתי מהאתר של מכון מקור חכמה. מתעניין ב־${interestLabel} ואשמח לשיחת ייעוץ.`;
+      return `שלום הרב יגאל, הגעתי מהאתר של מכון מקור חכמה. מתעניין ב־${interestLabel} ואשמח לשיחה.`;
     }
-    return "שלום הרב יגאל, הגעתי מהאתר של מכון מקור חכמה ואשמח לשיחת ייעוץ.";
+    return "שלום הרב יגאל, הגעתי מהאתר של מכון מקור חכמה ואשמח לשיחה על סת״ם.";
   }
   if (interestLabel && secondaryLabel) {
-    return `Hello Rabbi Yigal, I found Makor Chochma online. I’m interested in ${interestLabel}, and would also like to ask about ${secondaryLabel}. I’d like a consultation call.`;
+    return `Hello Rabbi Yigal, I found Makor Chochma online. I’m interested in ${interestLabel}, and would also like to ask about ${secondaryLabel}. I’d like a call.`;
   }
   if (interestLabel) {
-    return `Hello Rabbi Yigal, I found Makor Chochma online. I’m interested in ${interestLabel} and would like a consultation call.`;
+    return `Hello Rabbi Yigal, I found Makor Chochma online. I’m interested in ${interestLabel} and would like a call.`;
   }
-  return "Hello Rabbi Yigal, I found Makor Chochma online and would like a consultation call.";
+  return "Hello Rabbi Yigal, I found Makor Chochma online and would like to talk about stam.";
 }

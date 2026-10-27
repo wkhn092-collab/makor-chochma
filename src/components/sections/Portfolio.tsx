@@ -65,7 +65,7 @@ export function Portfolio({ copy }: Props) {
                       href="#lead"
                       className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#a8883f] transition-colors hover:text-ink"
                     >
-                      {copy.locale === "he" ? "לתיאום שיחה" : "Book a call"}
+                      {copy.locale === "he" ? "לשיחה עם הסופר" : "Talk to the sofer"}
                       <span aria-hidden className="translate-y-px rtl:inline-block">
                         ←
                       </span>
