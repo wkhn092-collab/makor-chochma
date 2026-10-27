@@ -18,7 +18,7 @@ type Props = {
   onPlayRequest?: () => void;
 };
 
-/** Match frame to video so nothing is cropped; dark fill avoids white bars. */
+/** Frame fills card; video uses object-cover so no side bars. */
 const FRAME: Record<"sm" | "md" | "lg", Record<Orientation, string>> = {
   sm: {
     portrait: "aspect-[3/4] w-full",
@@ -127,7 +127,7 @@ export function CdnVideo({
             <img
               src={poster}
               alt=""
-              className="absolute inset-0 h-full w-full object-contain object-center"
+              className="absolute inset-0 h-full w-full object-cover object-center"
               loading="lazy"
               decoding="async"
               fetchPriority="low"
@@ -165,7 +165,7 @@ export function CdnVideo({
       ) : (
         <video
           ref={videoRef}
-          className="absolute inset-0 z-10 h-full w-full object-contain object-center"
+          className="absolute inset-0 z-10 h-full w-full object-cover object-center"
           src={videoSrc}
           title={title}
           aria-label={title}
