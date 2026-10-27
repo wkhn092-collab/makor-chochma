@@ -1,43 +1,53 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 const CONSENT_KEY = "mc-analytics-consent";
 
-export function readAnalyticsConsent(): boolean {
-  if (typeof window === "undefined") return false;
+export type ConsentValue = "accepted" | "declined" | "unknown";
+
+export function readAnalyticsConsent(): ConsentValue {
+  if (typeof window === "undefined") return "unknown";
   try {
-    return window.localStorage.getItem(CONSENT_KEY) === "1";
+    const v = window.localStorage.getItem(CONSENT_KEY);
+    if (v === "1") return "accepted";
+    if (v === "0") return "declined";
+    return "unknown";
   } catch {
-    return false;
+    return "unknown";
   }
 }
 
 export function writeAnalyticsConsent(accepted: boolean) {
   try {
-    if (accepted) window.localStorage.setItem(CONSENT_KEY, "1");
-    else window.localStorage.removeItem(CONSENT_KEY);
+    window.localStorage.setItem(CONSENT_KEY, accepted ? "1" : "0");
     window.dispatchEvent(new Event("mc-analytics-consent"));
   } catch {
     /* private mode */
   }
 }
 
+function subscribeConsent(onStoreChange: () => void) {
+  window.addEventListener("mc-analytics-consent", onStoreChange);
+  window.addEventListener("storage", onStoreChange);
+  return () => {
+    window.removeEventListener("mc-analytics-consent", onStoreChange);
+    window.removeEventListener("storage", onStoreChange);
+  };
+}
+
 /** Loads GA4 / Clarity only after explicit analytics consent. */
 export function Analytics() {
   const ga = process.env.NEXT_PUBLIC_GA_ID;
   const clarity = process.env.NEXT_PUBLIC_CLARITY_ID;
-  const [allowed, setAllowed] = useState(false);
+  const consent = useSyncExternalStore(
+    subscribeConsent,
+    readAnalyticsConsent,
+    () => "unknown" as ConsentValue,
+  );
 
-  useEffect(() => {
-    const sync = () => setAllowed(readAnalyticsConsent());
-    sync();
-    window.addEventListener("mc-analytics-consent", sync);
-    return () => window.removeEventListener("mc-analytics-consent", sync);
-  }, []);
-
-  if (!allowed) return null;
+  if (consent !== "accepted") return null;
   if (!ga && !clarity) return null;
 
   return (

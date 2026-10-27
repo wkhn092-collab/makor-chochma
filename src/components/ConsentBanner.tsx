@@ -1,14 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import type { Locale } from "@/content/copy";
 import {
   readAnalyticsConsent,
   writeAnalyticsConsent,
+  type ConsentValue,
 } from "@/components/Analytics";
 
 type Props = { locale: Locale };
+
+function subscribeConsent(onStoreChange: () => void) {
+  window.addEventListener("mc-analytics-consent", onStoreChange);
+  window.addEventListener("storage", onStoreChange);
+  return () => {
+    window.removeEventListener("mc-analytics-consent", onStoreChange);
+    window.removeEventListener("storage", onStoreChange);
+  };
+}
 
 /**
  * Light analytics consent — shown only when GA/Clarity env keys exist
@@ -18,17 +28,15 @@ export function ConsentBanner({ locale }: Props) {
   const hasAnalytics = Boolean(
     process.env.NEXT_PUBLIC_GA_ID || process.env.NEXT_PUBLIC_CLARITY_ID,
   );
-  const [visible, setVisible] = useState(false);
+  const consent = useSyncExternalStore(
+    subscribeConsent,
+    readAnalyticsConsent,
+    () => "unknown" as ConsentValue,
+  );
   const isHe = locale === "he";
   const privacyHref = isHe ? "/privacy" : "/en/privacy";
 
-  useEffect(() => {
-    if (!hasAnalytics) return;
-    if (readAnalyticsConsent()) return;
-    setVisible(true);
-  }, [hasAnalytics]);
-
-  if (!hasAnalytics || !visible) return null;
+  if (!hasAnalytics || consent !== "unknown") return null;
 
   return (
     <div
@@ -44,26 +52,20 @@ export function ConsentBanner({ locale }: Props) {
         <Link href={privacyHref} className="font-medium text-ink underline-offset-2 hover:underline">
           {isHe ? "מדיניות הפרטיות" : "Privacy Policy"}
         </Link>
-        {isHe ? "." : "."}
+        .
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
         <button
           type="button"
           className="btn-primary min-h-10 px-4 text-sm"
-          onClick={() => {
-            writeAnalyticsConsent(true);
-            setVisible(false);
-          }}
+          onClick={() => writeAnalyticsConsent(true)}
         >
           {isHe ? "מאשר מדידה" : "Accept analytics"}
         </button>
         <button
           type="button"
           className="inline-flex min-h-10 items-center justify-center border border-ink/15 bg-surface px-4 text-sm font-medium text-ink"
-          onClick={() => {
-            writeAnalyticsConsent(false);
-            setVisible(false);
-          }}
+          onClick={() => writeAnalyticsConsent(false)}
         >
           {isHe ? "בלי מדידה" : "No analytics"}
         </button>

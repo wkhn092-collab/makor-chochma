@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 
 type Props = {
   error: Error & { digest?: string };
@@ -26,12 +27,12 @@ export default function Error({ error, reset }: Props) {
         >
           נסו שוב
         </button>
-        <a
+        <Link
           href="/"
           className="border border-ink/20 bg-surface px-4 py-2.5 text-sm font-medium text-ink"
         >
           לדף הבית
-        </a>
+        </Link>
       </div>
     </div>
   );

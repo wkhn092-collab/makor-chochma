@@ -68,6 +68,7 @@ export function CdnVideo({
   const videoSrc = cdnUrl(src);
   const poster = cloudinaryPoster(videoSrc);
   const orientation: Orientation = orientationProp;
+  const playing = started && active;
 
   useEffect(() => {
     const el = rootRef.current;
@@ -89,18 +90,15 @@ export function CdnVideo({
   }, []);
 
   useEffect(() => {
-    if (!started) return;
+    if (!playing) {
+      videoRef.current?.pause();
+      return;
+    }
     const v = videoRef.current;
     if (!v) return;
     v.muted = false;
     v.play().catch(() => undefined);
-  }, [started]);
-
-  useEffect(() => {
-    if (active || !started) return;
-    videoRef.current?.pause();
-    setStarted(false);
-  }, [active]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [playing]);
 
   function handleStart() {
     onPlayRequest?.();
@@ -113,11 +111,11 @@ export function CdnVideo({
       className={clsx(
         "relative isolate overflow-hidden rounded-[var(--radius-md)] bg-ink/85 shadow-contact",
         FRAME[size][orientation],
-        started ? "z-20" : "z-0",
+        playing ? "z-20" : "z-0",
         className,
       )}
     >
-      {!started ? (
+      {!playing ? (
         <button
           type="button"
           onClick={handleStart}

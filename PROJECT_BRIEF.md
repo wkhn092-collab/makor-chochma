@@ -23,6 +23,7 @@
 | Stack מתוכנן | Next.js (App Router) + Tailwind + Sanity + Zustand (לידים/UI בלבד) | ✅ |
 | שפה ברירת מחדל | **עברית RTL** (`/`) · אנגלית ב־`/en` | ✅ |
 | דומיין | **https://makor-chochma.vercel.app/** (חי) · דומיין מותאם אישית TBD | ✅ Preview/Prod Vercel |
+| בעלות חשבונות | פיתוח אצל אבישי עד העברה · צ׳קליסט: `docs/handoff/07-ownership-transfer.md` | ⏳ |
 | ריפו / תיקייה | `makor-chochma` (חדש, נפרד מ־aura-audio) | ✅ |
 | לוגו | קובץ WhatsApp מהלקוח — לוחות הברית + wordmark חום | ✅ |
 | מודל עסקי | **לידים בלבד** — אין מחירים, אין סליקה באתר | ✅ |
