@@ -1,10 +1,44 @@
 "use client";
 
 import Script from "next/script";
+import { useEffect, useState } from "react";
 
+const CONSENT_KEY = "mc-analytics-consent";
+
+export function readAnalyticsConsent(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return window.localStorage.getItem(CONSENT_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function writeAnalyticsConsent(accepted: boolean) {
+  try {
+    if (accepted) window.localStorage.setItem(CONSENT_KEY, "1");
+    else window.localStorage.removeItem(CONSENT_KEY);
+    window.dispatchEvent(new Event("mc-analytics-consent"));
+  } catch {
+    /* private mode */
+  }
+}
+
+/** Loads GA4 / Clarity only after explicit analytics consent. */
 export function Analytics() {
   const ga = process.env.NEXT_PUBLIC_GA_ID;
   const clarity = process.env.NEXT_PUBLIC_CLARITY_ID;
+  const [allowed, setAllowed] = useState(false);
+
+  useEffect(() => {
+    const sync = () => setAllowed(readAnalyticsConsent());
+    sync();
+    window.addEventListener("mc-analytics-consent", sync);
+    return () => window.removeEventListener("mc-analytics-consent", sync);
+  }, []);
+
+  if (!allowed) return null;
+  if (!ga && !clarity) return null;
 
   return (
     <>

@@ -12,6 +12,7 @@ import { Services } from "@/components/sections/Services";
 import { Faq } from "@/components/sections/Faq";
 import { LeadSection } from "@/components/sections/LeadSection";
 import { Analytics } from "@/components/Analytics";
+import { ConsentBanner } from "@/components/ConsentBanner";
 import { SectionTracker } from "@/components/SectionTracker";
 import { LocaleHtml } from "@/components/LocaleHtml";
 import { SiteMotion } from "@/components/motion/SiteMotion";
@@ -48,6 +49,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <JsonLd locale={locale} faqs={copy.faq.items} />
       <SkipLink locale={locale} />
       <Analytics />
+      <ConsentBanner locale={locale} />
       <PromoBanner locale={locale} />
       <SiteHeader copy={copy} />
       <main id="main" tabIndex={-1}>

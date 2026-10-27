@@ -348,18 +348,21 @@ export function getCopy(locale: Locale) {
         ? [
             "אנו אוספים שם מלא, מספר טלפון, ובחירת תחום עניין כשאתם שולחים את טופס יצירת הקשר — לצורך חזרה אליכם לתיאום שיחת ייעוץ ופגישה.",
             `המידע נשלח ל־${SITE.email} ונשמר אצל מפעיל האתר לטיפול בפניות. אינו נמכר לצדדים שלישיים.`,
-            "שירותי תשתית (אירוח, שליחת מייל, אנטי־בוט, אנליטיקס אם הופעל) עשויים לעבד נתונים טכניים לפי מדיניות הספק.",
+            "שירותי תשתית (אירוח, שליחת מייל, אנטי־בוט) עשויים לעבד נתונים טכניים לפי מדיניות הספק.",
+            "כלי אנליטיקס (GA4 / Clarity) נטענים רק אחרי שתאשרו מדידה בבאנר ההסכמה — אפשר לסרב.",
             `למחיקת פרטים או שאלות: ${SITE.email} או ${SITE.phoneDisplay}.`,
             "אין רכישה או סליקה באתר; פרטי תשלום אינם נאספים כאן.",
           ]
         : [
             "We collect your full name, phone number, and interest topic when you submit the contact form — to call you back for a consultation and meeting.",
             `Data is emailed to ${SITE.email} and retained by the site operator to handle inquiries. It is not sold to third parties.`,
-            "Infrastructure providers (hosting, email, bot protection, analytics if enabled) may process technical data under their policies.",
+            "Infrastructure providers (hosting, email, bot protection) may process technical data under their policies.",
+            "Analytics (GA4 / Clarity) load only after you accept measurement in the consent banner — you may decline.",
             `To request deletion or ask questions: ${SITE.email} or ${SITE.phoneDisplay}.`,
             "There is no checkout on this site; payment details are never collected here.",
           ],
     },
+
     terms: {
       title: isHe ? "תנאי שימוש" : "Terms of use",
       body: isHe

@@ -58,3 +58,22 @@
 - ברירת מחדל: in-memory  
 - פרוד מומלץ: `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`  
 - מימוש: `src/lib/rate-limit.ts`
+
+---
+
+## F. WAF / Firewall (3.32)
+
+פלטפורמה: **Vercel**.
+
+- [ ] Attack Challenge Mode זמין בלוח הבקרה בעת הצפה  
+- [ ] (אופציונלי) Vercel Firewall / custom rules אחרי דומיין מותאם  
+- [ ] Turnstile פעיל על הטופס = שכבת בוט נוספת  
+- אין Geo-block כברירת מחדל (קהל ישראלי + תפוצות)
+
+---
+
+## G. סריקת אבטחה (3.33)
+
+- Baseline אוטומטי: `docs/security-scan-baseline.md` (headers + health + surfaces)  
+- מומלץ לפני Go-Live מלא: OWASP ZAP על Preview URL + שמירת דוח PDF בתיקיית ops  
+- Staging = Vercel Preview Deployments (אין סביבה נפרדת)
