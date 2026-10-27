@@ -135,6 +135,27 @@ export function getCopy(locale: Locale) {
     },
     faq: {
       h2: isHe ? "שאלות שחוזרות בשיחה" : "Questions we hear on every call",
+      sidePhotoCaption: isHe ? "כתיבה ידנית על קלף" : "Hand writing on parchment",
+      sideTrustTitle: isHe ? "לפני השיחה" : "Before you call",
+      sideTrust: isHe
+        ? [
+            "סופר מוסמך — משמרת סת״ם ויד רפאל",
+            "שיחת ייעוץ קצרה, בלי התחייבות",
+            "פגישה פנים־אל־פנים באלעד",
+          ]
+        : [
+            "Certified sofer — Mishmeret Stam & Yad Rafael",
+            "Short consultation call, no obligation",
+            "In-person meeting in Elad",
+          ],
+      sideNextTitle: isHe ? "רוצים תשובה מהירה?" : "Want a quick answer?",
+      sideNextLead: isHe
+        ? "כתבו בוואטסאפ או השאירו פרטים — נחזור לתיאום שיחה."
+        : "WhatsApp us or leave details — we’ll schedule a call.",
+      sideCtaForm: isHe ? "להשארת פרטים" : "Leave details",
+      sideCtaWa: isHe ? "וואטסאפ" : "WhatsApp",
+      sideMetaHours: isHe ? SITE.hoursHe : SITE.hoursEn,
+      sideMetaPlace: isHe ? "אלעד · בתיאום" : "Elad · by appointment",
       items: isHe
         ? [
             {

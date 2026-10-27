@@ -31,28 +31,28 @@ export function About({ copy }: Props) {
           />
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-ink/50 via-ink/10 to-ink/20"
+            className="absolute inset-0 bg-gradient-to-t from-parchment/55 via-transparent to-parchment/25"
           />
           <span className="absolute bottom-4 start-4 rounded-sm bg-parchment/90 px-2 py-0.5 text-[10px] text-bronze backdrop-blur-sm">
             {copy.hero.simulation}
           </span>
 
-          {/* Stats rail — baked into the photo edge */}
-          <aside className="absolute inset-y-0 end-0 flex w-[5.5rem] flex-col justify-center gap-7 bg-ink/50 px-3 py-6 backdrop-blur-[2px] md:w-[6.25rem] md:gap-9 md:px-3.5">
+          {/* Stats rail — luminous cream glass, not a black slab */}
+          <aside className="absolute inset-y-0 end-0 flex w-[5.75rem] flex-col justify-center gap-7 border-s border-ink/10 bg-parchment/88 px-3 py-6 backdrop-blur-md md:w-[6.5rem] md:gap-9 md:px-3.5">
             <YearsCounter label={copy.about.yearsLabel} />
             <div>
               <p className="font-display text-[clamp(1.75rem,4vw,2.5rem)] font-bold leading-none tracking-[-0.03em] text-gold">
                 2
               </p>
-              <p className="mt-1.5 text-[11px] leading-snug text-white/65">
+              <p className="mt-1.5 text-[11px] leading-snug text-ink/55">
                 {copy.locale === "he" ? "הסמכות" : "certifications"}
               </p>
             </div>
             <div>
-              <p className="font-display text-[clamp(1.35rem,3vw,1.75rem)] font-bold leading-none tracking-[-0.02em] text-white">
+              <p className="font-display text-[clamp(1.35rem,3vw,1.75rem)] font-bold leading-none tracking-[-0.02em] text-ink">
                 {copy.locale === "he" ? "אלעד" : "Elad"}
               </p>
-              <p className="mt-1.5 text-[11px] leading-snug text-white/65">
+              <p className="mt-1.5 text-[11px] leading-snug text-ink/55">
                 {copy.locale === "he" ? "פגישות פנים אל פנים" : "in-person meetings"}
               </p>
             </div>

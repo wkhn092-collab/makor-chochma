@@ -52,7 +52,7 @@ export function YearsCounter({ label, className }: Props) {
     <div ref={wrapRef} className={className}>
       <span
         ref={numRef}
-        className="font-display block text-[clamp(2.75rem,6vw,4.25rem)] font-bold leading-none tracking-[-0.04em] text-white"
+        className="font-display block text-[clamp(2.75rem,6vw,4.25rem)] font-bold leading-none tracking-[-0.04em] text-ink"
         aria-hidden
       >
         0
@@ -60,7 +60,7 @@ export function YearsCounter({ label, className }: Props) {
       <span className="sr-only">
         <bdi>{SITE.yearsExperience}</bdi>
       </span>
-      <p className="mt-1.5 max-w-[7rem] text-[11px] leading-snug tracking-wide text-white/65">
+      <p className="mt-1.5 max-w-[7rem] text-[11px] leading-snug tracking-wide text-ink/55">
         {label}
       </p>
     </div>

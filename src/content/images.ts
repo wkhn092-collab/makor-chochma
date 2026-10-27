@@ -40,11 +40,17 @@ export const SITE_IMAGES = {
     altHe: "קלף פיטום הקטורת — צילום להמחשה",
     altEn: "Pitum HaKetoret parchment klaf — illustrative photo",
   },
-  /** About photo — Sephardic Torah tik */
+  /** About photo — bright full Sephardi tik (not dark museum crop) */
   about: {
-    src: "/images/sefer-sephardi-v7.jpg",
-    altHe: "ספר תורה ספרדי בתיק כסף מלא — צילום להמחשה",
-    altEn: "Full Sephardic Sefer Torah in silver tik — illustrative photo",
+    src: "/images/sefer-tik-full-v6.jpg",
+    altHe: "ספר תורה ספרדי בתיק כסף על בד בהיר — צילום להמחשה",
+    altEn: "Sephardic Sefer Torah in silver tik on light cloth — illustrative photo",
+  },
+  /** FAQ side visual — open klaf with yad */
+  faqSide: {
+    src: "/images/megillah-yad-v6.jpg",
+    altHe: "קלף פתוח עם יד כסף — צילום להמחשה",
+    altEn: "Open parchment with silver yad — illustrative photo",
   },
   /** Footer “הצעד הבא” full-bleed background */
   footerCta: {
