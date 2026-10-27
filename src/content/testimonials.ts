@@ -64,8 +64,9 @@ export const FEATURED_TESTIMONIALS: TestimonialVideo[] = [
 export const MORE_TESTIMONIALS: TestimonialVideo[] = [
   {
     id: "tziona-iraqi",
-    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021591/WhatsApp_Video_2026-10-25_at_20.50.30.mp4",
-    duration: "2:44",
+    // Woman speaker — was swapped with Lior’s file
+    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021789/WhatsApp_Video_2026-10-25_at_20.49.29.mp4",
+    duration: "0:48",
     nameHe: "ציונה עיראקי",
     nameEn: "Tziona Iraqi",
     quoteHe:
@@ -103,8 +104,9 @@ export const MORE_TESTIMONIALS: TestimonialVideo[] = [
   },
   {
     id: "lior",
-    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021789/WhatsApp_Video_2026-10-25_at_20.49.29.mp4",
-    duration: "0:48",
+    // Man speaker — was swapped with Tziona’s file
+    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021591/WhatsApp_Video_2026-10-25_at_20.50.30.mp4",
+    duration: "2:44",
     nameHe: "ליאור",
     nameEn: "Lior",
     quoteHe:
