@@ -171,8 +171,11 @@ export function CdnVideo({
           aria-label={title}
           playsInline
           controls
+          controlsList="nodownload noremoteplayback"
+          disablePictureInPicture
           preload="metadata"
           poster={poster ?? undefined}
+          onContextMenu={(e) => e.preventDefault()}
         />
       )}
     </div>
