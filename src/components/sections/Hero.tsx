@@ -150,12 +150,6 @@ export function Hero({ copy }: Props) {
               {copy.hero.ctaPrimary}
             </a>
           </div>
-          <p
-            className="mc-hero-in mt-2.5 max-w-sm text-center text-caption leading-relaxed text-ink/65 sm:text-xs"
-            style={{ "--d": "640ms" } as CSSProperties}
-          >
-            {copy.hero.micro}
-          </p>
         </div>
       </div>
 
