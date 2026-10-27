@@ -74,7 +74,7 @@ export function WhyUs({ copy }: Props) {
               href={`${p}/contact`}
               className="btn-secondary w-full text-center sm:w-auto"
             >
-              {copy.sticky.cta}
+              {copy.whyUs.ctaSecondary}
             </Link>
           </div>
           <p className="mt-3 text-xs leading-relaxed text-bronze">

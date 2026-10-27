@@ -35,16 +35,16 @@ export function getCopy(locale: Locale) {
         : "Stam written by the sofer",
       h1YearsSuffix: isHe ? "שנה על הקלף" : "years on the parchment",
       h2: isHe
-        ? "תפילין, מזוזות, מגילות, ספרי תורה ופיטום הקטורת. הרב יגאל עמרני · מוסמך משמרת סת״ם ויד רפאל · קודם שיחה, בלי מחיר באתר."
-        : "Tefillin, mezuzot, megillot, Sifrei Torah and Pitum HaKetoret. Rabbi Yigal Amarani · Mishmeret Stam & Yad Rafael · a call first, no prices on the site.",
-      ctaPrimary: isHe ? "לשיחה עם הסופר" : "Talk to the sofer",
+        ? "תפילין, מזוזות, מגילות, ספרי תורה ופיטום הקטורת. הרב יגאל עמרני · מוסמך משמרת סת״ם ויד רפאל · קודם שיחה, המחיר בפגישה."
+        : "Tefillin, mezuzot, megillot, Sifrei Torah and Pitum HaKetoret. Rabbi Yigal Amarani · Mishmeret Stam & Yad Rafael · a call first, price in the meeting.",
+      ctaPrimary: isHe ? "השאירו פרטים" : "Leave your details",
       ctaCall: isHe ? "התקשרו עכשיו" : "Call now",
       ctaSecondary: isHe
         ? "וואטסאפ להרב יגאל"
         : "WhatsApp Rabbi Yigal",
       micro: isHe
-        ? "שיחה בלי התחייבות · כ־15 דק׳ · בלי מחיר באתר · ואז פגישה באלעד אם מתאים"
-        : "No-obligation call · ~15 min · no prices here · then Elad if it fits",
+        ? "שיחה קצרה, בלי התחייבות · כ־15 דק׳ · ואז פגישה באלעד אם מתאים"
+        : "A short call, no obligation · ~15 min · then meet in Elad if it fits",
       simulation: isHe ? "צילום להמחשה" : "Stock photo",
     },
     trust: isHe
@@ -56,8 +56,8 @@ export function getCopy(locale: Locale) {
         ? `סופר סת״ם שכותב תפילין, מזוזות, מגילות וספרי תורה כבר ${SITE.yearsExperience} שנה — וגם פיטום הקטורת בתיאום. מוסמך משמרת סת״ם ומכון יד רפאל של הרב מועלם. גם מכשיר סופרים — מי שמלמד, חייב לדעת לכתוב.`
         : `A sofer who has written tefillin, mezuzot, megillot and Sifrei Torah for ${SITE.yearsExperience} years — and Pitum HaKetoret by arrangement. Certified by Mishmeret Stam and Yad Rafael (Rabbi Moalem). He also trains sofrim — if you teach, you must know how to write.`,
       line: isHe
-        ? "מזמינים סת״ם אצל הסופר שכותב — לא ממחסן בלי שם."
-        : "You order stam from the sofer who writes — not from a nameless warehouse.",
+        ? "הסת״ם מגיע מהסופר שכותב אותו — עם שם, ובשיחה לפני שסוגרים."
+        : "The stam comes from the sofer who writes it — with a name, and a call before you close.",
       yearsLabel: isHe ? "שנות כתיבה" : "years of writing",
       certPending: isHe
         ? "תמונת תעודה תתווסף כשתסופק · כרגע מצוין השם בלבד"
@@ -67,59 +67,60 @@ export function getCopy(locale: Locale) {
     whyUs: {
       eyebrow: isHe ? "למה אצלנו" : "Why here",
       h2: isHe
-        ? "סת״ם בלחיצה — או סת״ם עם שם הסופר"
-        : "Stam in a click — or stam with the sofer’s name",
+        ? "לקנות סת״ם בלחיצה — או לדעת מי כותב"
+        : "Buy stam with a click — or know who writes",
       lead: isHe
-        ? "רוב האתרים מוכרים סת״ם כמו מוצר בעגלה. כאן מתחילים משיחה עם מי שכותב — תפילין, מזוזה, מגילה או ספר תורה."
-        : "Most sites sell stam like a cart product. Here you start with a call to the person who writes — tefillin, mezuzah, megillah or Sefer Torah.",
+        ? "באתרים רבים קונים סת״ם כמו מוצר בעגלה. כאן מתחילים משיחה עם מי שכותב — תפילין, מזוזה, מגילה או ספר תורה."
+        : "On many sites you buy stam like a cart product. Here you start with a call to the person who writes — tefillin, mezuzah, megillah or Sefer Torah.",
       themLabel: isHe ? "קנייה אונליין טיפוסית" : "Typical online purchase",
       usLabel: isHe ? "מכון מקור חכמה" : "Makor Chochma",
       rows: isHe
         ? [
-            { them: "מוצר בעגלה, מחיר על המסך", us: "שיחה עם הסופר — בלי התחייבות" },
+            { them: "מוצר בעגלה, מחיר על המסך", us: "שיחה עם הרב יגאל, בלי התחייבות" },
             { them: "לא ברור מי כתב את הקלף", us: `הרב יגאל עמרני · ${SITE.yearsExperience} שנה על הקלף` },
             { them: "לחץ לסגור מרחוק", us: "פגישה באלעד — סוגרים פנים אל פנים" },
             { them: "«מהודר» בלי שם מגיה", us: "מוסמך משמרת סת״ם ויד רפאל · מלמד סופרים" },
           ]
         : [
-            { them: "Product in a cart, price on screen", us: "A call with the sofer — no obligation" },
+            { them: "Product in a cart, price on screen", us: "A call with Rabbi Yigal, no obligation" },
             { them: "Unclear who wrote the parchment", us: `Rabbi Yigal Amarani · ${SITE.yearsExperience} years on the parchment` },
             { them: "Pressure to close remotely", us: "Meet in Elad — close face to face" },
             { them: "“Mehudar” with no magiah named", us: "Mishmeret Stam & Yad Rafael · trains sofrim" },
           ],
-      cta: isHe ? "לשיחה עם הסופר" : "Talk to the sofer",
+      cta: isHe ? "התקשרו עכשיו" : "Call now",
+      ctaSecondary: isHe ? "השאירו פרטים" : "Leave your details",
     },
     statement: isHe
-      ? "מחפשים תפילין, מזוזות, מגילה, ספר תורה או פיטום הקטורת — ולא רוצים לקנות בלחיצה. רוצים לדעת מי כותב, מה רמת ההידור, ואיך הקלף מרגיש ביד. מכון מקור חכמה: דיו, קלף, ושיחה עם הסופר לפני שסוגרים — לא חנות אונליין."
-      : "You’re looking for tefillin, mezuzot, a megillah, Sefer Torah or Pitum HaKetoret — and don’t want to buy with a click. You want to know who writes, what hidur level, and how the klaf feels in hand. Makor Chochma: ink, parchment, and a talk with the sofer before you close — not an online shop.",
+      ? "מחפשים תפילין, מזוזות, מגילה, ספר תורה או פיטום הקטורת — ולא רוצים לקנות בלחיצה. רוצים לדעת מי כותב, מה רמת ההידור, ואיך הקלף מרגיש ביד. במכון מקור חכמה: דיו, קלף, ושיחה עם הסופר לפני שסוגרים."
+      : "You’re looking for tefillin, mezuzot, a megillah, Sefer Torah or Pitum HaKetoret — and don’t want to buy with a click. You want to know who writes, what hidur level, and how the klaf feels in hand. At Makor Chochma: ink, parchment, and a talk with the sofer before you close.",
     quote: isHe
-      ? "אני לא מוכר סת״ם מהצד. אני כותב על הקלף — מהשיחה הראשונה עד שהדבר בידיים שלכם."
-      : "I don’t sell stam from the sidelines. I write on the parchment — from the first call until it’s in your hands.",
+      ? "אני כותב על הקלף בעצמי — מהשיחה הראשונה עד שהדבר אצלכם."
+      : "I write on the parchment myself — from the first call until it’s with you.",
     craft: {
       h2: isHe ? "משיחה עד סת״ם ביד" : "From a call to stam in hand",
       lead: isHe
         ? "גללו — המסלול נצבע בזהב. כל שלב מחליף את הסיפור למעלה."
         : "Scroll — the path fills in gold. Each stage rewrites the story above.",
-      cta: isHe ? "לשיחה עם הסופר" : "Talk to the sofer",
+      cta: isHe ? "השאירו פרטים" : "Leave your details",
       steps: isHe
         ? [
-            { n: "01", title: "שיחה על מה שצריך", body: "תפילין, מזוזות, מגילה, ספר תורה או פיטום הקטורת. בלי מחיר באתר." },
+            { n: "01", title: "שיחה על מה שצריך", body: "תפילין, מזוזות, מגילה, ספר תורה או פיטום הקטורת. המחיר נסגר בפגישה." },
             { n: "02", title: "קלף ודיו ביד", body: "כתיבה ידנית על קלף — לא הדפסה. הסופר שדיברתם איתו הוא שכותב." },
-            { n: "03", title: "הגהה וליווי", body: "בדיקות, הסבר על ההידור, שקיפות מולכם בכל שלב — בלי סיסמאות." },
+            { n: "03", title: "הגהה וליווי", body: "בדיקות, הסבר על ההידור, ושקיפות מולכם בכל שלב." },
             { n: "04", title: "פגישה באלעד", body: "סוגרים פנים אל פנים. הזמנה ותשלום — בפגישה, לא באתר." },
           ]
         : [
-            { n: "01", title: "A call about what you need", body: "Tefillin, mezuzot, a megillah, Sefer Torah or Pitum HaKetoret. No prices online." },
+            { n: "01", title: "A call about what you need", body: "Tefillin, mezuzot, a megillah, Sefer Torah or Pitum HaKetoret. Price is set in the meeting." },
             { n: "02", title: "Parchment and ink by hand", body: "Handwriting on klaf — never print. The sofer you spoke with is the one who writes." },
-            { n: "03", title: "Proofing and guidance", body: "Checks, clear hidur explanation, transparency at every step — no slogans." },
+            { n: "03", title: "Proofing and guidance", body: "Checks, a clear hidur explanation, and transparency at every step." },
             { n: "04", title: "Meeting in Elad", body: "Close face to face. Order and payment — in the meeting, not on this site." },
           ],
     },
     services: {
       h2: isHe ? "מה כותבים ומספקים אצלנו" : "What we write and supply",
       lead: isHe
-        ? "בחרו נושא אחד — תפילין, מזוזות, מגילות, פיטום או ייעוץ. הבחירה נשמרת לטופס ולואטסאפ. בלי מחיר באתר; סוגרים בפגישה."
-        : "Pick one topic — tefillin, mezuzot, megillot, Pitum or advice. It carries to the form and WhatsApp. No prices online; you close in person.",
+        ? "בחרו נושא אחד — תפילין, מזוזות, מגילות, פיטום או ייעוץ. הבחירה נשמרת לטופס ולואטסאפ. המחיר נסגר בפגישה."
+        : "Pick one topic — tefillin, mezuzot, megillot, Pitum or advice. It carries to the form and WhatsApp. Price is set in the meeting.",
       selected: isHe ? "נבחר" : "Selected",
       hint: isHe
         ? "נשמר לטופס ולואטסאפ. אפשר לשנות לפני השליחה."
@@ -169,15 +170,15 @@ export function getCopy(locale: Locale) {
             },
             {
               q: "איך אדע מה רמת ההידור?",
-              a: "לא כותבים «מהודר» בלי הסבר. בשיחה ובפגישה מקבלים פירוט על הקלף, הכתיבה והבדיקות — לפי מה שמתאים לכם, לא לפי סיסמה.",
+              a: "לא כותבים «מהודר» בלי הסבר. בשיחה ובפגישה מקבלים פירוט על הקלף, הכתיבה והבדיקות — לפי מה שמתאים לכם.",
             },
             {
               q: "למה אין מחירים באתר?",
-              a: "כי כל הזמנה נבחרת לפי הידור וצרכים — תפילין, מזוזה או ספר תורה. קודם שיחה (~15 דק׳, בלי התחייבות), אחר כך פגישה באלעד וסגירה שם.",
+              a: "כי כל הזמנה נבחרת לפי הידור וצרכים — תפילין, מזוזה או ספר תורה. קודם שיחה קצרה (~15 דק׳), אחר כך פגישה באלעד וסגירה שם.",
             },
             {
               q: "למה לא לקנות סת״ם בלחיצה כמו כולם?",
-              a: "כי כאן מדברים עם הסופר שכותב — לא עם עגלה. יודעים מי כתב, מה נבדק, ואיך ממשיכים — לפני שסוגרים.",
+              a: "כי כאן מדברים עם הסופר שכותב. יודעים מי כתב, מה נבדק, ואיך ממשיכים — לפני שסוגרים.",
             },
             {
               q: "איך מתקדמים בפועל?",
@@ -203,15 +204,15 @@ export function getCopy(locale: Locale) {
             },
             {
               q: "How do I know the hidur level?",
-              a: "We don’t say “mehudar” without explaining. On the call and in the meeting you get detail on the klaf, writing, and checks — matched to you, not a slogan.",
+              a: "We don’t say “mehudar” without explaining. On the call and in the meeting you get detail on the klaf, writing, and checks — matched to what fits you.",
             },
             {
               q: "Why are there no prices on the site?",
-              a: "Because every order is chosen by hidur and needs — tefillin, mezuzah or Sefer Torah. First a ~15‑minute no-obligation call, then a meeting in Elad where you close.",
+              a: "Because every order is chosen by hidur and needs — tefillin, mezuzah or Sefer Torah. First a short call (~15 min), then a meeting in Elad where you close.",
             },
             {
               q: "Why not buy stam online like everyone else?",
-              a: "Because here you speak with the sofer who writes — not a cart. You know who wrote, what was checked, and how you continue — before you close.",
+              a: "Because here you speak with the sofer who writes. You know who wrote, what was checked, and how you continue — before you close.",
             },
             {
               q: "How does the process work?",
@@ -279,7 +280,7 @@ export function getCopy(locale: Locale) {
         : "Form running in dev without Turnstile",
     },
     sticky: {
-      cta: isHe ? "לשיחה עם הסופר" : "Talk to the sofer",
+      cta: isHe ? "השאירו פרטים" : "Leave your details",
       call: isHe ? "התקשרו" : "Call",
       wa: isHe ? "וואטסאפ" : "WhatsApp",
     },
@@ -315,12 +316,12 @@ export function getCopy(locale: Locale) {
       ? "שלום הרב יגאל, הגעתי מהאתר של מכון מקור חכמה ואשמח לשיחה על סת״ם."
       : "Hello Rabbi Yigal, I found Makor Chochma online and would like to talk about stam.",
     footer: {
-      miniH2: isHe ? "סת״ם מתחיל בשיחה" : "Stam starts with a call",
+      miniH2: isHe ? "בואו נדבר" : "Let’s talk",
       miniLead: isHe
         ? "שיחה קצרה על מה שצריך — תפילין, מזוזות, מגילה, ספר תורה או פיטום — ואם מתאים פגישה באלעד."
         : "A short call about what you need — tefillin, mezuzot, megillah, Sefer Torah or Pitum — then Elad if it fits.",
       miniCtaCall: isHe ? "התקשרו עכשיו" : "Call now",
-      miniCtaConsult: isHe ? "לשיחה עם הסופר" : "Talk to the sofer",
+      miniCtaConsult: isHe ? "השאירו פרטים" : "Leave your details",
       navTitle: isHe ? "ניווט" : "Navigate",
       contactTitle: isHe ? "יצירת קשר" : "Contact",
       legalTitle: isHe ? "מידע משפטי" : "Legal",
