@@ -4,12 +4,22 @@ import { getCopy } from "@/content/copy";
 import { LocaleHtml } from "@/components/LocaleHtml";
 import { SITE } from "@/content/site";
 
-type Kind = "accessibility" | "privacy";
+type Kind = "accessibility" | "privacy" | "terms";
 
 export function LegalPage({ locale, kind }: { locale: Locale; kind: Kind }) {
   const copy = getCopy(locale);
-  const title = kind === "accessibility" ? copy.a11y.title : copy.privacy.title;
-  const paragraphs = kind === "accessibility" ? copy.a11y.body : copy.privacy.body;
+  const title =
+    kind === "accessibility"
+      ? copy.a11y.title
+      : kind === "terms"
+        ? copy.terms.title
+        : copy.privacy.title;
+  const paragraphs =
+    kind === "accessibility"
+      ? copy.a11y.body
+      : kind === "terms"
+        ? copy.terms.body
+        : copy.privacy.body;
   const home = locale === "he" ? "/" : "/en";
 
   return (

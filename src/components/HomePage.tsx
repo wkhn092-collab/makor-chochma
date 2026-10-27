@@ -21,6 +21,7 @@ import { SiteMotion } from "@/components/motion/SiteMotion";
 import { ScrollProgress } from "@/components/motion/ScrollProgress";
 import { SkipLink } from "@/components/SkipLink";
 import { JsonLd } from "@/components/JsonLd";
+import { PromoBanner } from "@/components/PromoBanner";
 
 export function HomePage({ locale }: { locale: Locale }) {
   const copy = getCopy(locale);
@@ -30,6 +31,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <JsonLd locale={locale} faqs={copy.faq.items} />
       <SkipLink locale={locale} />
       <Analytics />
+      <PromoBanner locale={locale} />
       <ScrollProgress />
       <SiteHeader copy={copy} />
       <main id="main" tabIndex={-1}>

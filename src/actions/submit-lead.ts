@@ -8,7 +8,7 @@ import { persistLead } from "@/lib/sanity";
 import { sendLeadEmail } from "@/lib/mail";
 import { normalizeIlPhone } from "@/lib/validation/lead";
 import { assertSameOrigin } from "@/lib/origin";
-import { getServerEnv } from "@/lib/env";
+import { assertLeadPipelineReady, getServerEnv } from "@/lib/env";
 
 export type SubmitLeadResult =
   | { ok: true }
@@ -22,6 +22,11 @@ export async function submitLead(
   raw: unknown,
 ): Promise<SubmitLeadResult> {
   getServerEnv();
+
+  const pipeline = assertLeadPipelineReady();
+  if (!pipeline.ok) {
+    return { ok: false, code: "server" };
+  }
 
   const h = await headers();
   const originCheck = assertSameOrigin(h);

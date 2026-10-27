@@ -29,8 +29,11 @@
 | `NEXT_PUBLIC_SANITY_DATASET` | בדרך כלל `production` |
 | `SANITY_API_WRITE_TOKEN` | token עם create |
 | `NEXT_PUBLIC_SITE_URL` | URL פרודקשן (CORS/metadata) |
+| `LEAD_ALLOW_DEGRADED` | אופציונלי · `true` רק לשיגור רך בלי Resend/Turnstile (ברירת מחדל: fail-closed) |
 | `NEXT_PUBLIC_GA_ID` | אופציונלי |
 | `NEXT_PUBLIC_CLARITY_ID` | אופציונלי |
+
+**פרודקשן:** בלי `RESEND_API_KEY` או Sanity write, ובלי Turnstile — `submitLead` מחזיר שגיאת שרת (אלא אם `LEAD_ALLOW_DEGRADED=true`).
 
 ## 3. Resend
 

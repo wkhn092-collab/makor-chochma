@@ -15,7 +15,7 @@
 | **תחושה** | סדנת סופר חמה, נייר קלף, דיו חום, אמון שקט — לא חנות, לא הייטק |
 | **למה ממיר** | תואם לוגו; קריא בשמש במובייל; מרגיש «דתי־מכובד» לקהל ישראלי; מוריד חשד מול אתרי סת״ם מסחריים |
 | **השראה 1%** | [DAIKUHARA Kintsugi](https://www.awwwards.com/sites/daikuhara-kintsugi-antique) — שקט, מלאכה, טיפוגרפיה מרוסנת · [Atelier d'Offard](https://atelierdoffard.com) — מורשת חומר, תמונה מדברת · [ORVANE Watchmaker](https://horizonx.so) (editorial parchment craft) — קלף + סיפור גלילה |
-| **פלטה** | parchment `#F2EFE9` · ink `#4F3910` · bronze `#79705C` · accent CTA `#6B4E1F` · surface `#FFF` |
+| **פלטה (מעודכן Quiet Luxury)** | parchment `#F7F4EF` · ink `#1A1814` · bronze `#6B6560` · gold `#C9A962` · accent CTA `#0A0A0A` · surface `#FFF` — ראה `docs/design-tokens.md` |
 | **פונטים** | כותרות: **Frank Ruhl Libre** · גוף/UI: **Assistant** |
 | **רגע חתימה** | המספר **32** גדל בגלילה מול שמות שתי ההסמכות (משמרת סת״ם · יד רפאל) |
 

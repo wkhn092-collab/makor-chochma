@@ -13,6 +13,10 @@ export async function sendLeadEmail(input: LeadInput): Promise<{ ok: boolean; er
   const cc = process.env.LEAD_CC_EMAIL;
 
   if (!apiKey) {
+    if (process.env.NODE_ENV === "production") {
+      console.error("[lead:resend] RESEND_API_KEY missing in production");
+      return { ok: false, error: "missing_resend" };
+    }
     console.info("[lead:dev-no-resend]", {
       name: input.name,
       phone: normalizeIlPhone(input.phone),

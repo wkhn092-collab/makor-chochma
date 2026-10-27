@@ -161,6 +161,11 @@ export function SiteFooter({ copy }: Props) {
                   {copy.footer.privacy}
                 </Link>
               </li>
+              <li>
+                <Link href={`${p}/terms`} className="footer-link">
+                  {copy.footer.terms}
+                </Link>
+              </li>
               <li className="pt-2 text-xs leading-relaxed text-bronze">
                 {SITE.legalName} ·{" "}
                 <span dir="ltr">

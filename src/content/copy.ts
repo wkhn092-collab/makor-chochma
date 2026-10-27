@@ -307,6 +307,7 @@ export function getCopy(locale: Locale) {
         : "Orders and payment are finalized on the call and in the in-person meeting — not on this site.",
       accessibility: isHe ? "נגישות" : "Accessibility",
       privacy: isHe ? "פרטיות" : "Privacy",
+      terms: isHe ? "תנאי שימוש" : "Terms of use",
       maps: isHe ? "פתיחה במפות" : "Open in Maps",
       rights: isHe
         ? `© 2026 ${SITE.brand}`
@@ -344,6 +345,22 @@ export function getCopy(locale: Locale) {
             "Infrastructure providers (hosting, email, bot protection, analytics if enabled) may process technical data under their policies.",
             `To request deletion or ask questions: ${SITE.email} or ${SITE.phoneDisplay}.`,
             "There is no checkout on this site; payment details are never collected here.",
+          ],
+    },
+    terms: {
+      title: isHe ? "תנאי שימוש" : "Terms of use",
+      body: isHe
+        ? [
+            `האתר של ${SITE.brand} מיועד למידע וליצירת קשר לתיאום שיחת ייעוץ ופגישה עם ${SITE.contactName}.`,
+            "אין רכישה, סליקה, עגלה או מחירים באתר. הזמנה ותשלום נסגרים בשיחה ובפגישה פנים־אל־פנים באלעד.",
+            "תמונות המסומנות «הדמיה» הן להמחשה בלבד ואינן מצגות מוצר ספציפי שנמסר ללקוח.",
+            `השימוש באתר כפוף לדין הישראלי. לשאלות: ${SITE.phoneDisplay} או ${SITE.email}.`,
+          ]
+        : [
+            `The ${SITE.brandEn} site is for information and contacting us to schedule a consultation and meeting with ${SITE.contactNameEn}.`,
+            "There is no purchase, payment, cart, or pricing on this site. Orders and payment are finalized on a call and in an in-person meeting in Elad.",
+            "Images labeled as illustrative are for atmosphere only and do not depict a specific delivered item.",
+            `Use of this site is governed by Israeli law. Contact: ${SITE.phoneDisplay} or ${SITE.email}.`,
           ],
     },
   };
