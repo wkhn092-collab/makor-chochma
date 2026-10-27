@@ -35,8 +35,8 @@ export function getCopy(locale: Locale) {
         : "Stam written by the sofer",
       h1YearsSuffix: isHe ? "שנה על הקלף" : "years on the parchment",
       h2: isHe
-        ? "תפילין, מזוזות, מגילות, ספרי תורה ופיטום הקטורת. הרב יגאל עמרני · מוסמך משמרת סת״ם ויד רפאל · קודם שיחה, המחיר בפגישה."
-        : "Tefillin, mezuzot, megillot, Sifrei Torah and Pitum HaKetoret. Rabbi Yigal Amarani · Mishmeret Stam & Yad Rafael · a call first, price in the meeting.",
+        ? "תפילין, מזוזות, מגילות, ספרי תורה ופיטום הקטורת. הרב יגאל עמרני · מוסמך משמרת סת״ם ויד רפאל · קודם שיחה, ואז פגישה באלעד."
+        : "Tefillin, mezuzot, megillot, Sifrei Torah and Pitum HaKetoret. Rabbi Yigal Amarani · Mishmeret Stam & Yad Rafael · a call first, then meet in Elad.",
       ctaPrimary: isHe ? "לתיאום שיחה" : "Book a call",
       ctaCall: isHe ? "התקשרו עכשיו" : "Call now",
       ctaSecondary: isHe
@@ -76,13 +76,13 @@ export function getCopy(locale: Locale) {
       usLabel: isHe ? "מכון מקור חכמה" : "Makor Chochma",
       rows: isHe
         ? [
-            { them: "מוצר בעגלה, מחיר על המסך", us: "שיחה עם הרב יגאל, בלי התחייבות" },
+            { them: "מוצר בעגלה, סגירה מרחוק", us: "שיחה עם הרב יגאל, בלי התחייבות" },
             { them: "לא ברור מי כתב את הקלף", us: `הרב יגאל עמרני · ${SITE.yearsExperience} שנה על הקלף` },
             { them: "לחץ לסגור מרחוק", us: "פגישה באלעד — סוגרים פנים אל פנים" },
             { them: "«מהודר» בלי שם מגיה", us: "מוסמך משמרת סת״ם ויד רפאל · מלמד סופרים" },
           ]
         : [
-            { them: "Product in a cart, price on screen", us: "A call with Rabbi Yigal, no obligation" },
+            { them: "Product in a cart, close remotely", us: "A call with Rabbi Yigal, no obligation" },
             { them: "Unclear who wrote the parchment", us: `Rabbi Yigal Amarani · ${SITE.yearsExperience} years on the parchment` },
             { them: "Pressure to close remotely", us: "Meet in Elad — close face to face" },
             { them: "“Mehudar” with no magiah named", us: "Mishmeret Stam & Yad Rafael · trains sofrim" },
@@ -104,23 +104,23 @@ export function getCopy(locale: Locale) {
       cta: isHe ? "השאירו פרטים" : "Leave your details",
       steps: isHe
         ? [
-            { n: "01", title: "שיחה על מה שצריך", body: "תפילין, מזוזות, מגילה, ספר תורה או פיטום הקטורת. המחיר נסגר בפגישה." },
+            { n: "01", title: "שיחה על מה שצריך", body: "תפילין, מזוזות, מגילה, ספר תורה או פיטום הקטורת — מבהירים יחד מה מתאים." },
             { n: "02", title: "קלף ודיו ביד", body: "כתיבה ידנית על קלף — לא הדפסה. הסופר שדיברתם איתו הוא שכותב." },
             { n: "03", title: "הגהה וליווי", body: "בדיקות, הסבר על ההידור, ושקיפות מולכם בכל שלב." },
-            { n: "04", title: "פגישה באלעד", body: "סוגרים פנים אל פנים. הזמנה ותשלום — בפגישה, לא באתר." },
+            { n: "04", title: "פגישה באלעד", body: "סוגרים פנים אל פנים — וממשיכים משם." },
           ]
         : [
-            { n: "01", title: "A call about what you need", body: "Tefillin, mezuzot, a megillah, Sefer Torah or Pitum HaKetoret. Price is set in the meeting." },
+            { n: "01", title: "A call about what you need", body: "Tefillin, mezuzot, a megillah, Sefer Torah or Pitum HaKetoret — we clarify together what fits." },
             { n: "02", title: "Parchment and ink by hand", body: "Handwriting on klaf — never print. The sofer you spoke with is the one who writes." },
             { n: "03", title: "Proofing and guidance", body: "Checks, a clear hidur explanation, and transparency at every step." },
-            { n: "04", title: "Meeting in Elad", body: "Close face to face. Order and payment — in the meeting, not on this site." },
+            { n: "04", title: "Meeting in Elad", body: "Close face to face — and continue from there." },
           ],
     },
     services: {
       h2: isHe ? "מה כותבים ומספקים אצלנו" : "What we write and supply",
       lead: isHe
-        ? "בחרו נושא אחד — תפילין, מזוזות, מגילות, פיטום או ייעוץ. הבחירה נשמרת לטופס ולואטסאפ. המחיר נסגר בפגישה."
-        : "Pick one topic — tefillin, mezuzot, megillot, Pitum or advice. It carries to the form and WhatsApp. Price is set in the meeting.",
+        ? "בחרו נושא אחד — תפילין, מזוזות, מגילות, פיטום או ייעוץ. הבחירה נשמרת לטופס ולואטסאפ."
+        : "Pick one topic — tefillin, mezuzot, megillot, Pitum or advice. It carries to the form and WhatsApp.",
       selected: isHe ? "נבחר" : "Selected",
       hint: isHe
         ? "נשמר לטופס ולואטסאפ. אפשר לשנות לפני השליחה."
@@ -173,8 +173,8 @@ export function getCopy(locale: Locale) {
               a: "לא כותבים «מהודר» בלי הסבר. בשיחה ובפגישה מקבלים פירוט על הקלף, הכתיבה והבדיקות — לפי מה שמתאים לכם.",
             },
             {
-              q: "למה אין מחירים באתר?",
-              a: "כי כל הזמנה נבחרת לפי הידור וצרכים — תפילין, מזוזה או ספר תורה. קודם שיחה קצרה (~15 דק׳), אחר כך פגישה באלעד וסגירה שם.",
+              q: "איך בוחרים מה מתאים?",
+              a: "כל הזמנה לפי הידור וצרכים — תפילין, מזוזה או ספר תורה. בשיחה קצרה (~15 דק׳) מבהירים יחד, ואם מתאים נפגשים באלעד.",
             },
             {
               q: "למה לא לקנות סת״ם בלחיצה כמו כולם?",
@@ -207,8 +207,8 @@ export function getCopy(locale: Locale) {
               a: "We don’t say “mehudar” without explaining. On the call and in the meeting you get detail on the klaf, writing, and checks — matched to what fits you.",
             },
             {
-              q: "Why are there no prices on the site?",
-              a: "Because every order is chosen by hidur and needs — tefillin, mezuzah or Sefer Torah. First a short call (~15 min), then a meeting in Elad where you close.",
+              q: "How do you choose what fits?",
+              a: "Every order is by hidur and needs — tefillin, mezuzah or Sefer Torah. On a short call (~15 min) we clarify together, then meet in Elad if it fits.",
             },
             {
               q: "Why not buy stam online like everyone else?",
@@ -248,12 +248,12 @@ export function getCopy(locale: Locale) {
         ? [
             "שיחה קצרה (~15 דק׳), בלי התחייבות",
             "אם מתאים — קובעים פגישה באלעד",
-            "הזמנה ותשלום נסגרים בפגישה, לא באתר",
+            "הפרטים נסגרים בפגישה באלעד",
           ]
         : [
             "A short call (~15 min), no obligation",
             "If it’s a fit — we schedule a meeting in Elad",
-            "Order and payment close in the meeting, not on this site",
+            "Details are finalized in the Elad meeting",
           ],
       successCall: isHe ? "התקשרו עכשיו" : "Call now",
       successWa: isHe ? "וואטסאפ עכשיו" : "WhatsApp now",
@@ -326,8 +326,8 @@ export function getCopy(locale: Locale) {
       contactTitle: isHe ? "יצירת קשר" : "Contact",
       legalTitle: isHe ? "מידע משפטי" : "Legal",
       offlineDeal: isHe
-        ? "הזמנה ותשלום נסגרים בשיחה ובפגישה מול הסופר — לא באתר."
-        : "Orders and payment close on the call and in the meeting — not on this site.",
+        ? "ההזמנה נסגרת בשיחה ובפגישה מול הסופר."
+        : "The order is finalized on the call and in the meeting with the sofer.",
       accessibility: isHe ? "נגישות" : "Accessibility",
       privacy: isHe ? "פרטיות" : "Privacy",
       terms: isHe ? "תנאי שימוש" : "Terms of use",
@@ -361,7 +361,7 @@ export function getCopy(locale: Locale) {
             "שירותי תשתית (אירוח, שליחת מייל, אנטי־בוט) עשויים לעבד נתונים טכניים לפי מדיניות הספק.",
             "כלי אנליטיקס (GA4 / Clarity) נטענים רק אחרי שתאשרו מדידה בבאנר ההסכמה — אפשר לסרב.",
             `למחיקת פרטים או שאלות: ${SITE.email} או ${SITE.phoneDisplay}.`,
-            "אין רכישה או סליקה באתר; פרטי תשלום אינם נאספים כאן.",
+            "האתר מיועד ליצירת קשר בלבד; אין רכישה דרכו.",
           ]
         : [
             "We collect your full name, phone number, and interest topic when you submit the contact form — to call you back for a consultation and meeting.",
@@ -369,7 +369,7 @@ export function getCopy(locale: Locale) {
             "Infrastructure providers (hosting, email, bot protection) may process technical data under their policies.",
             "Analytics (GA4 / Clarity) load only after you accept measurement in the consent banner — you may decline.",
             `To request deletion or ask questions: ${SITE.email} or ${SITE.phoneDisplay}.`,
-            "There is no checkout on this site; payment details are never collected here.",
+            "This site is for contact only; there is no purchase through it.",
           ],
     },
 
@@ -378,13 +378,13 @@ export function getCopy(locale: Locale) {
       body: isHe
         ? [
             `האתר של ${SITE.brand} מיועד למידע וליצירת קשר לתיאום שיחת ייעוץ ופגישה עם ${SITE.contactName}.`,
-            "אין רכישה, סליקה, עגלה או מחירים באתר. הזמנה ותשלום נסגרים בשיחה ובפגישה פנים־אל־פנים באלעד.",
+            "האתר מיועד למידע וליצירת קשר בלבד. הזמנה נסגרת בשיחה ובפגישה פנים־אל־פנים באלעד.",
             "תמונות המסומנות «הדמיה» הן להמחשה בלבד ואינן מצגות מוצר ספציפי שנמסר ללקוח.",
             `השימוש באתר כפוף לדין הישראלי. לשאלות: ${SITE.phoneDisplay} או ${SITE.email}.`,
           ]
         : [
             `The ${SITE.brandEn} site is for information and contacting us to schedule a consultation and meeting with ${SITE.contactNameEn}.`,
-            "There is no purchase, payment, cart, or pricing on this site. Orders and payment are finalized on a call and in an in-person meeting in Elad.",
+            "This site is for information and contact only. Orders are finalized on a call and in an in-person meeting in Elad.",
             "Images labeled as illustrative are for atmosphere only and do not depict a specific delivered item.",
             `Use of this site is governed by Israeli law. Contact: ${SITE.phoneDisplay} or ${SITE.email}.`,
           ],
