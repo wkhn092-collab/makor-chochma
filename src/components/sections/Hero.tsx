@@ -3,7 +3,6 @@ import type { CSSProperties } from "react";
 import type { Copy } from "@/content/copy";
 import { SITE_IMAGES } from "@/content/images";
 import { SITE } from "@/content/site";
-import { waPrefill, whatsappUrl } from "@/lib/whatsapp";
 import { Marquee } from "@/motion/Marquee";
 import { HeroFan } from "@/components/sections/HeroFan";
 import "./hero-fan.css";
@@ -35,8 +34,6 @@ function FactsStrip({ facts }: { facts: string[] }) {
  * Full-bleed LCP photo + centered copy + responsive fan (3 mobile / 9 desktop).
  */
 export function Hero({ copy }: Props) {
-  const waHref = whatsappUrl(waPrefill(copy.locale));
-  const telHref = `tel:+${SITE.phoneE164}`;
   const brand = copy.locale === "he" ? SITE.brand : SITE.brandEn;
   const heroAlt =
     copy.locale === "he" ? SITE_IMAGES.hero.altHe : SITE_IMAGES.hero.altEn;
@@ -141,29 +138,16 @@ export function Hero({ copy }: Props) {
           </p>
 
           <div
-            className="mc-hero-in pointer-events-auto mt-3.5 flex w-full max-w-sm flex-col gap-2.5 sm:mt-4 sm:max-w-md sm:flex-row sm:justify-center"
+            className="mc-hero-in pointer-events-auto mt-3.5 flex w-full max-w-sm justify-center sm:mt-4 sm:max-w-md"
             style={{ "--d": "560ms" } as CSSProperties}
           >
             <a
-              href={telHref}
-              data-analytics="phone_click"
+              href="#lead"
               id="hero-cta"
-              className="btn-primary w-full min-h-12 touch-manipulation sm:w-auto sm:min-w-[11rem]"
+              data-analytics="hero_cta"
+              className="btn-primary w-full min-h-12 touch-manipulation px-8 text-center sm:min-w-[16rem]"
             >
-              {copy.hero.ctaCall}
-            </a>
-            <a
-              href={waHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-analytics="whatsapp_click"
-              className="btn-secondary w-full min-h-12 touch-manipulation sm:w-auto sm:min-w-[11rem]"
-            >
-              {copy.hero.ctaSecondary}
-              <span className="sr-only">
-                {" "}
-                ({isHe ? "נפתח בחלון חדש" : "opens in a new window"})
-              </span>
+              {copy.hero.ctaPrimary}
             </a>
           </div>
           <p

@@ -37,7 +37,7 @@ export function getCopy(locale: Locale) {
       h2: isHe
         ? "תפילין, מזוזות, מגילות, ספרי תורה ופיטום הקטורת. הרב יגאל עמרני · מוסמך משמרת סת״ם ויד רפאל · קודם שיחה, המחיר בפגישה."
         : "Tefillin, mezuzot, megillot, Sifrei Torah and Pitum HaKetoret. Rabbi Yigal Amarani · Mishmeret Stam & Yad Rafael · a call first, price in the meeting.",
-      ctaPrimary: isHe ? "השאירו פרטים" : "Leave your details",
+      ctaPrimary: isHe ? "לתיאום שיחה" : "Book a call",
       ctaCall: isHe ? "התקשרו עכשיו" : "Call now",
       ctaSecondary: isHe
         ? "וואטסאפ להרב יגאל"
