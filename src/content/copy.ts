@@ -40,8 +40,8 @@ export function getCopy(locale: Locale) {
       ctaPrimary: isHe ? "לשיחה עם הסופר" : "Talk to the sofer",
       ctaCall: isHe ? "התקשרו עכשיו" : "Call now",
       ctaSecondary: isHe
-        ? "שאלה להרב בוואטסאפ"
-        : "Ask Rabbi Yigal on WhatsApp",
+        ? "וואטסאפ להרב יגאל"
+        : "WhatsApp Rabbi Yigal",
       micro: isHe
         ? "שיחה בלי התחייבות · כ־15 דק׳ · בלי מחיר באתר · ואז פגישה באלעד אם מתאים"
         : "No-obligation call · ~15 min · no prices here · then Elad if it fits",
