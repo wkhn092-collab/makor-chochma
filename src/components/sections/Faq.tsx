@@ -104,23 +104,20 @@ export function Faq({ copy }: Props) {
 
           {/* End rail — next step + meta */}
           <Reveal y={16} delay={0.08} className="hidden lg:block">
-            <aside className="sticky top-28 space-y-6 border border-stone/80 bg-surface/60 p-5">
+            <aside className="sticky top-28 space-y-6 rounded-[var(--radius-md)] border border-stone/80 bg-surface/60 p-5 shadow-contact">
               <div>
                 <p className="font-display text-base font-semibold text-ink">{copy.faq.sideNextTitle}</p>
                 <p className="mt-2 text-sm leading-relaxed text-ink/70">{copy.faq.sideNextLead}</p>
               </div>
-              <div className="flex flex-col gap-2.5">
-                <a
-                  href="#lead"
-                  className="inline-flex items-center justify-center bg-ink px-3 py-2.5 text-center text-sm font-medium text-parchment transition-opacity hover:opacity-90"
-                >
+              <div className="flex flex-col gap-3">
+                <a href="#lead" className="btn-primary w-full !min-h-11 text-sm">
                   {copy.faq.sideCtaForm}
                 </a>
                 <a
                   href={waHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center border border-ink/20 bg-parchment px-3 py-2.5 text-center text-sm font-medium text-ink transition-colors hover:border-gold hover:text-gold"
+                  className="btn-secondary w-full !min-h-11 text-sm"
                 >
                   {copy.faq.sideCtaWa}
                 </a>
@@ -152,7 +149,7 @@ export function Faq({ copy }: Props) {
                   {copy.hero.simulation}
                 </span>
               </div>
-              <div className="flex flex-col justify-center gap-3 border border-stone/80 bg-surface/60 p-4">
+              <div className="flex flex-col justify-center gap-3 rounded-[var(--radius-md)] border border-stone/80 bg-surface/60 p-4 shadow-contact">
                 <p className="font-display text-sm font-semibold text-ink">{copy.faq.sideTrustTitle}</p>
                 <ul className="space-y-2">
                   {copy.faq.sideTrust.map((line) => (
@@ -162,10 +159,7 @@ export function Faq({ copy }: Props) {
                     </li>
                   ))}
                 </ul>
-                <a
-                  href="#lead"
-                  className="mt-1 inline-flex items-center justify-center bg-ink px-3 py-2 text-center text-sm font-medium text-parchment"
-                >
+                <a href="#lead" className="btn-primary mt-1 w-full !min-h-11 text-sm">
                   {copy.faq.sideCtaForm}
                 </a>
               </div>

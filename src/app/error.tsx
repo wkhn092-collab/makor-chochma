@@ -20,17 +20,10 @@ export default function Error({ error, reset }: Props) {
         אפשר לנסות שוב, או לחזור לדף הבית. אם זה חוזר — התקשרו אלינו.
       </p>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <button
-          type="button"
-          onClick={reset}
-          className="bg-ink px-4 py-2.5 text-sm font-medium text-parchment"
-        >
+        <button type="button" onClick={reset} className="btn-primary !min-h-11 px-6 text-sm">
           נסו שוב
         </button>
-        <Link
-          href="/"
-          className="border border-ink/20 bg-surface px-4 py-2.5 text-sm font-medium text-ink"
-        >
+        <Link href="/" className="btn-secondary !min-h-11 px-6 text-sm">
           לדף הבית
         </Link>
       </div>

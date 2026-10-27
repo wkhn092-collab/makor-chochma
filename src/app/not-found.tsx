@@ -9,13 +9,10 @@ export default function NotFound() {
         הכתובת אינה קיימת או הועברה. אפשר לחזור לדף הבית או להשאיר פרטים.
       </p>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <Link href="/" className="bg-ink px-4 py-2.5 text-sm font-medium text-parchment">
+        <Link href="/" className="btn-primary !min-h-11 px-6 text-sm">
           לדף הבית
         </Link>
-        <Link
-          href="/#lead"
-          className="border border-ink/20 bg-surface px-4 py-2.5 text-sm font-medium text-ink"
-        >
+        <Link href="/#lead" className="btn-secondary !min-h-11 px-6 text-sm">
           השאירו פרטים
         </Link>
       </div>

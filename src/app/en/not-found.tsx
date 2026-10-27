@@ -9,14 +9,11 @@ export default function NotFound() {
         This address doesn’t exist or has moved. Return home or leave details for a call.
       </p>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <Link href="/en" className="bg-ink px-4 py-2.5 text-sm font-medium text-parchment">
+        <Link href="/en" className="btn-primary !min-h-11 px-6 text-sm">
           Home
         </Link>
-        <Link
-          href="/en#lead"
-          className="border border-ink/20 bg-surface px-4 py-2.5 text-sm font-medium text-ink"
-        >
-          Book a call
+        <Link href="/en#lead" className="btn-secondary !min-h-11 px-6 text-sm">
+          Leave details
         </Link>
       </div>
     </div>
