@@ -6,11 +6,9 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   type ReactNode,
 } from "react";
 import { presets, type MotionPreset, type MotionSettings } from "./config";
-import { ScrollTrigger } from "./gsap";
 
 type ScrollTarget = number | string | HTMLElement;
 
@@ -34,9 +32,14 @@ export interface MotionProviderProps {
   smooth?: boolean;
 }
 
+async function refreshScrollTrigger() {
+  const { ScrollTrigger } = await import("./gsap");
+  ScrollTrigger.refresh();
+}
+
 /**
- * Site motion context. Lenis intentionally omitted — importing lenis.css
- * collided with globals.css in the Turbopack CSS cache and wiped Tailwind.
+ * Site motion context. Lenis omitted. GSAP/ScrollTrigger loaded lazily
+ * so the LCP path does not pay for the full motion kit up front.
  */
 export function MotionProvider({
   children,
@@ -53,20 +56,50 @@ export function MotionProvider({
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | undefined;
-    const observer = new ResizeObserver(() => {
+    let cancelled = false;
+
+    const schedule = () => {
       clearTimeout(timer);
-      timer = setTimeout(() => ScrollTrigger.refresh(), 200);
-    });
-    observer.observe(document.body);
+      timer = setTimeout(() => {
+        if (!cancelled) void refreshScrollTrigger();
+      }, 200);
+    };
+
+    const start = () => {
+      if (cancelled) return;
+      const observer = new ResizeObserver(schedule);
+      observer.observe(document.body);
+      cleanupObserver = () => observer.disconnect();
+      void refreshScrollTrigger();
+    };
+
+    let cleanupObserver = () => {};
+    const idle =
+      typeof requestIdleCallback !== "undefined"
+        ? requestIdleCallback(start, { timeout: 2500 })
+        : window.setTimeout(start, 1200);
+
     return () => {
+      cancelled = true;
       clearTimeout(timer);
-      observer.disconnect();
+      cleanupObserver();
+      if (typeof cancelIdleCallback !== "undefined" && typeof idle === "number") {
+        try {
+          cancelIdleCallback(idle as number);
+        } catch {
+          clearTimeout(idle);
+        }
+      } else {
+        clearTimeout(idle);
+      }
     };
   }, []);
 
   useEffect(() => {
-    const id = requestAnimationFrame(() => ScrollTrigger.refresh());
-    return () => cancelAnimationFrame(id);
+    const id = window.setTimeout(() => {
+      void refreshScrollTrigger();
+    }, 400);
+    return () => clearTimeout(id);
   }, [pathname]);
 
   const value = useMemo<MotionContextValue>(

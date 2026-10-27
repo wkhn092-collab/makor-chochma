@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import gsap from "gsap";
 import type { Copy } from "@/content/copy";
 import { SITE } from "@/content/site";
 import clsx from "clsx";
@@ -75,29 +74,34 @@ export function SiteHeader({ copy }: Props) {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const items = linksRef.current.filter(Boolean);
+    let cancelled = false;
 
-    if (reduced) {
-      gsap.set(items, { opacity: 1, y: 0 });
-    } else {
-      gsap.fromTo(
-        items,
-        { opacity: 0, y: 28 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.55,
-          stagger: 0.07,
-          ease: "power3.out",
-          overwrite: true,
-        },
-      );
-    }
+    void import("gsap").then(({ default: gsap }) => {
+      if (cancelled) return;
+      if (reduced) {
+        gsap.set(items, { opacity: 1, y: 0 });
+      } else {
+        gsap.fromTo(
+          items,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.55,
+            stagger: 0.07,
+            ease: "power3.out",
+            overwrite: true,
+          },
+        );
+      }
+    });
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeMenu();
     };
     window.addEventListener("keydown", onKey);
     return () => {
+      cancelled = true;
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
