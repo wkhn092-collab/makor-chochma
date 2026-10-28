@@ -29,8 +29,12 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
   /** Hide Next.js “N” badge while designing mobile layouts */
   devIndicators: false,
-  cacheComponents: true,
-  partialPrefetching: true,
+  /**
+   * Cache Components / PPR left the static shell WITHOUT `__next_f` flight data.
+   * Vercel CDN then served that shell (HIT) — React never hydrated, so hamburger
+   * + testimonial play were dead static HTML. Classic static HTML includes flight.
+   */
+  cacheComponents: false,
   experimental: {
     serverActions: {
       bodySizeLimit: "64kb",
