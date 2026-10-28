@@ -58,7 +58,13 @@ export function ScrollRoadmap({ copy }: Props) {
   const glowRef = useRef<SVGPathElement>(null);
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
-  const [nodes, setNodes] = useState<NodePos[]>([]);
+  /** Seed seats immediately — never wait on GSAP or the path looks empty (no 01–04 nodes). */
+  const [nodes, setNodes] = useState<NodePos[]>(() =>
+    (copy.locale === "he" ? NODES_DESKTOP_RTL : NODES_DESKTOP_LTR).slice(
+      0,
+      copy.craft.steps.length,
+    ),
+  );
   const [compact, setCompact] = useState(false);
   const activeRef = useRef(0);
 
@@ -100,10 +106,23 @@ export function ScrollRoadmap({ copy }: Props) {
 
     for (const el of [progress, glow]) {
       el.style.strokeDasharray = `${len}`;
-      el.style.strokeDashoffset = `${len}`;
+      /* Prefer-reduced / no-scrub: show full gold. Scrub path resets via onUpdate. */
+      if (prefersReducedMotion() || reduce) {
+        el.style.strokeDashoffset = "0";
+      } else {
+        el.style.strokeDashoffset = `${len}`;
+      }
     }
     return len;
-  }, [stageCount, pathDesktop, rtl]);
+  }, [stageCount, pathDesktop, rtl, reduce]);
+
+  /* Layout path + seats even if ScrollTrigger mount is delayed */
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      applyLayout();
+    });
+    return () => cancelAnimationFrame(id);
+  }, [applyLayout]);
 
   /** Scroll to a stage anchor inside the pin — same math as lawyer LegalRoadmap. */
   const goToStage = useCallback(
