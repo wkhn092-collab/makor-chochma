@@ -255,24 +255,25 @@ body {
   }
 }
 
-/* Initial hide only while GSAP owns the node; never leave blank forever */
+/* Initial hide while GSAP plays; CSS fallback un-hides if ScrollTrigger never fires */
 .reveal-hidden {
   opacity: 0;
   transform: translateY(28px);
+  animation: reveal-safety 0.01s linear 2s forwards;
+}
+
+@keyframes reveal-safety {
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal-hidden {
     opacity: 1;
     transform: none;
-  }
-}
-
-/* If client JS never attaches, content must still be readable */
-@supports not (animation: fade) {
-  .reveal-hidden {
-    opacity: 1;
-    transform: none;
+    animation: none;
   }
 }
 
