@@ -8,7 +8,6 @@ import { SITE } from "@/content/site";
 import { whatsappUrl, waPrefill } from "@/lib/whatsapp";
 import { Reveal } from "@/motion/Reveal";
 import { InkReveal } from "@/components/motion/InkReveal";
-import { SimulationBadge } from "@/components/ui/SimulationBadge";
 import clsx from "clsx";
 
 type Props = { copy: Copy };
@@ -21,16 +20,16 @@ export function Faq({ copy }: Props) {
   const telHref = `tel:+${SITE.phoneE164}`;
 
   return (
-    <section id="faq" className="border-t border-stone/70 bg-parchment py-12 md:py-20">
+    <section id="faq" className="border-t border-stone/70 bg-parchment py-14 md:py-20">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <InkReveal
           as="h2"
-          className="text-center font-display text-[clamp(1.55rem,4vw,2.5rem)] font-bold leading-snug text-ink"
+          className="text-center font-display text-[clamp(1.75rem,4vw,2.5rem)] font-bold text-ink"
         >
           {copy.faq.h2}
         </InkReveal>
 
-        <div className="mt-8 grid items-start gap-6 md:mt-10 md:gap-8 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_minmax(0,15rem)] lg:gap-10">
+        <div className="mt-10 grid items-start gap-8 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_minmax(0,15rem)] lg:gap-10">
           {/* Start rail — craft photo + trust lines */}
           <Reveal y={16} className="hidden lg:block">
             <aside className="sticky top-28 space-y-5">
@@ -42,14 +41,13 @@ export function Faq({ copy }: Props) {
                   sizes="240px"
                   className="object-cover object-[50%_40%]"
                 />
-                <SimulationBadge
-                  label={copy.hero.simulation}
-                  className="start-2 top-2"
-                />
                 <div
                   aria-hidden
                   className="absolute inset-0 bg-gradient-to-t from-parchment/70 via-transparent to-transparent"
                 />
+                <span className="absolute bottom-3 start-3 rounded-sm bg-parchment/90 px-2 py-0.5 text-micro text-bronze backdrop-blur-sm">
+                  {copy.hero.simulation}
+                </span>
               </div>
               <p className="font-display text-sm font-semibold text-ink">{copy.faq.sidePhotoCaption}</p>
               <ul className="space-y-3 border-t border-stone/80 pt-4">
@@ -76,7 +74,7 @@ export function Faq({ copy }: Props) {
                       aria-expanded={isOpen}
                       onClick={() => setOpen(isOpen ? null : i)}
                     >
-                      <span className="text-body-soft font-medium leading-snug text-ink sm:text-base">
+                      <span className="text-[0.95rem] font-medium leading-snug text-ink sm:text-base">
                         {item.q}
                       </span>
                       <span
@@ -149,10 +147,9 @@ export function Faq({ copy }: Props) {
                   sizes="(max-width: 640px) 100vw, 50vw"
                   className="object-cover object-[50%_40%]"
                 />
-                <SimulationBadge
-                  label={copy.hero.simulation}
-                  className="start-2 top-2"
-                />
+                <span className="absolute bottom-2 start-2 rounded-sm bg-parchment/90 px-2 py-0.5 text-micro text-bronze">
+                  {copy.hero.simulation}
+                </span>
               </div>
               <div className="flex flex-col justify-center gap-3 rounded-[var(--radius-md)] border border-stone/80 bg-surface/60 p-4 shadow-contact">
                 <p className="font-display text-sm font-semibold text-ink">{copy.faq.sideTrustTitle}</p>

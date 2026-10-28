@@ -28,8 +28,8 @@
   font-size: 1.12em;
   letter-spacing: -0.04em;
   line-height: 0.95;
-  color: var(--gold-soft);
-  text-shadow: 0 2px 28px rgb(0 0 0 / 0.45);
+  color: var(--gold-deep);
+  text-shadow: 0 1px 18px rgb(247 244 239 / 0.75);
 }
 
 @keyframes mc-fade-rise {
@@ -162,11 +162,11 @@
     --mc-fan-gap: 0.5rem;
   }
   .mc-hero-display {
-    font-size: clamp(2.05rem, 8.2vw, 2.55rem);
-    line-height: 1.06;
+    font-size: clamp(1.85rem, 7.5vw, 2.35rem);
+    line-height: 1.08;
   }
   .mc-hero-accent {
-    font-size: 1.06em;
+    font-size: 1.08em;
   }
   .mc-hero-fan {
     --mc-card-w: calc((100% - 2 * var(--mc-fan-gap)) / 3);

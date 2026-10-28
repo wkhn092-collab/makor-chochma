@@ -5,8 +5,6 @@ import { SITE_IMAGES } from "@/content/images";
 import { SITE } from "@/content/site";
 import { Marquee } from "@/motion/Marquee";
 import { HeroFan } from "@/components/sections/HeroFan";
-import { SimulationBadge } from "@/components/ui/SimulationBadge";
-import { InkReveal } from "@/components/motion/InkReveal";
 import "./hero-fan.css";
 
 type Props = { copy: Copy };
@@ -33,8 +31,7 @@ function FactsStrip({ facts }: { facts: string[] }) {
 }
 
 /**
- * Lawyer-tight hero: short headline, one line, one CTA, micro proof.
- * Dark wash + light type so the photo carries the stage (like Cohen).
+ * Full-bleed LCP photo + centered copy + responsive fan (3 mobile / 9 desktop).
  */
 export function Hero({ copy }: Props) {
   const brand = copy.locale === "he" ? SITE.brand : SITE.brandEn;
@@ -75,7 +72,7 @@ export function Hero({ copy }: Props) {
     <section
       id="hero"
       aria-labelledby="hero-title"
-      className="mc-hero-stage relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-accent text-white"
+      className="mc-hero-stage relative isolate flex min-h-[calc(100svh-var(--mc-header-h)+4.5rem)] flex-col overflow-hidden text-ink"
     >
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
         <Image
@@ -86,66 +83,78 @@ export function Hero({ copy }: Props) {
           fetchPriority="high"
           quality={70}
           sizes="100vw"
-          className="object-cover object-[48%_22%] brightness-[0.92] contrast-[1.05] saturate-[1.08] md:object-[50%_18%]"
+          className="object-cover object-[48%_22%] brightness-[1.18] contrast-[1.05] saturate-[1.12] md:object-[50%_18%]"
         />
-        {/* Dark stage wash — lawyer pattern: photo speaks, type stays short */}
+        {/* Mobile: vertical wash — photo stays full-bleed, text stays readable */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 md:hidden"
           style={{
             background: `
               linear-gradient(180deg,
-                rgba(10,10,10,0.62) 0%,
-                rgba(10,10,10,0.42) 32%,
-                rgba(10,10,10,0.28) 55%,
-                rgba(10,10,10,0.58) 100%),
-              radial-gradient(ellipse 90% 55% at 50% 38%, rgba(10,10,10,0.35), transparent 70%)
+                rgba(247,244,239,0.78) 0%,
+                rgba(247,244,239,0.42) 22%,
+                rgba(247,244,239,0.12) 42%,
+                rgba(247,244,239,0.08) 62%,
+                rgba(247,244,239,0.55) 100%)
             `,
+          }}
+        />
+        {/* Desktop: side + vertical wash */}
+        <div
+          className="absolute inset-0 hidden md:block"
+          style={{
+            background: isHe
+              ? `
+                linear-gradient(270deg, rgba(247,244,239,0.88) 0%, rgba(247,244,239,0.55) 40%, rgba(247,244,239,0.12) 72%, transparent 100%),
+                linear-gradient(180deg, rgba(247,244,239,0.35) 0%, transparent 40%, rgba(247,244,239,0.22) 100%)
+              `
+              : `
+                linear-gradient(90deg, rgba(247,244,239,0.88) 0%, rgba(247,244,239,0.55) 40%, rgba(247,244,239,0.12) 72%, transparent 100%),
+                linear-gradient(180deg, rgba(247,244,239,0.35) 0%, transparent 40%, rgba(247,244,239,0.22) 100%)
+              `,
           }}
         />
       </div>
 
       <span className="sr-only">{heroAlt}</span>
-      <SimulationBadge
-        label={copy.hero.simulation}
-        tone="onDark"
-        className="start-3 top-[calc(var(--mc-header-h)+0.65rem)] z-40 sm:start-5"
-      />
+      <span className="pointer-events-none absolute bottom-3 start-3 z-30 rounded-sm bg-parchment/90 px-1.5 py-0.5 text-tag text-bronze backdrop-blur-sm md:bottom-4 md:start-4">
+        {copy.hero.simulation}
+      </span>
 
-      {/* Copy block — centered in the upper stage, lawyer breathing room */}
-      <div className="relative z-30 mx-auto flex w-full max-w-[1180px] flex-1 flex-col justify-center px-5 pb-6 pt-[calc(var(--mc-header-h)+1.25rem)] sm:px-6">
-        <div className="mx-auto flex w-full max-w-lg flex-col items-center text-center">
-          <h1 id="hero-title" className="mc-hero-display max-w-[14ch] sm:max-w-[18ch]">
-            {/* Kinetic mask (InkReveal) — audit 1.33; LCP photo stays uneased */}
-            <InkReveal
-              as="span"
-              immediate
-              delay={0.1}
-              duration={0.9}
-              className="block text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]"
+      <div className="relative z-30 mx-auto flex w-full max-w-[1180px] shrink-0 flex-col px-4 pt-[calc(var(--mc-header-h)+0.85rem)] sm:px-6 sm:pt-[calc(var(--mc-header-h)+0.5rem)]">
+        <div className="flex flex-col items-center text-center">
+          <p
+            className="mc-hero-in text-label font-semibold tracking-[0.06em] text-bronze"
+            style={{ "--d": "80ms" } as CSSProperties}
+          >
+            {copy.hero.eyebrow}
+          </p>
+
+          <h1 id="hero-title" className="mc-hero-display mt-1.5 max-w-[18ch] sm:mt-2 sm:max-w-[22ch]">
+            <span
+              className="mc-hero-in block text-ink drop-shadow-[0_1px_14px_rgb(247_244_239/0.9)]"
+              style={{ "--d": "140ms" } as CSSProperties}
             >
               {copy.hero.h1}
-            </InkReveal>
-            <InkReveal
-              as="span"
-              immediate
-              delay={0.22}
-              duration={0.95}
-              className="mc-hero-accent mt-1.5 block"
+            </span>
+            <span
+              className="mc-hero-in mc-hero-accent mt-1 block"
+              style={{ "--d": "260ms" } as CSSProperties}
             >
               <bdi>{SITE.yearsExperience}</bdi> {copy.hero.h1YearsSuffix}
-            </InkReveal>
+            </span>
           </h1>
 
           <p
-            className="mc-hero-in mt-4 max-w-[36ch] text-lead leading-snug text-white/90 sm:mt-5 sm:max-w-[40ch] sm:text-lg"
-            style={{ "--d": "360ms" } as CSSProperties}
+            className="mc-hero-in mt-2.5 max-w-[34ch] text-[1rem] leading-snug text-ink/80 sm:mt-2.5 sm:max-w-[38ch] sm:text-base"
+            style={{ "--d": "420ms" } as CSSProperties}
           >
             {copy.hero.h2}
           </p>
 
           <div
-            className="mc-hero-in pointer-events-auto mt-7 flex w-full max-w-xs flex-col items-center gap-3.5 sm:mt-8 sm:max-w-sm"
-            style={{ "--d": "500ms" } as CSSProperties}
+            className="mc-hero-in pointer-events-auto mt-3.5 flex w-full max-w-sm justify-center sm:mt-4 sm:max-w-md"
+            style={{ "--d": "560ms" } as CSSProperties}
           >
             <a
               href="#lead"
@@ -155,18 +164,15 @@ export function Hero({ copy }: Props) {
             >
               {copy.hero.ctaPrimary}
             </a>
-            <p className="flex items-center gap-2 text-label leading-snug text-white/75">
-              <span className="size-1.5 shrink-0 rounded-full bg-gold" aria-hidden />
-              {copy.hero.micro}
-            </p>
           </div>
         </div>
       </div>
 
-      {/* Fan peeks under the fold on phone — desktop keeps full strip */}
+      <div className="min-h-8 flex-1 sm:min-h-12" aria-hidden="true" />
+
       <div className="relative z-20 mt-auto w-full shrink-0">
         <div
-          className="mc-hero-fan-slot mc-hero-in hidden sm:block"
+          className="mc-hero-fan-slot mc-hero-in"
           style={{ "--d": "900ms" } as CSSProperties}
         >
           <HeroFan locale={copy.locale} />

@@ -95,7 +95,7 @@ export function Testimonials({ copy }: Props) {
   return (
     <section
       id="testimonials"
-      className="relative z-0 overflow-x-clip bg-parchment-deep/40 py-12 md:py-20"
+      className="relative z-0 overflow-x-clip bg-parchment-deep/40 py-16 md:py-20"
     >
       <div className="relative z-0 mx-auto max-w-6xl px-4 md:px-6">
         <InkReveal

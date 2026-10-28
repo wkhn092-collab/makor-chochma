@@ -17,23 +17,23 @@ export function WhyUs({ copy }: Props) {
   return (
     <section
       id="why-us"
-      className="border-y border-stone/70 bg-parchment-deep/60 py-12 md:py-20"
+      className="border-y border-stone/70 bg-parchment-deep/60 py-14 md:py-20"
       aria-labelledby="why-us-title"
     >
       <div className="mx-auto max-w-5xl px-4 md:px-6">
         <div className="max-w-2xl">
-          <p className="text-caption font-semibold tracking-eyebrow text-bronze uppercase">
+          <p className="text-caption font-semibold tracking-[0.22em] text-gold uppercase">
             {copy.whyUs.eyebrow}
           </p>
           <InkReveal
             as="h2"
             id="why-us-title"
-            className="font-display mt-2.5 text-[clamp(1.45rem,3.4vw,2.35rem)] font-bold leading-[1.18] tracking-[-0.02em] text-ink md:mt-3"
+            className="font-display mt-3 text-[clamp(1.55rem,3.4vw,2.35rem)] font-bold leading-[1.15] tracking-[-0.02em] text-ink"
           >
             {copy.whyUs.h2}
           </InkReveal>
           <Reveal delay={0.06} y={14}>
-            <p className="mt-3 max-w-xl text-body-soft leading-relaxed text-ink/70 md:mt-4 md:text-base">
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-ink/70">
               {copy.whyUs.lead}
             </p>
           </Reveal>
@@ -41,7 +41,7 @@ export function WhyUs({ copy }: Props) {
 
         <Reveal delay={0.1} y={18} className="mt-10">
           <div className="overflow-hidden rounded-[var(--radius-md)] border border-stone/80 bg-surface">
-            <div className="grid grid-cols-[1fr_1.2fr] border-b border-stone/70 bg-parchment/80 text-caption font-semibold tracking-wide text-bronze sm:grid-cols-[1fr_1.15fr] sm:text-sm">
+            <div className="grid grid-cols-[1fr_1.2fr] border-b border-stone/70 bg-parchment/80 text-[0.6875rem] font-semibold tracking-wide text-bronze sm:grid-cols-[1fr_1.15fr] sm:text-sm">
               <p className="px-2.5 py-2.5 sm:px-5 sm:py-3">{copy.whyUs.themLabel}</p>
               <p className="border-s border-stone/70 px-2.5 py-2.5 text-ink sm:px-5 sm:py-3">
                 {copy.whyUs.usLabel}
@@ -53,10 +53,10 @@ export function WhyUs({ copy }: Props) {
                   key={row.us}
                   className="grid grid-cols-[1fr_1.2fr] border-b border-stone/50 last:border-b-0 sm:grid-cols-[1fr_1.15fr]"
                 >
-                  <p className="px-2.5 py-3 text-label leading-snug text-ink/55 sm:px-5 sm:py-4 sm:text-body-soft">
+                  <p className="px-2.5 py-3 text-[0.8125rem] leading-snug text-ink/55 sm:px-5 sm:py-4 sm:text-[0.95rem]">
                     {row.them}
                   </p>
-                  <p className="border-s border-stone/50 bg-parchment/35 px-2.5 py-3 text-label font-medium leading-snug text-ink sm:px-5 sm:py-4 sm:text-body-soft">
+                  <p className="border-s border-stone/50 bg-parchment/35 px-2.5 py-3 text-[0.8125rem] font-medium leading-snug text-ink sm:px-5 sm:py-4 sm:text-[0.95rem]">
                     {row.us}
                   </p>
                 </li>

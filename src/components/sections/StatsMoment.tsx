@@ -5,7 +5,6 @@ import Image from "next/image";
 import type { Copy } from "@/content/copy";
 import { gsap, prefersReducedMotion, useGSAP } from "@/motion/gsap";
 import { Reveal } from "@/motion/Reveal";
-import { SimulationBadge } from "@/components/ui/SimulationBadge";
 
 type Props = { copy: Copy };
 
@@ -114,7 +113,7 @@ export function StatsMoment({ copy }: Props) {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate overflow-hidden py-10 sm:py-16 md:py-28"
+      className="relative isolate overflow-hidden py-16 sm:py-20 md:py-28"
       aria-label={isHe ? "מה מייחד אותנו" : "What sets us apart"}
     >
       <div aria-hidden className="absolute inset-0 -z-10">
@@ -134,47 +133,43 @@ export function StatsMoment({ copy }: Props) {
         />
       </div>
 
-      <SimulationBadge
-        label={copy.hero.simulation}
-        className="start-3 top-3 z-20 sm:start-4 sm:top-4"
-      />
-
-      <div className="relative z-10 mx-auto w-full max-w-5xl px-3 sm:px-4 md:px-8">
+      <div className="relative z-10 mx-auto max-w-5xl px-4 md:px-8">
         <Reveal y={18}>
-          <div className="rounded-[1.15rem] bg-parchment/92 p-1.5 shadow-[0_24px_64px_rgb(26_24_20/0.1)] ring-1 ring-ink/10 backdrop-blur-md sm:rounded-[1.75rem] sm:p-2.5 md:p-3.5">
-            <div className="overflow-hidden rounded-[0.95rem] border border-ink/8 bg-gradient-to-b from-white/90 to-parchment/95 text-ink sm:rounded-[1.35rem]">
-              <div className="flex items-center justify-between border-b border-ink/8 px-4 py-2.5 sm:px-6 sm:py-3.5 md:px-8">
-                <span className="flex items-center gap-2 text-caption font-semibold tracking-wide text-bronze uppercase sm:gap-2.5 sm:tracking-label">
-                  <span className="relative flex size-2 sm:size-2.5">
+          <div className="rounded-[1.35rem] bg-parchment/92 p-2 shadow-[0_24px_64px_rgb(26_24_20/0.1)] ring-1 ring-ink/10 backdrop-blur-md sm:rounded-[1.75rem] sm:p-2.5 md:p-3.5">
+            <div className="overflow-hidden rounded-[1.05rem] border border-ink/8 bg-gradient-to-b from-white/90 to-parchment/95 text-ink sm:rounded-[1.35rem]">
+              <div className="flex items-center justify-between border-b border-ink/8 px-5 py-3 sm:px-6 sm:py-3.5 md:px-8">
+                <span className="flex items-center gap-2.5 text-caption font-semibold tracking-[0.14em] text-bronze uppercase">
+                  <span className="relative flex size-2.5">
                     <span className="absolute inset-0 animate-ping rounded-full bg-gold/60 motion-reduce:hidden" />
-                    <span className="relative size-2 rounded-full bg-gold sm:size-2.5" />
+                    <span className="relative size-2.5 rounded-full bg-gold" />
                   </span>
                   {isHe ? "מה מייחד אותנו" : "What sets us apart"}
                 </span>
-                <span aria-hidden className="h-px w-8 bg-gold/60 sm:w-10" />
+                <span aria-hidden className="h-px w-10 bg-gold/60" />
               </div>
 
-              {/* Phone: 3 compact columns · sm+: same row · never a tall stack */}
-              <dl className="grid grid-cols-3">
+              <dl className="grid grid-cols-1 sm:grid-cols-3">
                 {stats.map((s, i) => (
                   <div
                     key={s.title}
                     className={[
-                      "flex min-w-0 flex-col px-2.5 py-5 text-center sm:px-6 sm:py-10 md:px-8 md:py-12",
-                      i < stats.length - 1 ? "border-e border-ink/8" : "",
+                      "flex flex-col px-5 py-8 text-center sm:px-6 sm:py-10 md:px-8 md:py-12",
+                      i < stats.length - 1
+                        ? "border-b border-ink/8 sm:border-b-0 sm:border-e sm:border-ink/8"
+                        : "",
                     ].join(" ")}
                   >
-                    <dt className="text-tag font-semibold tracking-[0.1em] text-bronze uppercase sm:text-caption sm:tracking-[0.16em]">
+                    <dt className="text-caption font-semibold tracking-[0.16em] text-bronze uppercase">
                       {s.title}
                     </dt>
                     <dd
-                      className="font-display mt-2 text-[clamp(1.65rem,7vw,3.75rem)] font-bold leading-none tracking-[-0.03em] text-ink sm:mt-3"
+                      className="font-display mt-3 text-[clamp(2.5rem,5.5vw,3.75rem)] font-bold leading-none tracking-[-0.03em] text-ink"
                       data-stat-num={s.countTo != null ? "" : undefined}
                       data-count-to={s.countTo}
                     >
                       {s.value}
                     </dd>
-                    <dd className="mt-2 text-micro leading-snug text-bronze sm:mt-3 sm:text-sm sm:text-body-soft">
+                    <dd className="mt-3 text-sm leading-snug text-bronze sm:text-[0.95rem]">
                       {s.note}
                     </dd>
                   </div>
