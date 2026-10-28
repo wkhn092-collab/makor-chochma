@@ -43,4 +43,6 @@ Breakpoints: mobile-first `375` → `768` → `1024`.
 | 28.10.2026 לפני | 174 / 27 קבצים | סריקת baseline |
 | 28.10.2026 אחרי | ~138 | הוחלפו text/tracking נפוצים לסקאלה לעיל |
 
-**חריגים מכוונים (לא להחליף בעיוורון):** `clamp()` לכותרות רספונסיביות · `100svh`/`100dvh` · `safe-area-inset` · `env()` · `rounded-[var(--radius-*)]` · `ScrollRoadmap.tsx` (נעול ל־lawyer parity).
+**חריגים מכוונים (לא להחליף בעיוורון):** `clamp()` לכותרות רספונסיביות · `100svh`/`100dvh` · `safe-area-inset` · `env()` · מחלקות radius דרך `--radius-sm` / `--radius-md` · `ScrollRoadmap.tsx` (נעול ל־lawyer parity).
+
+> הערה: אל תכתבו ב־docs מחרוזת דמויה למחלקת Tailwind עם `*` — הסורק של Tailwind v4 עלול לייצר CSS לא תקין ולשבור את הבילד.
