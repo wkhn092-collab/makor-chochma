@@ -151,7 +151,7 @@ export function SiteHeader({ copy }: Props) {
               <a
                 href={telHref}
                 data-analytics="phone_click"
-                className="btn-primary !min-h-10 !px-5 text-sm max-sm:!hidden"
+                className="btn-primary !min-h-10 !px-5 text-sm !hidden md:!inline-flex"
               >
                 {copy.nav.ctaCall}
               </a>
