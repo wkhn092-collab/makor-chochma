@@ -8,8 +8,6 @@ import {
   TOPIC_LABEL,
   type TestimonialVideo,
 } from "@/content/testimonials";
-import { Reveal } from "@/motion/Reveal";
-import { InkReveal } from "@/components/motion/InkReveal";
 import { CdnVideo } from "@/components/ui/CdnVideo";
 
 type Props = { copy: Copy };
@@ -98,17 +96,14 @@ export function Testimonials({ copy }: Props) {
       className="relative z-0 overflow-x-clip bg-parchment-deep/40 py-16 md:py-20"
     >
       <div className="relative z-0 mx-auto max-w-6xl px-4 md:px-6">
-        <InkReveal
-          as="h2"
-          className="font-display max-w-3xl text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-snug text-ink"
-        >
+        {/* No Reveal/InkReveal here — GSAP left cards at opacity 0 after craft sticky */}
+        <h2 className="font-display max-w-3xl text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-snug text-ink">
           {copy.testimonials.h2}
-        </InkReveal>
+        </h2>
 
-        {/* Featured — main stories (peer + Sefer Torah) */}
         <div className="relative z-0 mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-10">
-          {FEATURED_TESTIMONIALS.map((item, i) => (
-            <Reveal key={item.id} delay={0.06 * i} className="relative z-0 w-full min-w-0">
+          {FEATURED_TESTIMONIALS.map((item) => (
+            <div key={item.id} className="relative z-0 w-full min-w-0">
               <TestimonialCard
                 item={item}
                 locale={copy.locale}
@@ -117,37 +112,34 @@ export function Testimonials({ copy }: Props) {
                 isActive={playingId === item.id}
                 onPlay={() => setPlayingId(item.id)}
               />
-            </Reveal>
+            </div>
           ))}
         </div>
 
-        {/* More clients */}
         <div className="relative z-0 mt-12 md:mt-14">
-          <Reveal>
-            <div className="mb-4 flex items-end justify-between gap-4">
-              <h3 className="font-display text-lg font-bold text-ink md:text-xl">
-                {copy.testimonials.moreTitle}
-              </h3>
-              <div className="hidden gap-2 sm:flex">
-                <button
-                  type="button"
-                  onClick={() => scrollByCard(-1)}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-stone bg-surface text-ink shadow-contact transition-colors hover:border-accent"
-                  aria-label={copy.testimonials.prev}
-                >
-                  {isRtl ? "→" : "←"}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollByCard(1)}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-stone bg-surface text-ink shadow-contact transition-colors hover:border-accent"
-                  aria-label={copy.testimonials.next}
-                >
-                  {isRtl ? "←" : "→"}
-                </button>
-              </div>
+          <div className="mb-4 flex items-end justify-between gap-4">
+            <h3 className="font-display text-lg font-bold text-ink md:text-xl">
+              {copy.testimonials.moreTitle}
+            </h3>
+            <div className="hidden gap-2 sm:flex">
+              <button
+                type="button"
+                onClick={() => scrollByCard(-1)}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-stone bg-surface text-ink shadow-contact transition-colors hover:border-accent"
+                aria-label={copy.testimonials.prev}
+              >
+                {isRtl ? "→" : "←"}
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollByCard(1)}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-stone bg-surface text-ink shadow-contact transition-colors hover:border-accent"
+                aria-label={copy.testimonials.next}
+              >
+                {isRtl ? "←" : "→"}
+              </button>
             </div>
-          </Reveal>
+          </div>
 
           <div
             ref={scrollerRef}

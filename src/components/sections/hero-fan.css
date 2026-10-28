@@ -74,6 +74,18 @@
   transform: translateY(18%);
 }
 
+/* SSR-safe mobile/desktop trees — no matchMedia in React */
+@media (min-width: 640px) {
+  .mc-hero-fan--mobile {
+    display: none !important;
+  }
+}
+@media (max-width: 639px) {
+  .mc-hero-fan--desktop {
+    display: none !important;
+  }
+}
+
 .mc-hero-fan-card {
   flex: 0 0 var(--mc-card-w);
   width: var(--mc-card-w);

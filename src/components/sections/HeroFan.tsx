@@ -1,6 +1,4 @@
-"use client";
-
-import { useEffect, useState, type CSSProperties } from "react";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { SITE_IMAGES } from "@/content/images";
 import "./hero-fan.css";
@@ -56,9 +54,9 @@ function FanCard({
       className={`mc-hero-fan-card ${fan.dark ? "mc-hero-fan-card--dark" : "mc-hero-fan-card--light"}`}
       style={
         {
-          "--r": fan.r,
+          "--r": String(fan.r),
           "--sink": `${fan.sink}px`,
-          "--i": index,
+          "--i": String(index),
         } as CSSProperties
       }
     >
@@ -87,34 +85,36 @@ function FanCard({
 
 type Props = { locale: "he" | "en" };
 
+/**
+ * CSS-only mobile/desktop fan — no useState(matchMedia) so SSR HTML
+ * matches the first client paint (avoids HeroFan hydration errors).
+ */
 export function HeroFan({ locale }: Props) {
-  const [wide, setWide] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 640px)");
-    const apply = () => setWide(mq.matches);
-    apply();
-    mq.addEventListener("change", apply);
-    return () => mq.removeEventListener("change", apply);
-  }, []);
-
-  const indices = wide
-    ? FAN_CARDS.map((_, i) => i)
-    : [...MOBILE_SLICE];
-
   return (
-    <div className="mc-hero-fan" aria-hidden="true">
-      {indices.map((index) => {
-        const card = FAN_CARDS[index]!;
-        return (
+    <>
+      <div className="mc-hero-fan mc-hero-fan--mobile" aria-hidden="true">
+        {MOBILE_SLICE.map((index) => {
+          const card = FAN_CARDS[index]!;
+          return (
+            <FanCard
+              key={`m-${card.src}-${index}`}
+              card={card}
+              index={index}
+              locale={locale}
+            />
+          );
+        })}
+      </div>
+      <div className="mc-hero-fan mc-hero-fan--desktop" aria-hidden="true">
+        {FAN_CARDS.map((card, index) => (
           <FanCard
-            key={`${card.src}-${index}`}
+            key={`d-${card.src}-${index}`}
             card={card}
             index={index}
             locale={locale}
           />
-        );
-      })}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }

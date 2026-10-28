@@ -68,7 +68,8 @@ export function CdnVideo({
   const videoSrc = cdnUrl(src);
   const poster = cloudinaryPoster(videoSrc);
   const orientation: Orientation = orientationProp;
-  const playing = started && active;
+  /* Show <video> on click alone — don't wait for parent `active` (was blocking play). */
+  const showPlayer = started;
 
   useEffect(() => {
     const el = rootRef.current;
@@ -90,7 +91,8 @@ export function CdnVideo({
   }, []);
 
   useEffect(() => {
-    if (!playing) {
+    if (!showPlayer) return;
+    if (!active) {
       videoRef.current?.pause();
       return;
     }
@@ -107,13 +109,12 @@ export function CdnVideo({
       if (v.readyState >= 2) void run();
       else v.addEventListener("loadeddata", () => void run(), { once: true });
     };
-    // Wait one frame so <video> ref is attached after started&&active flip
     const id = requestAnimationFrame(tryPlay);
     return () => {
       cancelled = true;
       cancelAnimationFrame(id);
     };
-  }, [playing]);
+  }, [showPlayer, active]);
 
   function handleStart() {
     onPlayRequest?.();
@@ -126,11 +127,11 @@ export function CdnVideo({
       className={clsx(
         "relative isolate overflow-hidden rounded-[var(--radius-md)] bg-ink/85 shadow-contact",
         FRAME[size][orientation],
-        playing ? "z-20" : "z-0",
+        showPlayer && active ? "z-20" : "z-0",
         className,
       )}
     >
-      {!playing ? (
+      {!showPlayer ? (
         <button
           type="button"
           onClick={handleStart}

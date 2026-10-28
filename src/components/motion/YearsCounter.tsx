@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,9 +17,16 @@ type Props = {
 export function YearsCounter({ label, className }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const numRef = useRef<HTMLSpanElement>(null);
+  /* Gate GSAP until after hydrate — mutating text during hydrate broke SiteHeader listeners */
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
 
   useGSAP(
     () => {
+      if (!ready) return;
       const wrap = wrapRef.current;
       const num = numRef.current;
       if (!wrap || !num) return;
@@ -45,7 +52,7 @@ export function YearsCounter({ label, className }: Props) {
         },
       });
     },
-    { dependencies: [] },
+    { dependencies: [ready] },
   );
 
   return (
