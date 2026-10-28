@@ -1,5 +1,4 @@
 import { SITE } from "@/content/site";
-import { purifyHtml } from "@/lib/dom-purify";
 
 type Props = {
   locale: "he" | "en";
@@ -8,7 +7,7 @@ type Props = {
 
 /**
  * LocalBusiness + Organization (+ optional FAQPage).
- * Escapes `<` then DOMPurify-strips tags before dangerouslySetInnerHTML.
+ * Escape `<` in JSON-LD so `</script>` cannot break out of the tag.
  */
 export function JsonLd({ locale, faqs }: Props) {
   const isHe = locale === "he";
@@ -65,12 +64,11 @@ export function JsonLd({ locale, faqs }: Props) {
     });
   }
 
-  const json = purifyHtml(JSON.stringify(graph).replace(/</g, "\\u003c"));
+  const json = JSON.stringify(graph).replace(/</g, "\\u003c");
 
   return (
     <script
       type="application/ld+json"
-      // DOMPurify (ALLOWED_TAGS:[]) + \u003c escape — Baseline 6
       dangerouslySetInnerHTML={{ __html: json }}
     />
   );

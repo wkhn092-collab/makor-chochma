@@ -1,24 +1,19 @@
 import "server-only";
 
-import DOMPurify from "isomorphic-dompurify";
-
 /**
- * Sanitize a string that will be injected via dangerouslySetInnerHTML.
- * Default: strip all tags/attrs (safe for JSON-LD text blobs).
+ * Strip tags/attrs for strings injected via dangerouslySetInnerHTML.
+ * No jsdom/isomorphic-dompurify — that package crashes on Vercel serverless
+ * (ERR_REQUIRE_ESM via html-encoding-sniffer) when the route is dynamic.
  */
 export function purifyHtml(
   dirty: string,
   options?: { allowMinimalMarkup?: boolean },
 ): string {
   if (options?.allowMinimalMarkup) {
-    return DOMPurify.sanitize(dirty, {
-      USE_PROFILES: { html: true },
-      FORBID_TAGS: ["script", "iframe", "object", "embed", "form"],
-      FORBID_ATTR: ["style", "onerror", "onclick", "onload"],
-    });
+    return dirty
+      .replace(/<\/?(script|iframe|object|embed|form)[^>]*>/gi, "")
+      .replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+      .replace(/\sstyle\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, "");
   }
-  return DOMPurify.sanitize(dirty, {
-    ALLOWED_TAGS: [],
-    ALLOWED_ATTR: [],
-  });
+  return dirty.replace(/<[^>]*>/g, "");
 }
