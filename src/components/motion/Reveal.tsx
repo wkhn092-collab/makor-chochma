@@ -32,9 +32,10 @@ export function Reveal({
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (reduced) {
         gsap.set(el, { opacity: 1, y: 0 });
+        el.classList.remove("reveal-hidden");
         return;
       }
-      gsap.fromTo(
+      const tween = gsap.fromTo(
         el,
         { opacity: 0, y },
         {
@@ -45,11 +46,24 @@ export function Reveal({
           ease: "power3.out",
           scrollTrigger: {
             trigger: el,
-            start: "top 78%",
+            start: "top 88%",
             toggleActions: "play none none none",
+            once: true,
+          },
+          onComplete: () => {
+            el.classList.remove("reveal-hidden");
           },
         },
       );
+      // If ScrollTrigger never fires (pin conflicts / late hydration), never leave blank.
+      const safety = window.setTimeout(() => {
+        if (getComputedStyle(el).opacity === "0") {
+          tween.progress(1);
+          el.classList.remove("reveal-hidden");
+          gsap.set(el, { opacity: 1, y: 0, clearProps: "transform" });
+        }
+      }, 1800);
+      return () => window.clearTimeout(safety);
     },
     { dependencies: [delay, y] },
   );

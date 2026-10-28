@@ -3,7 +3,6 @@ import Link from "next/link";
 import type { Copy } from "@/content/copy";
 import { SITE } from "@/content/site";
 import { SITE_IMAGES } from "@/content/images";
-import { Reveal } from "@/components/motion/Reveal";
 import { SimulationBadge } from "@/components/ui/SimulationBadge";
 
 type Props = { copy: Copy };
@@ -32,7 +31,8 @@ export function SiteFooter({ copy }: Props) {
       aria-label={copy.locale === "he" ? "כותרת תחתית" : "Site footer"}
     >
       {/* Closing band — desktop only (mobile already has sticky call/WA) */}
-      <Reveal className="hidden md:block">
+      {/* No Reveal here: GSAP/ScrollTrigger was leaving the band at opacity 0 */}
+      <div className="hidden md:block">
         <div className="relative isolate overflow-hidden border-b border-stone/50">
           <Image
             src={SITE_IMAGES.footerCta.src}
@@ -82,126 +82,123 @@ export function SiteFooter({ copy }: Props) {
               </Link>
             </div>
           </div>
-
         </div>
-      </Reveal>
+      </div>
 
-      {/* Columns — mobile 2×2 classic, desktop 4-up */}
-      <Reveal delay={0.06}>
-        <div className="mx-auto max-w-6xl px-4 py-5 md:px-6 md:py-14">
-          <div className="grid grid-cols-2 gap-x-5 gap-y-5 lg:grid-cols-4 lg:gap-10">
-            <div className="min-w-0">
-              <Link href={p || "/"} className="inline-block">
-                <Image
-                  src="/logo.jpg"
-                  alt={brand}
-                  width={140}
-                  height={48}
-                  className="h-8 w-auto object-contain md:h-10"
-                />
-              </Link>
-              <p className="mt-2 font-display text-sm font-bold leading-snug text-ink md:mt-4 md:text-lg">
-                {brand}
-              </p>
-              <p className="mt-1 text-[0.75rem] leading-snug text-bronze md:mt-2 md:text-sm md:leading-relaxed">
-                {copy.footer.offlineDeal}
-              </p>
-            </div>
+      {/* Columns — mobile 2×2 classic, desktop 4-up (always visible; no Reveal) */}
+      <div className="mx-auto max-w-6xl px-4 py-5 md:px-6 md:py-14">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-5 lg:grid-cols-4 lg:gap-10">
+          <div className="min-w-0">
+            <Link href={p || "/"} className="inline-block">
+              <Image
+                src="/logo.jpg"
+                alt={brand}
+                width={140}
+                height={48}
+                className="h-8 w-auto object-contain md:h-10"
+              />
+            </Link>
+            <p className="mt-2 font-display text-sm font-bold leading-snug text-ink md:mt-4 md:text-lg">
+              {brand}
+            </p>
+            <p className="mt-1 text-[0.75rem] leading-snug text-bronze md:mt-2 md:text-sm md:leading-relaxed">
+              {copy.footer.offlineDeal}
+            </p>
+          </div>
 
-            <div className="min-w-0 text-center lg:text-start">
-              <p className="text-caption font-semibold tracking-label text-bronze uppercase md:tracking-wide md:normal-case">
-                {copy.footer.navTitle}
-              </p>
-              <ul className="mt-2.5 space-y-1.5 text-sm md:mt-4 md:space-y-3">
-                {navLinks.map((l) => (
-                  <li key={l.href}>
-                    <Link href={l.href} className="footer-link">
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="min-w-0 text-center lg:text-start">
+            <p className="text-caption font-semibold tracking-label text-bronze uppercase md:tracking-wide md:normal-case">
+              {copy.footer.navTitle}
+            </p>
+            <ul className="mt-2.5 space-y-1.5 text-sm md:mt-4 md:space-y-3">
+              {navLinks.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="footer-link">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <div className="min-w-0">
-              <p className="text-caption font-semibold tracking-label text-bronze uppercase md:tracking-wide md:normal-case">
-                {copy.footer.contactTitle}
-              </p>
-              <ul className="mt-2.5 space-y-1.5 text-label text-ink/90 md:mt-4 md:space-y-3 md:text-sm">
-                <li className="leading-snug">
-                  {copy.locale === "he" ? SITE.addressHe : SITE.addressEn}
-                </li>
-                <li>
-                  <a href={telHref} className="footer-link" dir="ltr">
-                    <bdi>{SITE.phoneDisplay}</bdi>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={`mailto:${SITE.email}`}
-                    className="footer-link break-all"
-                    dir="ltr"
-                  >
-                    <bdi>{SITE.email}</bdi>
-                  </a>
-                </li>
-                <li className="text-bronze">
-                  {copy.locale === "he" ? SITE.hoursHe : SITE.hoursEn}
-                </li>
-                <li>
-                  <a
-                    href={SITE.mapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="footer-link"
-                  >
-                    {copy.footer.maps}
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <div className="min-w-0">
+            <p className="text-caption font-semibold tracking-label text-bronze uppercase md:tracking-wide md:normal-case">
+              {copy.footer.contactTitle}
+            </p>
+            <ul className="mt-2.5 space-y-1.5 text-label text-ink/90 md:mt-4 md:space-y-3 md:text-sm">
+              <li className="leading-snug">
+                {copy.locale === "he" ? SITE.addressHe : SITE.addressEn}
+              </li>
+              <li>
+                <a href={telHref} className="footer-link" dir="ltr">
+                  <bdi>{SITE.phoneDisplay}</bdi>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`mailto:${SITE.email}`}
+                  className="footer-link break-all"
+                  dir="ltr"
+                >
+                  <bdi>{SITE.email}</bdi>
+                </a>
+              </li>
+              <li className="text-bronze">
+                {copy.locale === "he" ? SITE.hoursHe : SITE.hoursEn}
+              </li>
+              <li>
+                <a
+                  href={SITE.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-link"
+                >
+                  {copy.footer.maps}
+                </a>
+              </li>
+            </ul>
+          </div>
 
-            <div className="min-w-0 text-center lg:text-start">
-              <p className="text-caption font-semibold tracking-label text-bronze uppercase md:tracking-wide md:normal-case">
-                {copy.footer.legalTitle}
-              </p>
-              <ul className="mt-2.5 space-y-1.5 text-sm md:mt-4 md:space-y-3">
-                <li>
-                  <Link href={`${p}/accessibility`} className="footer-link">
-                    {copy.footer.accessibility}
-                  </Link>
-                </li>
-                <li>
-                  <Link href={`${p}/privacy`} className="footer-link">
-                    {copy.footer.privacy}
-                  </Link>
-                </li>
-                <li>
-                  <Link href={`${p}/terms`} className="footer-link">
-                    {copy.footer.terms}
-                  </Link>
-                </li>
-                <li>
-                  <Link href={`${p}/shipping`} className="footer-link">
-                    {copy.footer.shipping}
-                  </Link>
-                </li>
-                <li>
-                  <Link href={`${p}/returns`} className="footer-link">
-                    {copy.footer.returns}
-                  </Link>
-                </li>
-              </ul>
-              <p className="mt-2.5 text-micro leading-snug text-bronze md:mt-3 md:text-xs md:leading-relaxed">
-                {SITE.legalName} ·{" "}
-                <span dir="ltr">
-                  ח.פ/עוסק <bdi>{SITE.businessId}</bdi>
-                </span>
-              </p>
-            </div>
+          <div className="min-w-0 text-center lg:text-start">
+            <p className="text-caption font-semibold tracking-label text-bronze uppercase md:tracking-wide md:normal-case">
+              {copy.footer.legalTitle}
+            </p>
+            <ul className="mt-2.5 space-y-1.5 text-sm md:mt-4 md:space-y-3">
+              <li>
+                <Link href={`${p}/accessibility`} className="footer-link">
+                  {copy.footer.accessibility}
+                </Link>
+              </li>
+              <li>
+                <Link href={`${p}/privacy`} className="footer-link">
+                  {copy.footer.privacy}
+                </Link>
+              </li>
+              <li>
+                <Link href={`${p}/terms`} className="footer-link">
+                  {copy.footer.terms}
+                </Link>
+              </li>
+              <li>
+                <Link href={`${p}/shipping`} className="footer-link">
+                  {copy.footer.shipping}
+                </Link>
+              </li>
+              <li>
+                <Link href={`${p}/returns`} className="footer-link">
+                  {copy.footer.returns}
+                </Link>
+              </li>
+            </ul>
+            <p className="mt-2.5 text-micro leading-snug text-bronze md:mt-3 md:text-xs md:leading-relaxed">
+              {SITE.legalName} ·{" "}
+              <span dir="ltr">
+                ח.פ/עוסק <bdi>{SITE.businessId}</bdi>
+              </span>
+            </p>
           </div>
         </div>
-      </Reveal>
+      </div>
 
       <div className="border-t border-stone/50">
         <div className="mx-auto flex max-w-6xl px-4 py-3 md:px-6 md:py-5">

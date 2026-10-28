@@ -255,12 +255,21 @@ body {
   }
 }
 
+/* Initial hide only while GSAP owns the node; never leave blank forever */
 .reveal-hidden {
   opacity: 0;
   transform: translateY(28px);
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reveal-hidden {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* If client JS never attaches, content must still be readable */
+@supports not (animation: fade) {
   .reveal-hidden {
     opacity: 1;
     transform: none;
