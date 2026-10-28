@@ -65,27 +65,31 @@ export function SiteHeader({ copy }: Props) {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const items = linksRef.current.filter(Boolean);
+    /* Keep labels visible immediately — never blank the menu while GSAP loads */
+    for (const el of items) {
+      el.style.opacity = "1";
+      el.style.transform = "none";
+    }
     let cancelled = false;
 
-    void import("gsap").then(({ default: gsap }) => {
-      if (cancelled) return;
-      if (reduced) {
-        gsap.set(items, { opacity: 1, y: 0 });
-      } else {
+    if (!reduced && items.length) {
+      void import("gsap").then(({ default: gsap }) => {
+        if (cancelled) return;
         gsap.fromTo(
           items,
-          { opacity: 0, y: 20 },
+          { y: 14 },
           {
-            opacity: 1,
             y: 0,
-            duration: 0.45,
-            stagger: 0.06,
+            opacity: 1,
+            duration: 0.4,
+            stagger: 0.05,
             ease: "power3.out",
             overwrite: true,
+            clearProps: "transform",
           },
         );
-      }
-    });
+      });
+    }
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeMenu();
@@ -151,7 +155,7 @@ export function SiteHeader({ copy }: Props) {
               <a
                 href={telHref}
                 data-analytics="phone_click"
-                className="btn-primary !min-h-10 !px-5 text-sm !hidden md:!inline-flex"
+                className="btn-primary !hidden min-h-10 px-5 text-sm md:!inline-flex"
               >
                 {copy.nav.ctaCall}
               </a>

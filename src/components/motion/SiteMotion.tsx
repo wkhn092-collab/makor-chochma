@@ -1,6 +1,6 @@
 "use client";
 
-import { MotionProvider } from "@/motion";
+import { MotionProvider } from "@/motion/MotionProvider";
 
 type Props = { children: React.ReactNode };
 

@@ -2,11 +2,16 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import type { Copy } from "@/content/copy";
 import { SITE_IMAGES } from "@/content/images";
-import { useMotion } from "@/motion";
-import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/motion/gsap";
+
+function prefersReducedMotion(): boolean {
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+}
 
 type Props = { copy: Copy };
 
@@ -45,17 +50,14 @@ const GOLD_SOFT = "#D4B87A";
  * RTL: 01 starts on the right.
  */
 export function ScrollRoadmap({ copy }: Props) {
-  const { scrollTo } = useMotion();
-  const scrollToRef = useRef(scrollTo);
-  useEffect(() => {
-    scrollToRef.current = scrollTo;
-  }, [scrollTo]);
-
+  /** Tall scroll track — sticky section locks inside while progress advances 01→04 */
+  const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const progressRef = useRef<SVGPathElement>(null);
   const glowRef = useRef<SVGPathElement>(null);
+  const pathLenRef = useRef(1);
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
   /** Seed seats immediately — never wait on GSAP or the path looks empty (no 01–04 nodes). */
@@ -65,6 +67,7 @@ export function ScrollRoadmap({ copy }: Props) {
       copy.craft.steps.length,
     ),
   );
+  /* Always false on SSR — sync after mount to avoid hydration mismatch */
   const [compact, setCompact] = useState(false);
   const activeRef = useRef(0);
 
@@ -101,8 +104,11 @@ export function ScrollRoadmap({ copy }: Props) {
     glow.setAttribute("d", d);
 
     const len = path.getTotalLength();
-    const seats = rtl ? NODES_DESKTOP_RTL : NODES_DESKTOP_LTR;
-    setNodes(seats.slice(0, stageCount));
+    /*
+     * Do NOT setNodes() here. A state update right before/after ScrollTrigger
+     * pin makes React reparent #craft out of .pin-spacer and the lock dies.
+     * Seats are seeded in useState (and synced below only when locale/count change).
+     */
 
     for (const el of [progress, glow]) {
       el.style.strokeDasharray = `${len}`;
@@ -114,9 +120,26 @@ export function ScrollRoadmap({ copy }: Props) {
       }
     }
     return len;
-  }, [stageCount, pathDesktop, rtl, reduce]);
+  }, [pathDesktop, reduce]);
 
-  /* Layout path + seats even if ScrollTrigger mount is delayed */
+  /* Sync seats when locale / stage count changes — skip if identical (no re-render). */
+  useEffect(() => {
+    const seats = (rtl ? NODES_DESKTOP_RTL : NODES_DESKTOP_LTR).slice(
+      0,
+      stageCount,
+    );
+    setNodes((prev) => {
+      if (
+        prev.length === seats.length &&
+        prev.every((p, i) => p.x === seats[i]!.x && p.y === seats[i]!.y)
+      ) {
+        return prev;
+      }
+      return seats;
+    });
+  }, [rtl, stageCount]);
+
+  /* Layout path even if ScrollTrigger mount is delayed */
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       applyLayout();
@@ -124,22 +147,32 @@ export function ScrollRoadmap({ copy }: Props) {
     return () => cancelAnimationFrame(id);
   }, [applyLayout]);
 
-  /** Scroll to a stage anchor inside the pin — same math as lawyer LegalRoadmap. */
+  /** Scroll distance while the sticky craft panel is locked (lawyer-equivalent). */
+  const pinMetrics = useCallback(() => {
+    const track = trackRef.current;
+    const section = sectionRef.current;
+    if (!track || !section || stageCount <= 1) return null;
+    const pinStart = track.getBoundingClientRect().top + window.scrollY;
+    const pinDistance = Math.max(0, track.offsetHeight - section.offsetHeight);
+    if (pinDistance <= 0) return null;
+    return { pinStart, pinDistance };
+  }, [stageCount]);
+
+  /** Jump to a stage while sticky-locked — same math as lawyer LegalRoadmap. */
   const goToStage = useCallback(
     (targetIdx: number) => {
-      const section = sectionRef.current;
-      const spacer = section?.parentElement;
-      if (!section || !spacer || stageCount <= 1) return;
-      const pinStart = spacer.getBoundingClientRect().top + window.scrollY;
-      const pinDistance = spacer.offsetHeight - section.offsetHeight;
-      if (pinDistance <= 0) return;
+      const m = pinMetrics();
+      if (!m) return;
       const idx = Math.min(stageCount - 1, Math.max(0, targetIdx));
-      const y = pinStart + (idx / (stageCount - 1)) * pinDistance;
-      if (Math.abs(window.scrollY - y) > 2) {
-        scrollToRef.current(y);
-      }
+      const y = m.pinStart + (idx / (stageCount - 1)) * m.pinDistance;
+      if (Math.abs(window.scrollY - y) <= 2) return;
+      const immediate = Boolean(reduce || prefersReducedMotion());
+      window.scrollTo({
+        top: y,
+        behavior: immediate ? "auto" : "smooth",
+      });
     },
-    [stageCount],
+    [pinMetrics, stageCount, reduce],
   );
 
   /*
@@ -160,22 +193,21 @@ export function ScrollRoadmap({ copy }: Props) {
     };
 
     const onEnd = (event: TouchEvent) => {
-      const spacer = section.parentElement;
-      if (!spacer || stageCount <= 1) return;
-      const pinStart = spacer.getBoundingClientRect().top + window.scrollY;
-      const pinDistance = spacer.offsetHeight - section.offsetHeight;
-      if (pinDistance <= 0) return;
+      const m = pinMetrics();
+      if (!m) return;
       const yNow = window.scrollY;
-      if (yNow < pinStart - 4 || yNow > pinStart + pinDistance + 4) return;
+      if (yNow < m.pinStart - 4 || yNow > m.pinStart + m.pinDistance + 4) return;
 
       const endY = event.changedTouches[0]?.clientY ?? startY;
       const dy = startY - endY;
       const step = Math.abs(dy) < 40 ? 0 : dy > 0 ? 1 : -1;
       const target = Math.min(stageCount - 1, Math.max(0, startIdx + step));
-      const y = pinStart + (target / (stageCount - 1)) * pinDistance;
-      if (Math.abs(yNow - y) > 2) {
-        scrollToRef.current(y);
-      }
+      const y = m.pinStart + (target / (stageCount - 1)) * m.pinDistance;
+      if (Math.abs(yNow - y) <= 2) return;
+      window.scrollTo({
+        top: y,
+        behavior: reduce || prefersReducedMotion() ? "auto" : "smooth",
+      });
     };
 
     section.addEventListener("touchstart", onStart, { passive: true });
@@ -184,124 +216,83 @@ export function ScrollRoadmap({ copy }: Props) {
       section.removeEventListener("touchstart", onStart);
       section.removeEventListener("touchend", onEnd);
     };
-  }, [compact, reduce, stageCount]);
+  }, [compact, reduce, stageCount, pinMetrics]);
 
-  useGSAP(
-    () => {
-      const section = sectionRef.current;
-      const progress = progressRef.current;
-      const glow = glowRef.current;
-      if (!section || !progress || !glow) return;
+  /*
+   * Sticky lock (no GSAP pin): tall track + sticky panel.
+   * Scroll through the track advances 01→04 and paints the gold path.
+   */
+  /*
+   * Single owner for stage scrub (no craft-lock.js parallel listeners).
+   * Sticky track + scroll progress → 01–04 + gold path.
+   */
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (section) section.dataset.craftLive = "1";
 
-      /* Kill orphan pins from HMR / prior mounts — those create the black void scroll. */
-      ScrollTrigger.getAll().forEach((st) => {
-        if (st.trigger === section) st.kill();
-      });
+    const length = applyLayout() || progressRef.current?.getTotalLength() || 1;
+    pathLenRef.current = length;
 
-      const paintSpacer = (st: ScrollTrigger | null | undefined) => {
-        const pinEl = st?.pin;
-        const spacer =
-          pinEl instanceof HTMLElement ? pinEl.parentElement : null;
-        if (spacer?.classList.contains("pin-spacer")) {
-          /* Same idea as lawyer navy spacer — no white flash, but short pin only */
-          spacer.style.backgroundColor = "#1a1816";
-        }
-      };
-
-      let len = applyLayout();
-      if (!len) return;
-
-      if (prefersReducedMotion() || reduce) {
-        progress.style.strokeDashoffset = "0";
-        glow.style.strokeDashoffset = "0";
-        setActive(stageCount - 1);
-        return;
+    const paintDash = (p: number) => {
+      const len = pathLenRef.current;
+      const offset = len * (1 - p);
+      for (const el of [progressRef.current, glowRef.current]) {
+        if (!el) continue;
+        el.style.strokeDasharray = `${len}`;
+        el.style.strokeDashoffset = `${offset}`;
       }
+    };
 
-      const mm = gsap.matchMedia();
+    if (reduce || prefersReducedMotion()) {
+      paintDash(1);
+      setActive(stageCount - 1);
+      return;
+    }
 
-      mm.add(
-        {
-          isMobile: "(max-width: 767px)",
-          isDesktop: "(min-width: 768px)",
-          reduceMotion: "(prefers-reduced-motion: reduce)",
-        },
-        (ctx) => {
-          const { isMobile, reduceMotion } = ctx.conditions as {
-            isMobile: boolean;
-            reduceMotion: boolean;
-          };
-          setCompact(isMobile);
+    paintDash(0);
 
-          len = applyLayout() || len;
+    const onScroll = () => {
+      const m = pinMetrics();
+      if (!m) return;
+      const raw = (window.scrollY - m.pinStart) / m.pinDistance;
+      const p = Math.min(1, Math.max(0, raw));
+      paintDash(p);
 
-          if (reduceMotion) {
-            progress.style.strokeDashoffset = "0";
-            glow.style.strokeDashoffset = "0";
-            setActive(stageCount - 1);
-            return;
-          }
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
+      const idx = isMobile
+        ? Math.min(stageCount - 1, Math.round(p * (stageCount - 1)))
+        : Math.min(stageCount - 1, Math.floor(p * stageCount));
+      setActive((prev) => (prev === idx ? prev : idx));
+    };
 
-          const applyProgress = (p: number, mobile: boolean) => {
-            const offset = len * (1 - p);
-            progress.style.strokeDashoffset = `${offset}`;
-            glow.style.strokeDashoffset = `${offset}`;
-            const idx = mobile
-              ? Math.min(stageCount - 1, Math.round(p * (stageCount - 1)))
-              : Math.min(stageCount - 1, Math.floor(p * stageCount));
-            setActive((prev) => (prev === idx ? prev : idx));
-          };
-
-          const tween = gsap.to(
-            {},
-            {
-              ease: "none",
-              scrollTrigger: {
-                trigger: section,
-                start: "top top",
-                /* Exact lawyer LegalRoadmap pin lengths */
-                end: isMobile ? "+=150%" : "+=260%",
-                pin: true,
-                scrub: 0.7,
-                anticipatePin: 1,
-                invalidateOnRefresh: true,
-                onRefresh: (self) => paintSpacer(self),
-                onEnter: (self) => paintSpacer(self),
-                onEnterBack: (self) => paintSpacer(self),
-                onUpdate: (self) => {
-                  paintSpacer(self);
-                  applyProgress(self.progress, isMobile);
-                },
-              },
-            },
-          );
-
-          paintSpacer(tween.scrollTrigger ?? undefined);
-
-          return () => {
-            tween.scrollTrigger?.kill();
-            tween.kill();
-          };
-        },
-      );
-
-      return () => mm.revert();
-    },
-    { scope: sectionRef, dependencies: [applyLayout, reduce, stageCount] },
-  );
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [applyLayout, reduce, stageCount, pinMetrics]);
 
   const stage = stages[active] ?? stages[0]!;
-  const activeImg = craftImgs[active] ?? craftImgs[0]!;
   const strokeTrack = compact ? 12 : 16;
   const strokeGlow = compact ? 18 : 26;
   const strokeProgress = compact ? 8 : 12;
   const nodeSize = compact ? 40 : 52;
 
+  /* Mobile ~150% travel, desktop ~260% — same scroll budget as lawyer pin end */
+  const trackMinH = compact ? "250vh" : "360vh";
+
   return (
+    <div
+      ref={trackRef}
+      className="relative"
+      style={{ minHeight: trackMinH, backgroundColor: "#1a1816" }}
+    >
     <section
       ref={sectionRef}
       id="craft"
-      className="relative isolate min-h-[100svh] overflow-hidden text-white"
+      className="sticky top-0 isolate h-[100svh] max-h-[100svh] overflow-hidden text-white"
       style={{ backgroundColor: "#1a1816" }}
       aria-labelledby="roadmap-heading"
     >
@@ -311,25 +302,24 @@ export function ScrollRoadmap({ copy }: Props) {
         className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
         style={{ backgroundColor: "#1a1816" }}
       >
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={activeImg.src}
-            className="absolute inset-0"
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={reduce ? undefined : { opacity: 0 }}
-            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        {/* All stage photos stacked — scroll runtime toggles opacity via active */}
+        {craftImgs.slice(0, stageCount).map((img, i) => (
+          <div
+            key={img.src}
+            data-craft-photo
+            className="absolute inset-0 transition-opacity duration-500"
+            style={{ opacity: i === active ? 1 : 0 }}
           >
             <Image
-              src={activeImg.src}
+              src={img.src}
               alt=""
               fill
               sizes="100vw"
-              priority={active === 0}
+              priority={i === 0}
               className="select-none object-cover object-center"
             />
-          </motion.div>
-        </AnimatePresence>
+          </div>
+        ))}
         <div
           className="absolute inset-0"
           style={{
@@ -340,57 +330,54 @@ export function ScrollRoadmap({ copy }: Props) {
       </div>
 
       {/*
-        Mobile bottom pad clears sticky + WhatsApp so thumbs/path sit at lawyer height.
-        Lawyer uses ~6.25rem; here sticky+WA need a bit more lift.
+        Same shell as lawyer LegalRoadmap: copy on top, thumbs+sine path at bottom.
+        Extra mobile pb clears sticky + WhatsApp.
       */}
-      <div className="relative z-10 mx-auto flex h-[100svh] max-h-[100svh] max-w-4xl flex-col px-4 pb-[max(8.5rem,calc(env(safe-area-inset-bottom)+7.25rem))] pt-8 md:max-w-5xl md:px-6 md:pb-10 md:pt-10">
-        {/* Story */}
-        <div className="flex shrink-0 flex-col items-center pt-4 text-center md:pt-8">
+      <div className="relative z-10 mx-auto flex h-[100svh] max-h-[100svh] max-w-4xl flex-col px-4 pb-[max(8.5rem,calc(env(safe-area-inset-bottom)+7.25rem))] pt-[max(1.25rem,env(safe-area-inset-top))] md:max-w-5xl md:px-6 md:pb-10 md:pt-10">
+        {/* Story — lawyer layout: in-flow AnimatePresence (no absolute → no stuck opacity:0) */}
+        <div className="mx-auto mt-[min(6vh,2.75rem)] w-full max-w-2xl shrink-0 text-center md:mt-0">
           <p className="text-caption font-medium tracking-[0.28em] text-gold uppercase">
             {copy.locale === "he" ? "ארבעה שלבים" : "Four stages"}
           </p>
 
-          <div className="relative mt-4 flex w-full flex-col items-center">
-            <div className="relative w-full min-h-[6.5rem] md:min-h-[7.25rem]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={stage.n}
-                  initial={reduce ? false : { opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={reduce ? undefined : { opacity: 0, y: -10 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute inset-x-0 top-0 flex flex-col items-center"
-                >
-                  <p className="font-display text-sm font-semibold tracking-[0.2em] text-gold md:text-base">
-                    {stage.n}
-                  </p>
-                  <h2
-                    id="roadmap-heading"
-                    className="font-display mt-2 max-w-xl text-[clamp(1.75rem,4vw,2.75rem)] font-bold leading-[1.12] tracking-[-0.03em] text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]"
-                  >
-                    {stage.title}
-                  </h2>
-                  <p className="mt-2.5 max-w-md text-sm leading-relaxed text-white/88 md:text-[0.95rem]">
-                    {stage.body}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
+          <div className="relative mt-2.5 min-h-[12.5rem] md:mt-3 md:min-h-[8.5rem]">
+            {/*
+              Lawyer LegalRoadmap uses motion/react; here GSAP pin was leaving
+              framer-motion entrance at opacity:0. Keep copy always visible —
+              crossfade only the photo behind (AnimatePresence above).
+            */}
+            <div aria-live="polite" aria-atomic="true">
+              <p
+                data-craft-num
+                className="font-display text-[1.1rem] font-semibold tracking-[0.2em] text-gold md:text-[0.85rem]"
+              >
+                {stage.n}
+              </p>
+              <h2
+                id="roadmap-heading"
+                className="font-display mt-1.5 text-[clamp(2rem,7.5vw,2.45rem)] font-bold leading-[1.15] tracking-[-0.03em] text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)] md:mt-1 md:text-[clamp(1.35rem,5.5vw,2.1rem)] md:leading-tight"
+              >
+                {stage.title}
+              </h2>
+              <p
+                data-craft-body
+                className="mx-auto mt-3 max-w-[34ch] text-[1.05rem] leading-snug text-white/90 md:mt-2 md:max-w-md md:text-[0.95rem] md:leading-relaxed"
+              >
+                {stage.body}
+              </p>
+              <a
+                href="#lead"
+                className="relative z-10 mt-5 inline-flex min-h-12 items-center touch-manipulation rounded-full bg-gold px-7 py-2.5 text-[1rem] font-semibold text-[#1a1612] shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-transform hover:scale-[1.02] md:mt-4 md:min-h-10 md:px-5 md:text-sm"
+              >
+                {copy.craft.cta}
+              </a>
             </div>
-            <a
-              href="#lead"
-              className="relative z-10 mt-4 inline-flex min-h-11 shrink-0 items-center touch-manipulation rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-[#1a1612] shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-transform hover:scale-[1.02] md:mt-5"
-            >
-              {copy.craft.cta}
-            </a>
           </div>
         </div>
 
-        {/* Thumbs + path — lawyer: mt-auto + tight gap, lifted by section pb */}
-        <div className="relative mt-auto mx-auto flex w-full max-w-5xl min-h-0 flex-col justify-end gap-2.5 pb-1 pt-4 md:mt-3 md:gap-4 md:pb-2 md:pt-0">
-          <ul
-            className={`mx-auto flex w-full max-w-3xl gap-2.5 md:gap-3 ${rtl ? "flex-row-reverse" : ""}`}
-            dir="ltr"
-          >
+        {/* Thumbs + sine path — exact lawyer LegalRoadmap geometry */}
+        <div className="relative mt-auto flex min-h-0 flex-col justify-end gap-2.5 pb-1 pt-4 md:mt-3 md:gap-4 md:pb-2 md:pt-0">
+          <ul className="mx-auto grid w-full max-w-2xl shrink-0 grid-cols-4 gap-2 md:gap-2.5">
             {stages.map((s, i) => {
               const img = craftImgs[i] ?? craftImgs[0]!;
               const on = i === active;
@@ -398,6 +385,7 @@ export function ScrollRoadmap({ copy }: Props) {
                 <li key={s.n} className="min-w-0 flex-1">
                   <button
                     type="button"
+                    data-craft-thumb
                     onClick={() => goToStage(i)}
                     className="relative block w-full overflow-hidden rounded-md text-start outline-none transition-[box-shadow,transform] duration-500"
                     style={{
@@ -436,12 +424,14 @@ export function ScrollRoadmap({ copy }: Props) {
                       </span>
                       {/* Bottom strip: gold + number when active, dark + number when not */}
                       <span
+                        data-craft-strip
                         className="absolute inset-x-0 bottom-0 flex h-6 items-center justify-center md:h-8"
                         style={{
                           background: on ? GOLD : "rgba(0,0,0,0.55)",
                         }}
                       >
                         <span
+                          data-craft-strip-label
                           className="text-caption font-bold tracking-[0.14em] md:text-xs"
                           style={{ color: on ? "#1a1612" : "rgba(255,255,255,0.75)" }}
                         >
@@ -498,7 +488,6 @@ export function ScrollRoadmap({ copy }: Props) {
                 strokeLinejoin="round"
                 opacity={0.5}
                 filter="url(#roadmap-glow)"
-                style={{ willChange: "stroke-dashoffset" }}
               />
               <path
                 ref={progressRef}
@@ -509,7 +498,6 @@ export function ScrollRoadmap({ copy }: Props) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 filter="url(#roadmap-glow)"
-                style={{ willChange: "stroke-dashoffset" }}
               />
 
               {nodes.map((pos, i) => {
@@ -557,5 +545,6 @@ export function ScrollRoadmap({ copy }: Props) {
         </div>
       </div>
     </section>
+    </div>
   );
 }
