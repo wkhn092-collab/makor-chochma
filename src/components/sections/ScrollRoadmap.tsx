@@ -1,11 +1,12 @@
 ﻿"use client";
 
 import Image from "next/image";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { Copy } from "@/content/copy";
 import { SITE_IMAGES } from "@/content/images";
-import { gsap, prefersReducedMotion, useGSAP } from "@/motion/gsap";
+import { useMotion } from "@/motion";
+import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/motion/gsap";
 
 type Props = { copy: Copy };
 
@@ -33,13 +34,8 @@ const NODES_DESKTOP_LTR: NodePos[] = [
   { x: 780, y: 200 },
   { x: 1180, y: 200 },
 ];
-const PATH_MOBILE =
-  "M 160 40 C 160 40 60 140 60 220 C 60 320 260 360 260 460 C 260 560 60 600 60 700 C 60 780 160 840 160 880";
-
-const VIEW_DESKTOP = { w: 1240, h: 400 };
-const VIEW_MOBILE = { w: 320, h: 920 };
-/** Sized for lawyer-scale SVG (~260px tall) so labels stay readable */
-const NODE_SIZE = 56;
+/** Same viewBox as lawyer LegalRoadmap — one sine path on phone and desktop */
+const VIEW = { w: 1240, h: 400 };
 
 const GOLD = "#C9A962";
 const GOLD_SOFT = "#D4B87A";
@@ -49,6 +45,12 @@ const GOLD_SOFT = "#D4B87A";
  * RTL: 01 starts on the right.
  */
 export function ScrollRoadmap({ copy }: Props) {
+  const { scrollTo } = useMotion();
+  const scrollToRef = useRef(scrollTo);
+  useEffect(() => {
+    scrollToRef.current = scrollTo;
+  }, [scrollTo]);
+
   const sectionRef = useRef<HTMLElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
@@ -57,24 +59,26 @@ export function ScrollRoadmap({ copy }: Props) {
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
   const [nodes, setNodes] = useState<NodePos[]>([]);
+  const [compact, setCompact] = useState(false);
+  const activeRef = useRef(0);
+
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const sync = () => setCompact(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   const stages = copy.craft.steps;
+  const stageCount = stages.length;
   const craftImgs = SITE_IMAGES.craft;
   const rtl = copy.locale === "he";
   const pathDesktop = rtl ? PATH_DESKTOP_RTL : PATH_DESKTOP_LTR;
-  /**
-   * Last step near the end (~0.92) — late enough to feel like "סוף",
-   * but slightly before 1 so image 04 is visible before pin releases.
-   */
-  const thresholds = useMemo(() => {
-    const n = stages.length;
-    if (n <= 1) return [0];
-    return stages.map((_, i) => {
-      if (i === 0) return 0;
-      if (i === n - 1) return 0.92;
-      return i / Math.max(1, n - 1);
-    });
-  }, [stages]);
 
   const applyLayout = useCallback(() => {
     const path = pathRef.current;
@@ -83,37 +87,85 @@ export function ScrollRoadmap({ copy }: Props) {
     const svg = svgRef.current;
     if (!path || !progress || !glow || !svg) return 0;
 
-    const mobile = window.matchMedia("(max-width: 767px)").matches;
-    const view = mobile ? VIEW_MOBILE : VIEW_DESKTOP;
-    const d = mobile ? PATH_MOBILE : pathDesktop;
-
-    svg.setAttribute("viewBox", `0 0 ${view.w} ${view.h}`);
+    /* Lawyer parity: same horizontal sine on all breakpoints (no vertical zigzag). */
+    const d = pathDesktop;
+    svg.setAttribute("viewBox", `0 0 ${VIEW.w} ${VIEW.h}`);
     path.setAttribute("d", d);
     progress.setAttribute("d", d);
     glow.setAttribute("d", d);
 
     const len = path.getTotalLength();
-    const count = stages.length;
-
-    if (mobile) {
-      const pts: NodePos[] = [];
-      for (let i = 0; i < count; i++) {
-        const t = count === 1 ? 0 : i / (count - 1);
-        const p = path.getPointAtLength(len * t);
-        pts.push({ x: p.x, y: p.y });
-      }
-      setNodes(pts);
-    } else {
-      const seats = rtl ? NODES_DESKTOP_RTL : NODES_DESKTOP_LTR;
-      setNodes(seats.slice(0, count));
-    }
+    const seats = rtl ? NODES_DESKTOP_RTL : NODES_DESKTOP_LTR;
+    setNodes(seats.slice(0, stageCount));
 
     for (const el of [progress, glow]) {
       el.style.strokeDasharray = `${len}`;
       el.style.strokeDashoffset = `${len}`;
     }
     return len;
-  }, [stages.length, pathDesktop, rtl]);
+  }, [stageCount, pathDesktop, rtl]);
+
+  /** Scroll to a stage anchor inside the pin — same math as lawyer LegalRoadmap. */
+  const goToStage = useCallback(
+    (targetIdx: number) => {
+      const section = sectionRef.current;
+      const spacer = section?.parentElement;
+      if (!section || !spacer || stageCount <= 1) return;
+      const pinStart = spacer.getBoundingClientRect().top + window.scrollY;
+      const pinDistance = spacer.offsetHeight - section.offsetHeight;
+      if (pinDistance <= 0) return;
+      const idx = Math.min(stageCount - 1, Math.max(0, targetIdx));
+      const y = pinStart + (idx / (stageCount - 1)) * pinDistance;
+      if (Math.abs(window.scrollY - y) > 2) {
+        scrollToRef.current(y);
+      }
+    },
+    [stageCount],
+  );
+
+  /*
+   * Phone: one finger swipe = exactly one stage (lawyer LegalRoadmap).
+   * Never lands between numbers; first/last stage lets the page scroll on.
+   */
+  useEffect(() => {
+    if (!compact || reduce) return;
+    const section = sectionRef.current;
+    if (!section) return;
+
+    let startY = 0;
+    let startIdx = 0;
+
+    const onStart = (event: TouchEvent) => {
+      startY = event.touches[0]?.clientY ?? 0;
+      startIdx = activeRef.current;
+    };
+
+    const onEnd = (event: TouchEvent) => {
+      const spacer = section.parentElement;
+      if (!spacer || stageCount <= 1) return;
+      const pinStart = spacer.getBoundingClientRect().top + window.scrollY;
+      const pinDistance = spacer.offsetHeight - section.offsetHeight;
+      if (pinDistance <= 0) return;
+      const yNow = window.scrollY;
+      if (yNow < pinStart - 4 || yNow > pinStart + pinDistance + 4) return;
+
+      const endY = event.changedTouches[0]?.clientY ?? startY;
+      const dy = startY - endY;
+      const step = Math.abs(dy) < 40 ? 0 : dy > 0 ? 1 : -1;
+      const target = Math.min(stageCount - 1, Math.max(0, startIdx + step));
+      const y = pinStart + (target / (stageCount - 1)) * pinDistance;
+      if (Math.abs(yNow - y) > 2) {
+        scrollToRef.current(y);
+      }
+    };
+
+    section.addEventListener("touchstart", onStart, { passive: true });
+    section.addEventListener("touchend", onEnd, { passive: true });
+    return () => {
+      section.removeEventListener("touchstart", onStart);
+      section.removeEventListener("touchend", onEnd);
+    };
+  }, [compact, reduce, stageCount]);
 
   useGSAP(
     () => {
@@ -122,81 +174,132 @@ export function ScrollRoadmap({ copy }: Props) {
       const glow = glowRef.current;
       if (!section || !progress || !glow) return;
 
+      /* Kill orphan pins from HMR / prior mounts — those create the black void scroll. */
+      ScrollTrigger.getAll().forEach((st) => {
+        if (st.trigger === section) st.kill();
+      });
+
+      const paintSpacer = (st: ScrollTrigger | null | undefined) => {
+        const pinEl = st?.pin;
+        const spacer =
+          pinEl instanceof HTMLElement ? pinEl.parentElement : null;
+        if (spacer?.classList.contains("pin-spacer")) {
+          /* Same idea as lawyer navy spacer — no white flash, but short pin only */
+          spacer.style.backgroundColor = "#1a1816";
+        }
+      };
+
       let len = applyLayout();
       if (!len) return;
 
       if (prefersReducedMotion() || reduce) {
         progress.style.strokeDashoffset = "0";
         glow.style.strokeDashoffset = "0";
-        setActive(stages.length - 1);
+        setActive(stageCount - 1);
         return;
       }
 
-      const applyProgress = (p: number) => {
-        const offset = len * (1 - p);
-        progress.style.strokeDashoffset = `${offset}`;
-        glow.style.strokeDashoffset = `${offset}`;
+      const mm = gsap.matchMedia();
 
-        let idx = 0;
-        for (let i = 0; i < thresholds.length; i++) {
-          if (p + 0.001 >= (thresholds[i] ?? 0)) idx = i;
-        }
-        setActive((prev) => (prev === idx ? prev : idx));
-      };
-
-      const tween = gsap.to(
-        {},
+      mm.add(
         {
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: () => `+=${Math.round(window.innerHeight * stages.length * 0.95)}`,
-            pin: true,
-            scrub: 0.45,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => applyProgress(self.progress),
-          },
+          isMobile: "(max-width: 767px)",
+          isDesktop: "(min-width: 768px)",
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+        },
+        (ctx) => {
+          const { isMobile, reduceMotion } = ctx.conditions as {
+            isMobile: boolean;
+            reduceMotion: boolean;
+          };
+          setCompact(isMobile);
+
+          len = applyLayout() || len;
+
+          if (reduceMotion) {
+            progress.style.strokeDashoffset = "0";
+            glow.style.strokeDashoffset = "0";
+            setActive(stageCount - 1);
+            return;
+          }
+
+          const applyProgress = (p: number, mobile: boolean) => {
+            const offset = len * (1 - p);
+            progress.style.strokeDashoffset = `${offset}`;
+            glow.style.strokeDashoffset = `${offset}`;
+            const idx = mobile
+              ? Math.min(stageCount - 1, Math.round(p * (stageCount - 1)))
+              : Math.min(stageCount - 1, Math.floor(p * stageCount));
+            setActive((prev) => (prev === idx ? prev : idx));
+          };
+
+          const tween = gsap.to(
+            {},
+            {
+              ease: "none",
+              scrollTrigger: {
+                trigger: section,
+                start: "top top",
+                /* Exact lawyer LegalRoadmap pin lengths */
+                end: isMobile ? "+=150%" : "+=260%",
+                pin: true,
+                scrub: 0.7,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+                onRefresh: (self) => paintSpacer(self),
+                onEnter: (self) => paintSpacer(self),
+                onEnterBack: (self) => paintSpacer(self),
+                onUpdate: (self) => {
+                  paintSpacer(self);
+                  applyProgress(self.progress, isMobile);
+                },
+              },
+            },
+          );
+
+          paintSpacer(tween.scrollTrigger ?? undefined);
+
+          return () => {
+            tween.scrollTrigger?.kill();
+            tween.kill();
+          };
         },
       );
 
-      const onResize = () => {
-        len = applyLayout() || len;
-        applyProgress(tween.scrollTrigger?.progress ?? 0);
-        tween.scrollTrigger?.refresh();
-      };
-      window.addEventListener("resize", onResize);
-
-      return () => {
-        window.removeEventListener("resize", onResize);
-        tween.scrollTrigger?.kill();
-        tween.kill();
-      };
+      return () => mm.revert();
     },
-    { scope: sectionRef, dependencies: [applyLayout, reduce, stages.length, thresholds] },
+    { scope: sectionRef, dependencies: [applyLayout, reduce, stageCount] },
   );
 
   const stage = stages[active] ?? stages[0]!;
   const activeImg = craftImgs[active] ?? craftImgs[0]!;
+  const strokeTrack = compact ? 12 : 16;
+  const strokeGlow = compact ? 18 : 26;
+  const strokeProgress = compact ? 8 : 12;
+  const nodeSize = compact ? 40 : 52;
 
   return (
     <section
       ref={sectionRef}
       id="craft"
-      className="relative isolate overflow-hidden text-white"
+      className="relative isolate min-h-[100svh] overflow-hidden text-white"
       style={{ backgroundColor: "#1a1816" }}
       aria-labelledby="roadmap-heading"
     >
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <AnimatePresence mode="sync" initial={false}>
+      {/* Lawyer-style: solid underlay + crossfade — never an empty black frame */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+        style={{ backgroundColor: "#1a1816" }}
+      >
+        <AnimatePresence initial={false}>
           <motion.div
             key={activeImg.src}
             className="absolute inset-0"
-            initial={reduce ? false : { opacity: 0, scale: 1.03 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={reduce ? undefined : { opacity: 0 }}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           >
             <Image
               src={activeImg.src}
@@ -204,7 +307,7 @@ export function ScrollRoadmap({ copy }: Props) {
               fill
               sizes="100vw"
               priority={active === 0}
-              className="object-cover object-center"
+              className="select-none object-cover object-center"
             />
           </motion.div>
         </AnimatePresence>
@@ -212,14 +315,18 @@ export function ScrollRoadmap({ copy }: Props) {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(18,16,14,0.22) 0%, rgba(18,16,14,0.15) 42%, rgba(18,16,14,0.62) 100%)",
+              "linear-gradient(180deg, rgba(18,16,14,0.55) 0%, rgba(18,16,14,0.28) 38%, rgba(18,16,14,0.2) 55%, rgba(18,16,14,0.72) 100%)",
           }}
         />
       </div>
 
-      <div className="relative z-10 mx-auto flex h-[100svh] max-w-4xl flex-col justify-between px-4 py-8 md:px-6 md:py-10">
+      {/*
+        Mobile bottom pad clears sticky + WhatsApp so thumbs/path sit at lawyer height.
+        Lawyer uses ~6.25rem; here sticky+WA need a bit more lift.
+      */}
+      <div className="relative z-10 mx-auto flex h-[100svh] max-h-[100svh] max-w-4xl flex-col px-4 pb-[max(8.5rem,calc(env(safe-area-inset-bottom)+7.25rem))] pt-8 md:max-w-5xl md:px-6 md:pb-10 md:pt-10">
         {/* Story */}
-        <div className="flex flex-col items-center pt-4 text-center md:pt-8">
+        <div className="flex shrink-0 flex-col items-center pt-4 text-center md:pt-8">
           <p className="text-caption font-medium tracking-[0.28em] text-gold uppercase">
             {copy.locale === "he" ? "ארבעה שלבים" : "Four stages"}
           </p>
@@ -259,10 +366,10 @@ export function ScrollRoadmap({ copy }: Props) {
           </div>
         </div>
 
-        {/* Thumbs + path — lawyer width (max-w-5xl) */}
-        <div className="mx-auto w-full max-w-5xl pb-1">
+        {/* Thumbs + path — lawyer: mt-auto + tight gap, lifted by section pb */}
+        <div className="relative mt-auto mx-auto flex w-full max-w-5xl min-h-0 flex-col justify-end gap-2.5 pb-1 pt-4 md:mt-3 md:gap-4 md:pb-2 md:pt-0">
           <ul
-            className={`mx-auto flex max-w-3xl gap-2.5 md:gap-3 ${rtl ? "flex-row-reverse" : ""}`}
+            className={`mx-auto flex w-full max-w-3xl gap-2.5 md:gap-3 ${rtl ? "flex-row-reverse" : ""}`}
             dir="ltr"
           >
             {stages.map((s, i) => {
@@ -272,7 +379,7 @@ export function ScrollRoadmap({ copy }: Props) {
                 <li key={s.n} className="min-w-0 flex-1">
                   <button
                     type="button"
-                    onClick={() => setActive(i)}
+                    onClick={() => goToStage(i)}
                     className="relative block w-full overflow-hidden rounded-md text-start outline-none transition-[box-shadow,transform] duration-500"
                     style={{
                       transform: on ? "translateY(-2px)" : undefined,
@@ -329,11 +436,11 @@ export function ScrollRoadmap({ copy }: Props) {
             })}
           </ul>
 
-          {/* Lawyer-scale sine path — same max-h as cohen-law (~260px desktop) */}
-          <div className="relative mt-2 w-full md:mt-3" dir="ltr">
+          {/* Exact lawyer LegalRoadmap sine — same path phone + desktop */}
+          <div className="relative w-full shrink-0" dir="ltr">
             <svg
               ref={svgRef}
-              viewBox={`0 0 ${VIEW_DESKTOP.w} ${VIEW_DESKTOP.h}`}
+              viewBox={`0 0 ${VIEW.w} ${VIEW.h}`}
               className="mx-auto h-auto w-full max-h-[min(18vh,130px)] max-w-5xl shrink-0 overflow-visible drop-shadow-[0_8px_24px_rgb(0_0_0/0.35)] md:max-h-[min(32vh,260px)]"
               role="img"
               aria-label={copy.craft.h2}
@@ -358,7 +465,7 @@ export function ScrollRoadmap({ copy }: Props) {
                 d={pathDesktop}
                 fill="none"
                 stroke="rgba(255,255,255,0.22)"
-                strokeWidth={16}
+                strokeWidth={strokeTrack}
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
@@ -367,7 +474,7 @@ export function ScrollRoadmap({ copy }: Props) {
                 d={pathDesktop}
                 fill="none"
                 stroke={GOLD}
-                strokeWidth={26}
+                strokeWidth={strokeGlow}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 opacity={0.5}
@@ -379,7 +486,7 @@ export function ScrollRoadmap({ copy }: Props) {
                 d={pathDesktop}
                 fill="none"
                 stroke="url(#roadmap-gold)"
-                strokeWidth={12}
+                strokeWidth={strokeProgress}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 filter="url(#roadmap-glow)"
@@ -389,31 +496,35 @@ export function ScrollRoadmap({ copy }: Props) {
               {nodes.map((pos, i) => {
                 const on = i <= active;
                 const current = i === active;
-                const half = NODE_SIZE / 2;
+                const half = nodeSize / 2;
                 const label = stages[i]?.n ?? String(i + 1).padStart(2, "0");
                 return (
                   <g key={label} transform={`translate(${pos.x} ${pos.y})`}>
                     {current ? (
-                      <circle r={half + 14} fill="rgba(201,169,98,0.25)" filter="url(#roadmap-glow)" />
+                      <circle
+                        r={nodeSize * 0.72}
+                        fill="rgba(201,169,98,0.25)"
+                        filter="url(#roadmap-glow)"
+                      />
                     ) : null}
                     <rect
                       x={-half}
                       y={-half}
-                      width={NODE_SIZE}
-                      height={NODE_SIZE}
-                      rx={14}
-                      ry={14}
+                      width={nodeSize}
+                      height={nodeSize}
+                      rx={12}
+                      ry={12}
                       fill="#161412"
-                      stroke={on ? GOLD : "rgba(255,255,255,0.3)"}
-                      strokeWidth={current ? 3 : 1.75}
+                      stroke={on ? GOLD : "rgba(255,255,255,0.28)"}
+                      strokeWidth={1.5}
                     />
                     <text
                       x={0}
                       y={0}
-                      dy="0.35em"
+                      dominantBaseline="central"
                       textAnchor="middle"
-                      fill={on ? GOLD : "rgba(255,255,255,0.7)"}
-                      fontSize={20}
+                      fill={on ? GOLD : "rgba(255,255,255,0.45)"}
+                      fontSize={compact ? 12 : 15}
                       fontWeight={700}
                       style={{ fontFamily: "var(--font-frank), Georgia, serif" }}
                     >

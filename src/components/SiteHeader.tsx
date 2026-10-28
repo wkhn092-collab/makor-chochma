@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Copy } from "@/content/copy";
 import { SITE } from "@/content/site";
+import { useLeadUi } from "@/store/lead-ui";
 import clsx from "clsx";
 
 type Props = { copy: Copy };
@@ -20,10 +21,19 @@ export function SiteHeader({ copy }: Props) {
   const home = p || "/";
   const panelId = useId();
   const linksRef = useRef<(HTMLAnchorElement | null)[]>([]);
-  const lastY = useRef(0);
-  const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpenLocal] = useState(false);
+  const setMenuOpenStore = useLeadUi((s) => s.setMenuOpen);
+  const setMenuOpen = useCallback(
+    (next: boolean | ((prev: boolean) => boolean)) => {
+      setMenuOpenLocal((prev) => {
+        const value = typeof next === "function" ? next(prev) : next;
+        setMenuOpenStore(value);
+        return value;
+      });
+    },
+    [setMenuOpenStore],
+  );
 
   const links = [
     { href: `${p}/about`, label: copy.nav.about },
@@ -35,35 +45,16 @@ export function SiteHeader({ copy }: Props) {
   const telHref = `tel:+${SITE.phoneE164}`;
   const brand = copy.locale === "he" ? SITE.brand : SITE.brandEn;
 
-  const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const closeMenu = useCallback(() => setMenuOpen(false), [setMenuOpen]);
+
+  useEffect(() => () => setMenuOpenStore(false), [setMenuOpenStore]);
 
   useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      const delta = y - lastY.current;
-      setScrolled(y > 24);
-
-      if (menuOpen) {
-        lastY.current = y;
-        return;
-      }
-
-      if (y < 48) {
-        setHidden(false);
-      } else if (delta > 10) {
-        setHidden(true);
-      } else if (delta < -8) {
-        setHidden(false);
-      }
-
-      lastY.current = y;
-    };
-
-    lastY.current = window.scrollY;
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [menuOpen]);
+  }, []);
 
   useEffect(() => {
     if (!menuOpen) {
@@ -83,12 +74,12 @@ export function SiteHeader({ copy }: Props) {
       } else {
         gsap.fromTo(
           items,
-          { opacity: 0, y: 28 },
+          { opacity: 0, y: 20 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.55,
-            stagger: 0.07,
+            duration: 0.45,
+            stagger: 0.06,
             ease: "power3.out",
             overwrite: true,
           },
@@ -110,11 +101,7 @@ export function SiteHeader({ copy }: Props) {
   return (
     <>
       <header
-        className={clsx(
-          "fixed inset-x-0 top-0 z-50 transition-transform duration-500",
-          hidden && !menuOpen ? "-translate-y-full" : "translate-y-0",
-        )}
-        style={{ transitionTimingFunction: EASE_EXPO }}
+        className="fixed inset-x-0 top-0 z-[70]"
       >
         <div
           className={clsx(
@@ -208,7 +195,7 @@ export function SiteHeader({ copy }: Props) {
         </div>
       </header>
 
-      {/* Mobile full-screen overlay */}
+      {/* Mobile full-screen overlay — above sticky/WA, below header controls */}
       <div
         id={panelId}
         role="dialog"
@@ -216,12 +203,15 @@ export function SiteHeader({ copy }: Props) {
         aria-label={copy.nav.openMenu}
         hidden={!menuOpen}
         className={clsx(
-          "fixed inset-0 z-40 flex flex-col bg-parchment/95 backdrop-blur-xl md:hidden",
+          "fixed inset-0 z-[60] flex h-[100dvh] max-h-[100dvh] flex-col bg-parchment md:hidden",
           menuOpen ? "pointer-events-auto" : "pointer-events-none",
         )}
       >
-        <div className="flex flex-1 flex-col justify-center px-6 pb-28 pt-24">
-          <nav aria-label="Mobile" className="flex flex-col gap-2">
+        <div className="flex min-h-0 flex-1 flex-col px-5 pt-[4.75rem]">
+          <p className="text-caption font-semibold tracking-caption-wide text-bronze uppercase">
+            {copy.locale === "he" ? "תפריט" : "Menu"}
+          </p>
+          <nav aria-label="Mobile" className="mt-4 flex flex-col">
             {links.map((l, i) => (
               <Link
                 key={l.href}
@@ -230,7 +220,7 @@ export function SiteHeader({ copy }: Props) {
                   linksRef.current[i] = el;
                 }}
                 onClick={closeMenu}
-                className="font-display border-b border-stone/40 py-4 text-2xl font-bold text-ink"
+                className="font-display border-b border-stone/45 py-4 text-[1.5rem] font-bold leading-snug tracking-[-0.02em] text-ink first:border-t first:border-stone/45"
               >
                 {l.label}
               </Link>
@@ -238,18 +228,21 @@ export function SiteHeader({ copy }: Props) {
           </nav>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 border-t border-stone/50 bg-parchment/90 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+        <div className="shrink-0 border-t border-stone/50 bg-parchment-deep px-4 pt-3.5 pb-[max(0.85rem,env(safe-area-inset-bottom))]">
           <a
             href={telHref}
             data-analytics="phone_click"
             onClick={closeMenu}
-            className="btn-primary w-full text-base"
+            className="btn-primary w-full !min-h-12 text-base"
           >
             {copy.nav.ctaCall}
             <span className="ms-2 font-semibold opacity-80" dir="ltr">
               <bdi>{SITE.phoneDisplay}</bdi>
             </span>
           </a>
+          <p className="mt-2.5 text-center text-xs text-bronze">
+            {copy.locale === "he" ? SITE.hoursHe : SITE.hoursEn}
+          </p>
         </div>
       </div>
     </>

@@ -94,10 +94,25 @@ export function CdnVideo({
       videoRef.current?.pause();
       return;
     }
-    const v = videoRef.current;
-    if (!v) return;
-    v.muted = false;
-    v.play().catch(() => undefined);
+    let cancelled = false;
+    const tryPlay = () => {
+      const v = videoRef.current;
+      if (!v || cancelled) return;
+      v.playsInline = true;
+      const run = () =>
+        v.play().catch(() => {
+          v.muted = true;
+          return v.play().catch(() => undefined);
+        });
+      if (v.readyState >= 2) void run();
+      else v.addEventListener("loadeddata", () => void run(), { once: true });
+    };
+    // Wait one frame so <video> ref is attached after started&&active flip
+    const id = requestAnimationFrame(tryPlay);
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(id);
+    };
   }, [playing]);
 
   function handleStart() {
