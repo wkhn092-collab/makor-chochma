@@ -122,13 +122,13 @@ export function CdnVideo({
           className="absolute inset-0 z-10 block w-full"
           aria-label={`${playLabel}: ${title}`}
         >
-          {nearViewport && poster ? (
+          {poster ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={poster}
               alt=""
               className="absolute inset-0 h-full w-full object-cover object-center"
-              loading="lazy"
+              loading={nearViewport ? "eager" : "lazy"}
               decoding="async"
               fetchPriority="low"
             />
