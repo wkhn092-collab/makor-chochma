@@ -64,7 +64,9 @@ export function SiteHeader({ copy }: Props) {
     document.body.style.overflow = "hidden";
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const items = linksRef.current.filter(Boolean);
+    const items = linksRef.current.filter(
+      (el): el is HTMLAnchorElement => el != null,
+    );
     /* Keep labels visible immediately — never blank the menu while GSAP loads */
     for (const el of items) {
       el.style.opacity = "1";
