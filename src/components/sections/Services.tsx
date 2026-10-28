@@ -8,6 +8,7 @@ import { useLeadUi } from "@/store/lead-ui";
 import { SecondaryInterestHint } from "@/components/SecondaryInterestHint";
 import { Reveal } from "@/motion/Reveal";
 import { InkReveal } from "@/components/motion/InkReveal";
+import { SimulationBadge } from "@/components/ui/SimulationBadge";
 import clsx from "clsx";
 
 type Props = { copy: Copy };
@@ -29,26 +30,26 @@ export function Services({ copy }: Props) {
   const items = INTERESTS.filter((i) => i.id !== "general");
 
   return (
-    <section id="services" className="border-y border-stone/70 bg-parchment py-16 md:py-24">
+    <section id="services" className="border-y border-stone/70 bg-parchment py-12 md:py-24">
       <div className="mx-auto max-w-5xl px-4 md:px-6">
         <div className="max-w-2xl">
-          <p className="text-caption font-semibold tracking-[0.22em] text-gold uppercase">
+          <p className="text-caption font-semibold tracking-eyebrow text-bronze uppercase">
             {copy.locale === "he" ? "הסדנה" : "The atelier"}
           </p>
           <InkReveal
             as="h2"
-            className="font-display mt-3 text-[clamp(1.65rem,3.6vw,2.5rem)] font-bold leading-[1.15] tracking-[-0.02em] text-ink"
+            className="font-display mt-2.5 text-[clamp(1.5rem,3.6vw,2.5rem)] font-bold leading-[1.15] tracking-[-0.02em] text-ink md:mt-3"
           >
             {copy.services.h2}
           </InkReveal>
           <Reveal delay={0.06} y={16}>
-            <p className="mt-4 text-base leading-relaxed text-ink/70 md:text-lead">
+            <p className="mt-3 text-body-soft leading-relaxed text-ink/70 md:mt-4 md:text-base md:text-lead">
               {copy.services.lead}
             </p>
           </Reveal>
         </div>
 
-        <ul className="mt-12 border-t border-ink/10">
+        <ul className="mt-8 border-t border-ink/10 md:mt-12">
           {items.map((item, idx) => {
             const selected = interest === item.id;
             const title = copy.locale === "he" ? item.he : item.en;
@@ -73,7 +74,7 @@ export function Services({ copy }: Props) {
                 >
                   <span
                     className={clsx(
-                      "font-display text-sm font-semibold tracking-[0.12em] tabular-nums transition-colors",
+                      "font-display text-sm font-semibold tracking-wide tabular-nums transition-colors",
                       selected ? "text-gold" : "text-bronze/70 group-hover:text-gold",
                     )}
                   >
@@ -93,6 +94,12 @@ export function Services({ copy }: Props) {
                         )}
                       />
                     ) : null}
+                    {src ? (
+                      <SimulationBadge
+                        label={copy.hero.simulation}
+                        className="start-0.5 top-0.5 max-w-[calc(100%-4px)] truncate px-1 py-px sm:start-1 sm:top-1"
+                      />
+                    ) : null}
                     <span
                       aria-hidden
                       className={clsx(
@@ -107,7 +114,7 @@ export function Services({ copy }: Props) {
                       <span className="font-display text-[clamp(1.15rem,2.4vw,1.65rem)] font-bold leading-tight tracking-[-0.02em] text-ink">
                         {title}
                       </span>
-                      <span className="mt-1 block max-w-xl text-[0.875rem] leading-relaxed text-ink/65 sm:mt-1.5 md:text-[0.95rem]">
+                      <span className="mt-1 block max-w-xl text-body-sm leading-relaxed text-ink/65 sm:mt-1.5 md:text-body-soft">
                         {blurb}
                       </span>
                       <span

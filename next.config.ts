@@ -27,6 +27,8 @@ try {
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   productionBrowserSourceMaps: false,
+  /** Hide Next.js “N” badge while designing mobile layouts */
+  devIndicators: false,
   cacheComponents: true,
   partialPrefetching: true,
   experimental: {

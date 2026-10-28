@@ -9,7 +9,10 @@ export type ActivePromo = {
   endsAt: string | null;
 };
 
-/** Pure check — pass `nowMs` from the client to avoid prerender `Date` bans. */
+/**
+ * Pure check — pass authoritative `nowMs` from the **server**
+ * (`PromoBanner` uses `connection()` + `Date.now()`).
+ */
 export function getActivePromo(nowMs: number): ActivePromo {
   const endsAt = PROMO.endsAt;
   const hasCopy = Boolean(

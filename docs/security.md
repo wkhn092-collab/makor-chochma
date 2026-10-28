@@ -31,6 +31,17 @@
 - `Permissions-Policy` מצמצם
 - CSP Report-Only בשיגור
 
+## Authorization surface (Script 5 · 1.19)
+
+| משאב | גישה ציבורית | בקרה |
+|---|---|---|
+| לידים ב־Sanity | **אין** GET/API ציבורי | כתיבה רק ב־`persistLead` (`server-only` + write token) |
+| `/api/health` | OK בלבד | `src/app/api/health/route.ts` — ללא PII |
+| Server Action `submitLead` | same-origin | `assertSameOrigin` + Zod + Turnstile + rate limit |
+| `/account/*` | לא קיים | אין Customer Portal (מודל לידים) |
+| Sanity Studio | אבישי בלבד | לא חשוף כ־route ציבורי באתר הלקוח |
+
 ## מה לא רלוונטי עדיין
 
-Checkout, webhooks תשלום, IDOR על הזמנות לקוח, OTP — אין מודול ב׳ בשלב זה.
+Checkout, webhooks תשלום, IDOR על הזמנות לקוח, OTP — אין מודול ב׳ בשלב זה.  
+פירוט החרגות סקריפט 5: `docs/audit-script5-scope.md`.

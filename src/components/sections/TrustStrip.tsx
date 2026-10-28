@@ -15,7 +15,7 @@ export function TrustStrip({ copy }: Props) {
         {parts.map((part) => (
           <span
             key={part}
-            className="text-caption font-medium tracking-[0.14em] text-ink/70 uppercase whitespace-nowrap md:text-xs"
+            className="text-caption font-medium tracking-label text-ink/70 uppercase whitespace-nowrap md:text-xs"
           >
             {part}
             <span className="mx-3 text-gold" aria-hidden>

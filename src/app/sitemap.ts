@@ -10,6 +10,8 @@ const paths = [
   "/contact",
   "/privacy",
   "/terms",
+  "/shipping",
+  "/returns",
   "/accessibility",
 ] as const;
 

@@ -5,6 +5,7 @@ import { SITE_IMAGES } from "@/content/images";
 import { Reveal } from "@/motion/Reveal";
 import { InkReveal } from "@/components/motion/InkReveal";
 import { LeadForm } from "@/components/LeadForm";
+import { SimulationBadge } from "@/components/ui/SimulationBadge";
 
 type Props = { copy: Copy };
 
@@ -27,11 +28,11 @@ export function LeadSection({ copy }: Props) {
       ];
 
   return (
-    <section id="lead" className="border-t border-stone/70 bg-parchment py-16 md:py-24">
+    <section id="lead" className="border-t border-stone/70 bg-parchment py-12 md:py-24">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="order-2 flex flex-col lg:order-1">
-            <p className="text-caption font-semibold tracking-[0.22em] text-gold uppercase">
+            <p className="text-caption font-semibold tracking-eyebrow text-bronze uppercase">
               {isHe ? "יצירת קשר" : "Contact"}
             </p>
             <InkReveal
@@ -55,6 +56,11 @@ export function LeadSection({ copy }: Props) {
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover object-center"
                 />
+                <SimulationBadge
+                  label={copy.hero.simulation}
+                  tone="onDark"
+                  className="start-3 top-3"
+                />
                 <div
                   aria-hidden
                   className="absolute inset-0 bg-gradient-to-t from-ink/55 via-ink/10 to-transparent"
@@ -67,9 +73,6 @@ export function LeadSection({ copy }: Props) {
                     {isHe ? "סופר סת״ם · אלעד" : "Sofer Stam · Elad"}
                   </p>
                 </div>
-                <span className="absolute top-3 start-3 rounded-sm bg-parchment/90 px-1.5 py-0.5 text-tag text-bronze backdrop-blur-sm">
-                  {copy.hero.simulation}
-                </span>
               </div>
             </Reveal>
 
@@ -77,7 +80,7 @@ export function LeadSection({ copy }: Props) {
               <ul className="mt-8 space-y-5 border-t border-ink/10 pt-7">
                 {steps.map((s) => (
                   <li key={s.n} className="grid grid-cols-[2.5rem_1fr] gap-3">
-                    <span className="font-display text-sm font-semibold tracking-[0.12em] text-gold">
+                    <span className="font-display text-sm font-semibold tracking-wide text-gold">
                       {s.n}
                     </span>
                     <span>
@@ -104,7 +107,7 @@ export function LeadSection({ copy }: Props) {
 
           <Reveal delay={0.08} y={24} className="order-1 h-full lg:order-2">
             <div className="flex h-full flex-col rounded-[1.15rem] border border-ink/8 bg-gradient-to-b from-white to-parchment/80 p-4 shadow-[0_20px_50px_rgb(26_24_20/0.06)] sm:p-5 md:p-8">
-              <p className="text-caption font-semibold tracking-[0.18em] text-bronze uppercase">
+              <p className="text-caption font-semibold tracking-caption-wide text-bronze uppercase">
                 {isHe ? "השאירו פרטים" : "Leave your details"}
               </p>
               <div className="mt-5 flex-1">

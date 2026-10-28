@@ -1,26 +1,18 @@
-﻿"use client";
-
-import { useSyncExternalStore } from "react";
+﻿import { connection } from "next/server";
 import type { Locale } from "@/content/copy";
 import { getActivePromo } from "@/lib/promo";
 
 type Props = { locale: Locale };
 
-function subscribe() {
-  return () => {};
-}
-
-function getNow() {
-  return Date.now();
-}
-
-function getServerNow() {
-  return 0;
-}
-
-/** Soft promo strip — client-only time check; nothing renders when PROMO is off. */
-export function PromoBanner({ locale }: Props) {
-  const nowMs = useSyncExternalStore(subscribe, getNow, getServerNow);
+/**
+ * Promo strip — active/expiry decided on the server (Script 5 · 1.5).
+ * `connection()` opts into dynamic time so prerender cache cannot freeze expiry.
+ */
+export async function PromoBanner({ locale }: Props) {
+  await connection();
+  // Per-request clock after connection() — required so promo expiry is not frozen at build.
+  // eslint-disable-next-line react-hooks/purity -- request-time after connection()
+  const nowMs = Date.now();
   const promo = getActivePromo(nowMs);
   if (!promo.active) return null;
 
@@ -34,7 +26,9 @@ export function PromoBanner({ locale }: Props) {
       aria-live="polite"
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-2.5 text-center md:px-6 md:text-start">
-        <p className="font-display text-sm font-semibold tracking-wide text-ink">{title}</p>
+        <p className="font-display text-sm font-semibold tracking-wide text-ink">
+          {title}
+        </p>
         {body ? <p className="text-xs leading-relaxed text-ink/70">{body}</p> : null}
         {promo.endsAt ? (
           <p className="text-micro text-bronze">

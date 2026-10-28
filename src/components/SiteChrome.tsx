@@ -8,7 +8,6 @@ import { Analytics } from "@/components/Analytics";
 import { ConsentBanner } from "@/components/ConsentBanner";
 import { LocaleHtml } from "@/components/LocaleHtml";
 import { SiteMotion } from "@/components/motion/SiteMotion";
-import { SkipLink } from "@/components/SkipLink";
 
 type Props = {
   locale: Locale;
@@ -20,7 +19,6 @@ export function SiteChrome({ locale, children }: Props) {
   return (
     <SiteMotion>
       <LocaleHtml locale={locale} />
-      <SkipLink locale={locale} />
       <Analytics />
       <ConsentBanner locale={locale} />
       <SiteHeader copy={copy} />

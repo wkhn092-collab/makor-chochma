@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import clsx from "clsx";
 import { useLeadUi } from "@/store/lead-ui";
 import type { Copy } from "@/content/copy";
 import { interestLabel } from "@/content/site";
@@ -13,6 +14,7 @@ export function WhatsAppFloat({ copy }: Props) {
   const ref = useRef<HTMLAnchorElement>(null);
   const interest = useLeadUi((s) => s.interest);
   const secondaryInterest = useLeadUi((s) => s.secondaryInterest);
+  const menuOpen = useLeadUi((s) => s.menuOpen);
   const label = interestLabel(interest, copy.locale);
   const secondaryLabel =
     secondaryInterest && secondaryInterest !== interest
@@ -55,7 +57,12 @@ export function WhatsAppFloat({ copy }: Props) {
       rel="noopener noreferrer"
       aria-label={copy.sticky.wa}
       data-analytics="whatsapp_click"
-      className="shadow-contact fixed z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white bottom-[calc(5.75rem+env(safe-area-inset-bottom))] end-3 touch-manipulation md:bottom-6 md:end-6"
+      aria-hidden={menuOpen}
+      tabIndex={menuOpen ? -1 : undefined}
+      className={clsx(
+        "shadow-contact fixed z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white bottom-[calc(5.75rem+env(safe-area-inset-bottom))] end-3 touch-manipulation md:bottom-6 md:end-6",
+        menuOpen && "pointer-events-none invisible",
+      )}
       style={{ opacity: 0 }}
     >
       <svg viewBox="0 0 24 24" className="h-7 w-7 fill-current" aria-hidden>

@@ -55,9 +55,10 @@ export function Reveal({
   );
 
   useEffect(() => {
+    const node = ref.current;
     return () => {
       ScrollTrigger.getAll().forEach((t) => {
-        if (t.trigger === ref.current) t.kill();
+        if (t.trigger === node) t.kill();
       });
     };
   }, []);

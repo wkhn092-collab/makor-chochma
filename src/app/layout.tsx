@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Assistant, Frank_Ruhl_Libre } from "next/font/google";
+import { SkipLinkHost } from "@/components/SkipLinkHost";
 import "./globals.css";
 
 const assistant = Assistant({
@@ -43,7 +44,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="he" dir="rtl" className={`${assistant.variable} ${frank.variable} h-full`}>
-      <body className="min-h-full font-body antialiased pb-24 md:pb-0">{children}</body>
+      <body className="min-h-full font-body antialiased">
+        <SkipLinkHost />
+        {children}
+      </body>
     </html>
   );
 }

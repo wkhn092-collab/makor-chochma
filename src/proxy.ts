@@ -10,6 +10,10 @@ import type { NextRequest } from "next/server";
 export function proxy(request: NextRequest) {
   const response = NextResponse.next();
 
+  /** Nonce reserved for CSP Enforce (Script 5 · 2.15). Still Report-Only + unsafe-inline until launch week. */
+  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+  response.headers.set("x-nonce", nonce);
+
   response.headers.set("X-Frame-Options", "DENY");
   response.headers.set("X-Content-Type-Options", "nosniff");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");

@@ -4,7 +4,7 @@ import { getCopy } from "@/content/copy";
 import { LocaleHtml } from "@/components/LocaleHtml";
 import { SITE } from "@/content/site";
 
-type Kind = "accessibility" | "privacy" | "terms";
+type Kind = "accessibility" | "privacy" | "terms" | "shipping" | "returns";
 
 export function LegalPage({ locale, kind }: { locale: Locale; kind: Kind }) {
   const copy = getCopy(locale);
@@ -13,13 +13,21 @@ export function LegalPage({ locale, kind }: { locale: Locale; kind: Kind }) {
       ? copy.a11y.title
       : kind === "terms"
         ? copy.terms.title
-        : copy.privacy.title;
+        : kind === "shipping"
+          ? copy.shipping.title
+          : kind === "returns"
+            ? copy.returns.title
+            : copy.privacy.title;
   const paragraphs =
     kind === "accessibility"
       ? copy.a11y.body
       : kind === "terms"
         ? copy.terms.body
-        : copy.privacy.body;
+        : kind === "shipping"
+          ? copy.shipping.body
+          : kind === "returns"
+            ? copy.returns.body
+            : copy.privacy.body;
   const home = locale === "he" ? "/" : "/en";
 
   return (

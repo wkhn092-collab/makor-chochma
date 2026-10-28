@@ -1,0 +1,34 @@
+---
+description: Site lock + craft/roadmap lawyer-parity lock
+alwaysApply: true
+---
+
+# Site lock — מכון מקור חכמה
+
+## Hard lock — craft roadmap (user-fixed for mobile)
+**Never edit** `src/components/sections/ScrollRoadmap.tsx` or the `#craft` roadmap UI unless Avishi explicitly names that element and asks to change it.
+
+## General rule
+Only change what Avishi asks for in that message. Prefer small, section-by-section mobile fixes. No drive-by refactors.
+
+Allowed without a change request:
+- Answer questions
+- Explain existing code
+- Run localhost / open the site for viewing
+- Read files
+
+Forbidden unless he clearly says to do it:
+- Commits, pushes, deploys
+- Dependency or config changes
+- Touching the locked roadmap element
+
+## Craft / ScrollRoadmap — נעול (lawyer parity)
+
+`src/components/sections/ScrollRoadmap.tsx` (#craft) is **locked** to match callbot `LegalRoadmap`:
+
+- Horizontal sine path (same PATH / nodes / viewBox)
+- Mobile pin `+=150%`, desktop `+=260%`, scrub `0.7`
+- One swipe = one stage; thumb click scrolls to stage
+- Bottom pad clears sticky; no long black pin-spacer void
+
+Do **not** retune path, pin length, swipe, or layout of this block unless Avishi explicitly unlocks it or asks for a named change.

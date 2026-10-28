@@ -56,7 +56,7 @@ gsap.defaults({ ease: "power3.out", duration: 0.85 });
 | WhatsApp float | תמיד visible אחרי 1.2s מ־load (או מיד ב־reduced) · pulse עדין `scale 1→1.04` loop איטי **רק** אם לא reduced | שמאל תחתון (RTL: physically left/start — `inset-inline-start`) מעל sticky ב־`bottom` מדורג |
 | Magnetic / custom cursor | **לא בונים** (Tier 3) | — |
 | Lenis | **אופציונלי דסקטופ בלבד**; ברירת מחדל v1 = native + ScrollTrigger | כבוי |
-| Kinetic SplitText | H1: mask `clip-path` / overflow hidden לפי מילה · אחרי LCP יציב | במובייל: y+opacity בלי split אותיות |
+| Kinetic SplitText | H1: **InkReveal** (overflow clip + `yPercent`, RTL-safe) · `immediate` אחרי LCP · `SplitReveal` זמין ל־EN/chars | במובייל: אותו mask, בלי split אותיות |
 | Section Pin | **רק** מקטע «32 שנה» — pin קצר (~80–100vh) בזמן שהמספר רץ; בלי jacking | בלי pin; counter on enter |
 
 ---

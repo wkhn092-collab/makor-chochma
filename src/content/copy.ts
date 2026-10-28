@@ -34,17 +34,18 @@ export function getCopy(locale: Locale) {
         ? "סת״ם שנכתב אצל הסופר"
         : "Stam written by the sofer",
       h1YearsSuffix: isHe ? "שנה על הקלף" : "years on the parchment",
+      // Backs H1 with cert names + funnel (copy-deck / anti-AI 1.29)
       h2: isHe
-        ? "תפילין, מזוזות, מגילות, ספרי תורה ופיטום הקטורת. הרב יגאל עמרני · מוסמך משמרת סת״ם ויד רפאל · קודם שיחה, ואז פגישה באלעד."
-        : "Tefillin, mezuzot, megillot, Sifrei Torah and Pitum HaKetoret. Rabbi Yigal Amarani · Mishmeret Stam & Yad Rafael · a call first, then meet in Elad.",
+        ? `מוסמך משמרת סת״ם ויד רפאל · ${SITE.yearsExperience} שנה — שיחה בלי התחייבות, ואז פגישה באלעד.`
+        : `Mishmeret Stam & Yad Rafael · ${SITE.yearsExperience} years — a no-obligation call, then meet in Elad.`,
       ctaPrimary: isHe ? "לתיאום שיחה" : "Book a call",
       ctaCall: isHe ? "התקשרו עכשיו" : "Call now",
       ctaSecondary: isHe
         ? "וואטסאפ להרב יגאל"
         : "WhatsApp Rabbi Yigal",
       micro: isHe
-        ? "שיחה קצרה, בלי התחייבות · כ־15 דק׳ · ואז פגישה באלעד אם מתאים"
-        : "A short call, no obligation · ~15 min · then meet in Elad if it fits",
+        ? `${SITE.yearsExperience} שנה על הקלף · שיחה לפני שסוגרים`
+        : `${SITE.yearsExperience} years on the parchment · a call before you close`,
       simulation: isHe ? "צילום להמחשה" : "Stock photo",
     },
     trust: isHe
@@ -280,7 +281,7 @@ export function getCopy(locale: Locale) {
         : "Form running in dev without Turnstile",
     },
     sticky: {
-      cta: isHe ? "השאירו פרטים" : "Leave your details",
+      cta: isHe ? "תיאום שיחה" : "Book a call",
       call: isHe ? "התקשרו" : "Call",
       wa: isHe ? "וואטסאפ" : "WhatsApp",
     },
@@ -331,6 +332,8 @@ export function getCopy(locale: Locale) {
       accessibility: isHe ? "נגישות" : "Accessibility",
       privacy: isHe ? "פרטיות" : "Privacy",
       terms: isHe ? "תנאי שימוש" : "Terms of use",
+      shipping: isHe ? "משלוחים" : "Shipping",
+      returns: isHe ? "החזרות" : "Returns",
       maps: isHe ? "פתיחה במפות" : "Open in Maps",
       rights: isHe
         ? `© 2026 ${SITE.brand}`
@@ -387,6 +390,40 @@ export function getCopy(locale: Locale) {
             "This site is for information and contact only. Orders are finalized on a call and in an in-person meeting in Elad.",
             "Images labeled as illustrative are for atmosphere only and do not depict a specific delivered item.",
             `Use of this site is governed by Israeli law. Contact: ${SITE.phoneDisplay} or ${SITE.email}.`,
+          ],
+    },
+
+    shipping: {
+      title: isHe ? "מדיניות משלוחים" : "Shipping policy",
+      body: isHe
+        ? [
+            "אין רכישה או תשלום דרך האתר. משלוח — אם נדרש — נקבע רק אחרי שיחת ייעוץ וסגירת פרטים מול הסופר.",
+            "אפשרויות נפוצות: איסוף עצמי באלעד (רח׳ רבי יוסי בן קיסמא 43, קומת חניה) או שליחות בתיאום מראש לפי אזור וסוג הפריט (תפילין, מזוזות, מגילה, ספר תורה, פיטום הקטורת).",
+            "זמני אספקה ומחיר משלוח אינם מוצגים באתר — הם חלק מההצעה בשיחה, לפי הידור, זמינות וכמות.",
+            `לתיאום: ${SITE.phoneDisplay} או ${SITE.email}.`,
+          ]
+        : [
+            "There is no purchase or payment on this site. If delivery is needed, it is arranged only after a consultation call and agreement with the sofer.",
+            "Common options: pickup in Elad (43 Rabbi Yossi Ben Kisma St., parking floor) or arranged courier by region and item type (tefillin, mezuzot, megillah, Sefer Torah, Pitum HaKetoret).",
+            "Delivery times and shipping fees are not listed online — they are part of the call offer, based on hidur, availability, and quantity.",
+            `To arrange: ${SITE.phoneDisplay} or ${SITE.email}.`,
+          ],
+    },
+
+    returns: {
+      title: isHe ? "מדיניות החזרות" : "Returns policy",
+      body: isHe
+        ? [
+            "האתר אינו חנות מקוונת ואין ביטול עסקה דרך האתר — העסקה נסגרת בשיחה ובפגישה פנים־אל־פנים.",
+            "פריטי סת״ם (קלף, תפילין, מזוזות, מגילות וכו׳) הם מוצרים אישיים/דתיים; תנאי ביטול, החלפה או תיקון נקבעים מול הסופר לפי מה שסוכם בהזמנה ולפי דין ישראל החל.",
+            "אם התגלתה תקלה בכתיבה או בהתאמה למה שסוכם — פנו אלינו מיד לטיפול ולתיקון.",
+            `יצירת קשר: ${SITE.contactName} · ${SITE.phoneDisplay} · ${SITE.email}.`,
+          ]
+        : [
+            "This site is not an online store and cancellations are not processed through the website — deals are closed on a call and in an in-person meeting.",
+            "Stam items (klaf, tefillin, mezuzot, megillot, etc.) are personal/religious goods; cancel, exchange, or repair terms are set with the sofer as agreed in the order and under applicable Israeli law.",
+            "If a writing or fit issue appears versus what was agreed — contact us promptly for repair or resolution.",
+            `Contact: ${SITE.contactNameEn} · ${SITE.phoneDisplay} · ${SITE.email}.`,
           ],
     },
   };

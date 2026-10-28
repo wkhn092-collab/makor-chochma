@@ -55,6 +55,7 @@
   --color-accent-hover: var(--accent-hover);
   --color-gold: var(--gold);
   --color-gold-soft: var(--gold-soft);
+  --color-gold-deep: var(--gold-deep);
   --color-void: var(--void);
   --color-success: var(--success);
   --color-danger: var(--danger);
@@ -115,7 +116,7 @@ body {
   letter-spacing: var(--tracking-display);
 }
 
-/* Type scale — prefer these over arbitrary text-[Npx] */
+/* Type scale — prefer these over arbitrary text-[Npx] / text-[Nrem] */
 .text-tag {
   font-size: 0.5625rem; /* 9px — הדמיה badges */
   line-height: 1.3;
@@ -132,9 +133,26 @@ body {
   font-size: 0.8125rem; /* 13px */
   line-height: 1.4;
 }
+.text-body-sm {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.5;
+}
+.text-body-soft {
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
 .text-lead {
   font-size: 1.05rem;
   line-height: 1.55;
+}
+.tracking-eyebrow {
+  letter-spacing: 0.22em;
+}
+.tracking-label {
+  letter-spacing: 0.14em;
+}
+.tracking-caption-wide {
+  letter-spacing: 0.18em;
 }
 
 .shadow-contact {
