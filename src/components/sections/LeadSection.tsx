@@ -49,11 +49,11 @@ export function LeadSection({ copy }: Props) {
             <Reveal delay={0.1} y={20} className="mt-8 flex-1">
               <div className="relative isolate min-h-[14rem] overflow-hidden rounded-[var(--radius-md)] ring-1 ring-ink/10 sm:min-h-[16rem]">
                 <Image
-                  src={SITE_IMAGES.craft[3]!.src}
+                  src={SITE_IMAGES.portfolio[2]!.src}
                   alt=""
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover object-center"
+                  className="object-cover object-[50%_45%]"
                 />
                 <div
                   aria-hidden

@@ -39,24 +39,32 @@ export function SiteFooter({ copy }: Props) {
             alt=""
             fill
             sizes="100vw"
-            className="object-cover object-[50%_28%]"
+            className="object-cover object-[50%_28%] [filter:brightness(0.9)_saturate(0.88)_sepia(0.2)_hue-rotate(-6deg)]"
             aria-hidden
           />
           <SimulationBadge
             label={copy.hero.simulation}
             className="start-4 top-4 z-10 md:start-6 md:top-6"
           />
-          {/* Soft luminous wash — real photo shows through, text stays readable */}
+          {/* Warm parchment/gold wash — matches site, less chalky white */}
           <div
             aria-hidden
-            className="absolute inset-0 bg-parchment/70 md:bg-parchment/62"
+            className="absolute inset-0 bg-parchment/55"
           />
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-b from-parchment/35 via-transparent to-parchment-deep/50"
+            className="absolute inset-0 bg-gradient-to-b from-parchment/25 via-transparent to-parchment-deep/60"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 70% 55% at 75% 40%, rgb(201 169 98 / 0.12), transparent 70%)",
+            }}
           />
 
-          <div className="relative mx-auto flex min-h-[18rem] max-w-6xl flex-col justify-center px-4 py-14 text-start md:min-h-[22rem] md:px-6 md:py-20">
+          <div className="relative mx-auto flex min-h-[16rem] max-w-6xl flex-col justify-end px-4 py-12 text-start md:min-h-[18rem] md:px-6 md:py-14">
             <p className="text-caption font-semibold tracking-eyebrow text-bronze uppercase">
               {copy.locale === "he" ? "הצעד הבא" : "Next step"}
             </p>

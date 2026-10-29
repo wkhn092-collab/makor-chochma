@@ -37,14 +37,24 @@ export function Portfolio({ copy }: Props) {
             return (
               <Reveal key={item.title} delay={0.05 * i} y={20} as="li">
                 <article className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] bg-surface ring-1 ring-ink/10 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:ring-gold/40">
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div
+                    className={`relative aspect-[4/3] overflow-hidden${
+                      visual?.id === "tefillin" || visual?.id === "mezuzot"
+                        ? " bg-white"
+                        : ""
+                    }`}
+                  >
                     {visual ? (
                       <Image
                         src={visual.src}
                         alt={alt}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                        className={`${
+                          visual.id === "tefillin" || visual.id === "mezuzot"
+                            ? "object-contain"
+                            : "object-cover"
+                        } transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]`}
                       />
                     ) : null}
                     <span className="absolute bottom-2 start-2 rounded-sm bg-parchment/90 px-1.5 py-0.5 text-tag text-bronze backdrop-blur-sm">

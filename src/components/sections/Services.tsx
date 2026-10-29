@@ -80,7 +80,15 @@ export function Services({ copy }: Props) {
                     {n}
                   </span>
 
-                  <span className="relative aspect-[4/5] w-[3.25rem] overflow-hidden rounded-sm sm:w-[5.5rem]">
+                  <span
+                    className={clsx(
+                      "relative aspect-[4/5] w-[3.25rem] overflow-hidden rounded-sm sm:w-[5.5rem]",
+                      (item.id === "tefillin" ||
+                        item.id === "mezuzot" ||
+                        item.id === "pitum") &&
+                        "bg-white",
+                    )}
+                  >
                     {src ? (
                       <Image
                         src={src}
@@ -88,7 +96,12 @@ export function Services({ copy }: Props) {
                         fill
                         sizes="(max-width: 640px) 52px, 88px"
                         className={clsx(
-                          "object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                          "transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                          item.id === "tefillin" ||
+                            item.id === "mezuzot" ||
+                            item.id === "pitum"
+                            ? "object-contain"
+                            : "object-cover",
                           selected ? "scale-105" : "group-hover:scale-105",
                         )}
                       />

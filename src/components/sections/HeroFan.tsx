@@ -7,8 +7,10 @@ type FanCardData = {
   src: string;
   titleHe: string;
   titleEn: string;
+  /** Tailwind object-* classes — always include object-cover or object-contain */
   focus: string;
-  dark?: boolean;
+  /** White-bg product stills — photo well stays white even on dark chrome */
+  product?: boolean;
 };
 
 const FAN = [
@@ -24,38 +26,40 @@ const FAN = [
 ] as const;
 
 const FAN_CARDS: FanCardData[] = [
-  { src: SITE_IMAGES.craft[0]!.src, titleHe: "שיחת ייעוץ", titleEn: "Consultation", focus: "object-[center_40%]", dark: true },
-  { src: SITE_IMAGES.craft[1]!.src, titleHe: "קלף ודיו", titleEn: "Ink & parchment", focus: "object-[center_42%]" },
-  { src: SITE_IMAGES.craft[2]!.src, titleHe: "הגהה", titleEn: "Proofing", focus: "object-[center_38%]" },
-  { src: SITE_IMAGES.portfolio[0]!.src, titleHe: "תפילין", titleEn: "Tefillin", focus: "object-[center_32%]" },
-  { src: SITE_IMAGES.hero.src, titleHe: "מקור חכמה", titleEn: "Makor Chochma", focus: "object-[center_22%]" },
-  { src: SITE_IMAGES.portfolio[1]!.src, titleHe: "מזוזות", titleEn: "Mezuzot", focus: "object-[center_45%]" },
-  { src: SITE_IMAGES.portfolio[2]!.src, titleHe: "מגילות", titleEn: "Megillot", focus: "object-[center_28%]" },
-  { src: SITE_IMAGES.portfolio[3]!.src, titleHe: "ספרי תורה", titleEn: "Sifrei Torah", focus: "object-[center_35%]" },
-  { src: SITE_IMAGES.craft[3]!.src, titleHe: "פגישה באלעד", titleEn: "Meeting in Elad", focus: "object-[center_40%]", dark: true },
+  { src: SITE_IMAGES.craft[0]!.src, titleHe: "שיחת ייעוץ", titleEn: "Consultation", focus: "object-cover object-center" },
+  { src: SITE_IMAGES.craft[1]!.src, titleHe: "קלף ודיו", titleEn: "Ink & parchment", focus: "object-cover object-[center_40%]" },
+  { src: SITE_IMAGES.craft[2]!.src, titleHe: "הגהה", titleEn: "Proofing", focus: "object-cover object-center" },
+  { src: SITE_IMAGES.portfolio[0]!.src, titleHe: "תפילין", titleEn: "Tefillin", focus: "object-contain object-center", product: true },
+  { src: SITE_IMAGES.hero.src, titleHe: "מקור חכמה", titleEn: "Makor Chochma", focus: "object-cover object-[center_28%]" },
+  { src: SITE_IMAGES.portfolio[1]!.src, titleHe: "מזוזות", titleEn: "Mezuzot", focus: "object-contain object-center", product: true },
+  { src: SITE_IMAGES.portfolio[2]!.src, titleHe: "מגילות", titleEn: "Megillot", focus: "object-cover object-center" },
+  { src: SITE_IMAGES.portfolio[3]!.src, titleHe: "ספרי תורה", titleEn: "Sifrei Torah", focus: "object-cover object-center" },
+  { src: SITE_IMAGES.craft[3]!.src, titleHe: "פגישה באלעד", titleEn: "Meeting in Elad", focus: "object-cover object-[center_40%]" },
 ];
-
-/** Mobile shows indices 3–5 only — never request the other 6 images on small screens. */
-const MOBILE_SLICE = [3, 4, 5] as const;
 
 function FanCard({
   card,
   index,
   locale,
+  flat = false,
 }: {
   card: FanCardData;
   index: number;
   locale: "he" | "en";
+  /** Marquee: no tilt — angled cards left a broken gap at the loop seam */
+  flat?: boolean;
 }) {
   const title = locale === "he" ? card.titleHe : card.titleEn;
   const fan = FAN[index] ?? FAN[2]!;
+  const r = flat ? 0 : fan.r;
+  const sink = flat ? 0 : fan.sink;
   return (
     <article
-      className={`mc-hero-fan-card ${fan.dark ? "mc-hero-fan-card--dark" : "mc-hero-fan-card--light"}`}
+      className={`mc-hero-fan-card ${fan.dark ? "mc-hero-fan-card--dark" : "mc-hero-fan-card--light"}${flat ? " mc-hero-fan-card--flat" : ""}`}
       style={
         {
-          "--r": String(fan.r),
-          "--sink": `${fan.sink}px`,
+          "--r": String(r),
+          "--sink": `${sink}px`,
           "--i": String(index),
         } as CSSProperties
       }
@@ -68,15 +72,17 @@ function FanCard({
         </div>
         <p className="mc-hero-fan-title">{title}</p>
       </div>
-      <div className="mc-hero-fan-photo">
+      <div
+        className={`mc-hero-fan-photo${card.product ? " mc-hero-fan-photo--product" : ""}`}
+      >
         <Image
           src={card.src}
           alt=""
           fill
-          quality={62}
+          quality={78}
           loading="lazy"
-          sizes="(max-width: 639px) 32vw, (max-width: 767px) 28vw, 11vw"
-          className={`object-cover ${card.focus}`}
+          sizes="(max-width: 639px) 16vw, (max-width: 767px) 28vw, 14vw"
+          className={card.focus}
         />
       </div>
     </article>
@@ -86,35 +92,27 @@ function FanCard({
 type Props = { locale: "he" | "en" };
 
 /**
- * CSS-only mobile/desktop fan — no useState(matchMedia) so SSR HTML
- * matches the first client paint (avoids HeroFan hydration errors).
+ * CSS-only fan marquee — one track for mobile + desktop (SSR-safe, no matchMedia).
+ * Desktop: 9 cards across, locked look. Mobile: smaller cards (~6 visible) + left drift.
  */
 export function HeroFan({ locale }: Props) {
   return (
-    <>
-      <div className="mc-hero-fan mc-hero-fan--mobile" aria-hidden="true">
-        {MOBILE_SLICE.map((index) => {
-          const card = FAN_CARDS[index]!;
-          return (
-            <FanCard
-              key={`m-${card.src}-${index}`}
-              card={card}
-              index={index}
-              locale={locale}
-            />
-          );
-        })}
-      </div>
-      <div className="mc-hero-fan mc-hero-fan--desktop" aria-hidden="true">
-        {FAN_CARDS.map((card, index) => (
-          <FanCard
-            key={`d-${card.src}-${index}`}
-            card={card}
-            index={index}
-            locale={locale}
-          />
+    <div className="mc-hero-fan-viewport" aria-hidden="true">
+      <div className="mc-hero-fan-track">
+        {[0, 1].map((copy) => (
+          <div key={`copy-${copy}`} className="mc-hero-fan mc-hero-fan-group">
+            {FAN_CARDS.map((card, index) => (
+              <FanCard
+                key={`d${copy}-${card.src}-${index}`}
+                card={card}
+                index={index}
+                locale={locale}
+                flat
+              />
+            ))}
+          </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }

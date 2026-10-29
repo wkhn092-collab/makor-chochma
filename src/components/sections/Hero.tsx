@@ -14,14 +14,13 @@ function FactsStrip({ facts }: { facts: string[] }) {
     <div className="border-t border-gold/25 bg-parchment py-3.5 sm:py-4 md:py-5">
       <span className="sr-only">{facts.join(" · ")}</span>
       <div aria-hidden="true">
-        <Marquee duration={40} gap="2.25rem" pauseOnHover>
+        <Marquee duration={40} gap="2.75rem" pauseOnHover>
           {facts.map((fact) => (
             <span
               key={fact}
-              className="flex items-center gap-5 font-display text-lead font-medium tracking-[-0.01em] whitespace-nowrap text-ink sm:gap-8 sm:text-[clamp(1.05rem,0.9rem+1.1vw,1.6rem)]"
+              className="font-display text-lead font-medium tracking-[-0.01em] whitespace-nowrap text-ink sm:text-[clamp(1.05rem,0.9rem+1.1vw,1.6rem)]"
             >
               <bdi>{fact}</bdi>
-              <span className="size-1.5 shrink-0 rounded-full bg-gold sm:size-2" />
             </span>
           ))}
         </Marquee>
@@ -81,37 +80,23 @@ export function Hero({ copy }: Props) {
           fill
           priority
           fetchPriority="high"
-          quality={70}
+          quality={95}
           sizes="100vw"
-          className="object-cover object-[48%_22%] brightness-[1.18] contrast-[1.05] saturate-[1.12] md:object-[50%_18%]"
+          className="object-cover object-[52%_28%] brightness-[1.12] contrast-[1.1] saturate-[1.08] md:object-[50%_32%] md:brightness-[1.1] md:contrast-[1.12]"
         />
-        {/* Mobile: vertical wash — photo stays full-bleed, text stays readable */}
+        {/* Soft top veil for headline + bottom fade into parchment */}
         <div
-          className="absolute inset-0 md:hidden"
+          className="absolute inset-x-0 top-0 h-[42%] md:h-[36%]"
           style={{
-            background: `
-              linear-gradient(180deg,
-                rgba(247,244,239,0.78) 0%,
-                rgba(247,244,239,0.42) 22%,
-                rgba(247,244,239,0.12) 42%,
-                rgba(247,244,239,0.08) 62%,
-                rgba(247,244,239,0.55) 100%)
-            `,
+            background:
+              "linear-gradient(180deg, rgba(247,244,239,0.72) 0%, rgba(247,244,239,0.35) 45%, transparent 100%)",
           }}
         />
-        {/* Desktop: side + vertical wash */}
         <div
-          className="absolute inset-0 hidden md:block"
+          className="absolute inset-x-0 bottom-0 h-[28%] md:h-[22%]"
           style={{
-            background: isHe
-              ? `
-                linear-gradient(270deg, rgba(247,244,239,0.88) 0%, rgba(247,244,239,0.55) 40%, rgba(247,244,239,0.12) 72%, transparent 100%),
-                linear-gradient(180deg, rgba(247,244,239,0.35) 0%, transparent 40%, rgba(247,244,239,0.22) 100%)
-              `
-              : `
-                linear-gradient(90deg, rgba(247,244,239,0.88) 0%, rgba(247,244,239,0.55) 40%, rgba(247,244,239,0.12) 72%, transparent 100%),
-                linear-gradient(180deg, rgba(247,244,239,0.35) 0%, transparent 40%, rgba(247,244,239,0.22) 100%)
-              `,
+            background:
+              "linear-gradient(180deg, transparent 0%, rgba(247,244,239,0.35) 55%, rgba(247,244,239,0.7) 100%)",
           }}
         />
       </div>
@@ -121,8 +106,8 @@ export function Hero({ copy }: Props) {
         {copy.hero.simulation}
       </span>
 
-      <div className="relative z-30 mx-auto flex w-full max-w-[1180px] shrink-0 flex-col px-4 pt-[calc(var(--mc-header-h)+0.85rem)] sm:px-6 sm:pt-[calc(var(--mc-header-h)+0.5rem)]">
-        <div className="flex flex-col items-center text-center">
+      <div className="relative z-30 mx-auto flex w-full max-w-[1180px] shrink-0 flex-col px-4 pt-[calc(var(--mc-header-h)+0.55rem)] sm:px-6 sm:pt-[calc(var(--mc-header-h)+0.35rem)]">
+        <div className="flex flex-col items-center text-center [text-shadow:0_1px_18px_rgb(247_244_239/0.95),0_0_2px_rgb(247_244_239/1)]">
           <p
             className="mc-hero-in text-label font-semibold tracking-[0.06em] text-bronze"
             style={{ "--d": "80ms" } as CSSProperties}
@@ -132,7 +117,7 @@ export function Hero({ copy }: Props) {
 
           <h1 id="hero-title" className="mc-hero-display mt-1.5 max-w-[18ch] sm:mt-2 sm:max-w-[22ch]">
             <span
-              className="mc-hero-in block text-ink drop-shadow-[0_1px_14px_rgb(247_244_239/0.9)]"
+              className="mc-hero-in block text-ink"
               style={{ "--d": "140ms" } as CSSProperties}
             >
               {copy.hero.h1}
@@ -146,14 +131,14 @@ export function Hero({ copy }: Props) {
           </h1>
 
           <p
-            className="mc-hero-in mt-2.5 max-w-[34ch] text-[1rem] leading-snug text-ink/80 sm:mt-2.5 sm:max-w-[38ch] sm:text-base"
+            className="mc-hero-in mt-2 max-w-[34ch] text-[0.98rem] leading-snug text-ink/90 sm:mt-2.5 sm:max-w-[38ch] sm:text-base"
             style={{ "--d": "420ms" } as CSSProperties}
           >
             {copy.hero.h2}
           </p>
 
           <div
-            className="mc-hero-in pointer-events-auto mt-3.5 flex w-full max-w-sm justify-center sm:mt-4 sm:max-w-md"
+            className="mc-hero-in pointer-events-auto mt-3 flex w-full max-w-sm justify-center sm:mt-3.5 sm:max-w-md [text-shadow:none]"
             style={{ "--d": "560ms" } as CSSProperties}
           >
             <a

@@ -36,8 +36,8 @@ export function getCopy(locale: Locale) {
       h1YearsSuffix: isHe ? "שנה על הקלף" : "years on the parchment",
       // Backs H1 with cert names + funnel (copy-deck / anti-AI 1.29)
       h2: isHe
-        ? `מוסמך משמרת סת״ם ויד רפאל · ${SITE.yearsExperience} שנה — שיחה בלי התחייבות, ואז פגישה באלעד.`
-        : `Mishmeret Stam & Yad Rafael · ${SITE.yearsExperience} years — a no-obligation call, then meet in Elad.`,
+        ? `מוסמך משמרת סת״ם ויד רפאל · ${SITE.yearsExperience} שנה. שיחה בלי התחייבות, ואז פגישה באלעד.`
+        : `Mishmeret Stam & Yad Rafael · ${SITE.yearsExperience} years. A no-obligation call, then meet in Elad.`,
       ctaPrimary: isHe ? "לתיאום שיחה" : "Book a call",
       ctaCall: isHe ? "התקשרו עכשיו" : "Call now",
       ctaSecondary: isHe
@@ -108,13 +108,13 @@ export function getCopy(locale: Locale) {
             { n: "01", title: "שיחה על מה שצריך", body: "תפילין, מזוזות, מגילה, ספר תורה או פיטום הקטורת — מבהירים יחד מה מתאים." },
             { n: "02", title: "קלף ודיו ביד", body: "כתיבה ידנית על קלף — לא הדפסה. הסופר שדיברתם איתו הוא שכותב." },
             { n: "03", title: "הגהה וליווי", body: "בדיקות, הסבר על ההידור, ושקיפות מולכם בכל שלב." },
-            { n: "04", title: "פגישה באלעד", body: "סוגרים פנים אל פנים — וממשיכים משם." },
+            { n: "04", title: "פגישה באלעד", body: "סוגרים פנים אל פנים וממשיכים משם." },
           ]
         : [
             { n: "01", title: "A call about what you need", body: "Tefillin, mezuzot, a megillah, Sefer Torah or Pitum HaKetoret — we clarify together what fits." },
             { n: "02", title: "Parchment and ink by hand", body: "Handwriting on klaf — never print. The sofer you spoke with is the one who writes." },
             { n: "03", title: "Proofing and guidance", body: "Checks, a clear hidur explanation, and transparency at every step." },
-            { n: "04", title: "Meeting in Elad", body: "Close face to face — and continue from there." },
+            { n: "04", title: "Meeting in Elad", body: "Close face to face and continue from there." },
           ],
     },
     services: {
