@@ -32,13 +32,14 @@ export const TOPIC_LABEL: Record<
   service: { he: "שירות ובדיקה", en: "Service & checking" },
 };
 
-/** Featured — Ariel + Tziona (top grid). */
+/** Featured — Ariel + Tziona (top grid). Videos matched by face on mobile+desktop. */
 export const FEATURED_TESTIMONIALS: TestimonialVideo[] = [
   {
     id: "ariel-harar",
-    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021780/WhatsApp_Video_2026-10-25_at_20.49.49.mp4",
+    // Sofer (man) — was wrongly on the couple clip
+    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021783/WhatsApp_Video_2026-10-25_at_20.49.30.mp4",
     youtubeId: "PENDING_ARIEL_HARAR",
-    duration: "0:43",
+    duration: "1:25",
     nameHe: "אריאל חרר (סופר ומגיה סת״ם)",
     nameEn: "Ariel Harar (sofer & magiah)",
     quoteHe:
@@ -115,9 +116,10 @@ export const MORE_TESTIMONIALS: TestimonialVideo[] = [
   },
   {
     id: "sharabi",
-    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021783/WhatsApp_Video_2026-10-25_at_20.49.30.mp4",
+    // Couple on couch — was wrongly under Ariel
+    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021780/WhatsApp_Video_2026-10-25_at_20.49.49.mp4",
     youtubeId: "PENDING_SHARABI",
-    duration: "1:25",
+    duration: "0:43",
     nameHe: "משפחת שרעבי",
     nameEn: "The Sharabi family",
     quoteHe:
