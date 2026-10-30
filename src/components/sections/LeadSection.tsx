@@ -29,7 +29,7 @@ export function LeadSection({ copy }: Props) {
   return (
     <section id="lead" className="border-t border-stone/70 bg-parchment py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
+        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="order-2 flex flex-col lg:order-1">
             <p className="text-caption font-semibold tracking-[0.22em] text-gold uppercase">
               {isHe ? "יצירת קשר" : "Contact"}
@@ -100,12 +100,12 @@ export function LeadSection({ copy }: Props) {
             </Reveal>
           </div>
 
-          <Reveal delay={0.08} y={24} className="order-1 h-full lg:order-2">
-            <div className="flex h-full flex-col rounded-[1.15rem] border border-ink/8 bg-gradient-to-b from-white to-parchment/80 p-4 shadow-[0_20px_50px_rgb(26_24_20/0.06)] sm:p-5 md:p-8">
+          <Reveal delay={0.08} y={24} className="order-1 lg:order-2">
+            <div className="flex flex-col rounded-[1.15rem] border border-ink/8 bg-gradient-to-b from-white to-parchment/80 p-4 pb-4 shadow-[0_20px_50px_rgb(26_24_20/0.06)] sm:p-5 sm:pb-5 md:p-6 md:pb-5">
               <p className="text-caption font-semibold tracking-[0.18em] text-bronze uppercase">
                 {isHe ? "השאירו פרטים" : "Leave your details"}
               </p>
-              <div className="mt-5 flex-1">
+              <div className="mt-4">
                 <LeadForm copy={copy} />
               </div>
             </div>

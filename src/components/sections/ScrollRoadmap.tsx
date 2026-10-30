@@ -310,6 +310,7 @@ export function ScrollRoadmap({ copy }: Props) {
             className="absolute inset-0 transition-opacity duration-500"
             style={{ opacity: i === active ? 1 : 0 }}
           >
+            {/* Mobile crop — locked */}
             <Image
               src={img.src}
               alt=""
@@ -317,19 +318,46 @@ export function ScrollRoadmap({ copy }: Props) {
               sizes="100vw"
               priority={i === 0}
               quality={92}
-              className="select-none object-cover contrast-[1.06] saturate-[1.05]"
+              className="select-none object-cover contrast-[1.06] saturate-[1.05] md:hidden"
               style={{
                 objectPosition:
                   "focus" in img && img.focus ? img.focus : "50% 50%",
               }}
             />
+            {/* Desktop crop / optional landscape src — mobile untouched */}
+            <Image
+              src={
+                "srcMd" in img && img.srcMd ? img.srcMd : img.src
+              }
+              alt=""
+              fill
+              sizes="100vw"
+              priority={i === 0}
+              quality={92}
+              className="hidden select-none object-cover contrast-[1.08] saturate-[1.06] brightness-[1.04] md:block"
+              style={{
+                objectPosition:
+                  "focusMd" in img && img.focusMd
+                    ? img.focusMd
+                    : "focus" in img && img.focus
+                      ? img.focus
+                      : "50% 50%",
+              }}
+            />
           </div>
         ))}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 md:hidden"
           style={{
             background:
               "linear-gradient(180deg, rgba(18,16,14,0.42) 0%, rgba(18,16,14,0.18) 38%, rgba(18,16,14,0.12) 55%, rgba(18,16,14,0.65) 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 hidden md:block"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(18,16,14,0.28) 0%, rgba(18,16,14,0.1) 40%, rgba(18,16,14,0.08) 55%, rgba(18,16,14,0.55) 100%)",
           }}
         />
       </div>
@@ -409,7 +437,7 @@ export function ScrollRoadmap({ copy }: Props) {
                         fill
                         sizes="220px"
                         quality={90}
-                        className="object-cover"
+                        className="object-cover md:hidden"
                         style={{
                           objectPosition:
                             "thumbFocus" in img && img.thumbFocus
@@ -418,6 +446,27 @@ export function ScrollRoadmap({ copy }: Props) {
                                 ? img.focus
                                 : "50% 50%",
                           filter: on ? "none" : "brightness(0.88)",
+                        }}
+                      />
+                      <Image
+                        src={
+                          "srcMd" in img && img.srcMd ? img.srcMd : img.src
+                        }
+                        alt=""
+                        fill
+                        sizes="220px"
+                        quality={90}
+                        className="hidden object-cover md:block"
+                        style={{
+                          objectPosition:
+                            "thumbFocusMd" in img && img.thumbFocusMd
+                              ? img.thumbFocusMd
+                              : "focusMd" in img && img.focusMd
+                                ? img.focusMd
+                                : "thumbFocus" in img && img.thumbFocus
+                                  ? img.thumbFocus
+                                  : "50% 50%",
+                          filter: on ? "none" : "brightness(0.9)",
                         }}
                       />
                       <span

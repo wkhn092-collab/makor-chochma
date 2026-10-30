@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import Image from "next/image";
 import type { Copy } from "@/content/copy";
 import { SITE_IMAGES } from "@/content/images";
@@ -12,12 +12,68 @@ import clsx from "clsx";
 
 type Props = { copy: Copy };
 
+/** Desktop only — drift sticky FAQ rails down slowly to cover column gap. */
+function useFaqRailDrift(
+  gridRef: RefObject<HTMLDivElement | null>,
+  startRail: RefObject<HTMLElement | null>,
+  endRail: RefObject<HTMLElement | null>,
+) {
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const section = document.getElementById("faq");
+    const rails = [startRail, endRail];
+
+    const sync = () => {
+      const grid = gridRef.current;
+      if (!section || !grid) return;
+      if (!mq.matches) {
+        for (const r of rails) {
+          if (r.current) r.current.style.transform = "";
+        }
+        return;
+      }
+
+      const sectionRect = section.getBoundingClientRect();
+      const gridH = grid.offsetHeight;
+      const viewH = window.innerHeight;
+      const range = Math.max(1, sectionRect.height - viewH * 0.45);
+      const raw = (viewH * 0.32 - sectionRect.top) / range;
+      const p = Math.min(1, Math.max(0, raw));
+      const eased = p * p * (3 - 2 * p);
+
+      for (const r of rails) {
+        const el = r.current;
+        if (!el) continue;
+        const travel = Math.max(0, gridH - el.offsetHeight - 24);
+        el.style.transform = `translateY(${(eased * travel * 0.72).toFixed(1)}px)`;
+      }
+    };
+
+    sync();
+    window.addEventListener("scroll", sync, { passive: true });
+    window.addEventListener("resize", sync);
+    mq.addEventListener("change", sync);
+    const ro = new ResizeObserver(sync);
+    if (gridRef.current) ro.observe(gridRef.current);
+    return () => {
+      window.removeEventListener("scroll", sync);
+      window.removeEventListener("resize", sync);
+      mq.removeEventListener("change", sync);
+      ro.disconnect();
+    };
+  }, [gridRef, startRail, endRail]);
+}
+
 export function Faq({ copy }: Props) {
   const [open, setOpen] = useState<number | null>(0);
   const side = SITE_IMAGES.faqSide;
   const sideAlt = copy.locale === "he" ? (side.altHe ?? "") : (side.altEn ?? "");
   const waHref = whatsappUrl(waPrefill(copy.locale));
   const telHref = `tel:+${SITE.phoneE164}`;
+  const gridRef = useRef<HTMLDivElement>(null);
+  const startRailRef = useRef<HTMLElement>(null);
+  const endRailRef = useRef<HTMLElement>(null);
+  useFaqRailDrift(gridRef, startRailRef, endRailRef);
 
   return (
     <section id="faq" className="border-t border-stone/70 bg-parchment py-14 md:py-20">
@@ -29,10 +85,17 @@ export function Faq({ copy }: Props) {
           {copy.faq.h2}
         </InkReveal>
 
-        <div className="mt-10 grid items-start gap-8 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_minmax(0,15rem)] lg:gap-10">
+        <div
+          ref={gridRef}
+          data-faq-grid
+          className="mt-10 grid items-start gap-8 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_minmax(0,15rem)] lg:gap-10"
+        >
           {/* Start rail — craft photo + trust lines */}
           <Reveal y={16} className="hidden lg:block">
-            <aside className="sticky top-28 space-y-5">
+            <aside
+              ref={startRailRef}
+              className="sticky top-40 space-y-5 will-change-transform"
+            >
               <div className="relative aspect-[3/4] overflow-hidden rounded-[var(--radius-md)]">
                 <Image
                   src={side.src}
@@ -103,7 +166,10 @@ export function Faq({ copy }: Props) {
 
           {/* End rail — next step + meta */}
           <Reveal y={16} delay={0.08} className="hidden lg:block">
-            <aside className="sticky top-28 space-y-6 rounded-[var(--radius-md)] border border-stone/80 bg-surface/60 p-5 shadow-contact">
+            <aside
+              ref={endRailRef}
+              className="sticky top-40 space-y-6 rounded-[var(--radius-md)] border border-stone/80 bg-surface/60 p-5 shadow-contact will-change-transform"
+            >
               <div>
                 <p className="font-display text-base font-semibold text-ink">{copy.faq.sideNextTitle}</p>
                 <p className="mt-2 text-sm leading-relaxed text-ink/70">{copy.faq.sideNextLead}</p>

@@ -78,7 +78,7 @@ export function Hero({ copy }: Props) {
         aria-hidden="true"
         style={{ backgroundColor: "#1a1816" }}
       >
-        {/* One full-bleed photo — no blur twin under it */}
+        {/* Mobile — locked crop */}
         <Image
           src={SITE_IMAGES.hero.src}
           alt=""
@@ -87,8 +87,20 @@ export function Hero({ copy }: Props) {
           fetchPriority="high"
           quality={100}
           sizes="100vw"
-          className="object-cover contrast-[1.08] saturate-[1.08]"
+          className="object-cover contrast-[1.08] saturate-[1.08] md:hidden"
           style={{ objectPosition: "45% 18%" }}
+        />
+        {/* Desktop — landscape fill, no washed empty side */}
+        <Image
+          src={SITE_IMAGES.heroDesktop.src}
+          alt=""
+          fill
+          priority
+          fetchPriority="high"
+          quality={100}
+          sizes="100vw"
+          className="hidden object-cover contrast-[1.06] saturate-[1.05] md:block"
+          style={{ objectPosition: "48% 42%" }}
         />
         {/* Soft top veil for headline + bottom wash under the fan */}
         <div
@@ -99,7 +111,7 @@ export function Hero({ copy }: Props) {
           }}
         />
         <div
-          className="absolute inset-x-0 bottom-0 h-[36%] md:h-[30%]"
+          className="absolute inset-x-0 bottom-0 h-[36%] md:h-[24%]"
           style={{
             background:
               "linear-gradient(180deg, transparent 0%, rgba(247,244,239,0.45) 45%, rgba(247,244,239,0.88) 100%)",

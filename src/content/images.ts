@@ -9,6 +9,13 @@ export const SITE_IMAGES = {
     altEn: "Rabbi Yigal Amarani — sofer stam writing on parchment in the atelier",
     real: true,
   },
+  /** Desktop-only — sharpened crop of atelier writing (mobile keeps `hero`) */
+  heroDesktop: {
+    src: "/images/sofer/hero-desktop.jpg",
+    altHe: "הרב יגאל עמרני — כתיבה על קלף בסדנה",
+    altEn: "Rabbi Yigal Amarani — writing on parchment in the atelier",
+    real: true,
+  },
   portfolio: [
     {
       id: "tefillin",
@@ -75,6 +82,9 @@ export const SITE_IMAGES = {
       real: true,
       focus: "50% 16%",
       thumbFocus: "50% 14%",
+      /** Desktop: portrait face for consult — must differ from ink stage */
+      focusMd: "50% 12%",
+      thumbFocusMd: "50% 10%",
     },
     {
       id: "ink",
@@ -85,6 +95,10 @@ export const SITE_IMAGES = {
       real: true,
       focus: "48% 42%",
       thumbFocus: "50% 40%",
+      /** Desktop: landscape writing — distinct from consult portrait */
+      srcMd: "/images/sofer/sofer-20.jpg",
+      focusMd: "62% 36%",
+      thumbFocusMd: "68% 32%",
     },
     {
       id: "proof",
@@ -95,6 +109,8 @@ export const SITE_IMAGES = {
       real: true,
       focus: "50% 45%",
       thumbFocus: "50% 42%",
+      focusMd: "50% 48%",
+      thumbFocusMd: "50% 45%",
     },
     {
       id: "meeting",
@@ -105,6 +121,8 @@ export const SITE_IMAGES = {
       real: true,
       focus: "42% 28%",
       thumbFocus: "45% 24%",
+      focusMd: "40% 22%",
+      thumbFocusMd: "42% 20%",
     },
   ],
 } as const;
