@@ -129,9 +129,9 @@ export function getCopy(locale: Locale) {
     },
     testimonials: {
       h2: isHe
-        ? "מה אומרים מי שכבר לקחו סת״ם אצלנו"
-        : "What people say after getting stam here",
-      moreTitle: isHe ? "עוד לקוחות משתפים" : "More clients share",
+        ? "מה אומרים לקוחות שבחרו להפקיד את התפילין שלהם בידיים טובות?"
+        : "What clients say after trusting their tefillin to careful hands",
+      moreTitle: isHe ? "לקוחות נוספים משתפים" : "More clients share",
       prev: isHe ? "הקודם" : "Previous",
       next: isHe ? "הבא" : "Next",
       swipeHint: isHe ? "החליקו לראות עוד המלצות" : "Swipe for more testimonials",

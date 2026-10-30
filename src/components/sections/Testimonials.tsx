@@ -8,7 +8,7 @@ import {
   TOPIC_LABEL,
   type TestimonialVideo,
 } from "@/content/testimonials";
-import { CdnVideo } from "@/components/ui/CdnVideo";
+import { YoutubeEmbed } from "@/components/ui/YoutubeEmbed";
 
 type Props = { copy: Copy };
 
@@ -38,8 +38,9 @@ function TestimonialCard({
         isActive ? "z-30" : "z-0"
       }`}
     >
-      <CdnVideo
-        src={item.src}
+      <YoutubeEmbed
+        youtubeId={item.youtubeId}
+        fallbackSrc={item.src}
         title={name}
         duration={item.duration}
         playLabel={playLabel}
@@ -64,8 +65,8 @@ function TestimonialCard({
         <blockquote
           className={
             isLarge
-              ? "line-clamp-4 text-sm font-medium leading-relaxed text-ink/80"
-              : "line-clamp-3 text-xs font-medium leading-relaxed text-ink/80 md:text-sm"
+              ? "text-sm font-semibold leading-relaxed text-ink/85"
+              : "line-clamp-3 text-xs font-semibold leading-relaxed text-ink/85 md:text-sm"
           }
         >
           “{quote}”

@@ -1,20 +1,23 @@
 /**
- * MP4s via Cloudinary — full https://res.cloudinary.com/... URLs.
- * Mapped by WhatsApp filename → testimonial card.
+ * Video testimonials — Cloudinary MP4 (remote) until YouTube IDs arrive.
+ * Replace `youtubeId` when ready; UI prefers YouTube embed when set.
+ *
+ * Durations + quotes must stay paired with the correct speaker.
  */
 export type TestimonialTopic = "tefillin" | "sefer-torah" | "peer" | "service";
 
 export type TestimonialVideo = {
   id: string;
-  /** Full Cloudinary URL or relative path under /videos */
+  /** Cloudinary https URL — used until youtubeId is real */
   src: string;
+  /** Set real YouTube id to switch the player to iframe embed */
+  youtubeId?: string;
   duration: string;
   nameHe: string;
   nameEn: string;
   quoteHe: string;
   quoteEn: string;
   topic: TestimonialTopic;
-  /** Helps frame the player so landscape clips aren’t cropped. */
   orientation: "portrait" | "landscape";
   featured?: boolean;
 };
@@ -29,11 +32,12 @@ export const TOPIC_LABEL: Record<
   service: { he: "שירות ובדיקה", en: "Service & checking" },
 };
 
-/** Main stories — peer + Sefer Torah (shown larger). */
+/** Featured — 2 lead videos (top grid). */
 export const FEATURED_TESTIMONIALS: TestimonialVideo[] = [
   {
     id: "ariel-harar",
     src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021780/WhatsApp_Video_2026-10-25_at_20.49.49.mp4",
+    youtubeId: "PENDING_ARIEL_HARAR",
     duration: "0:43",
     nameHe: "אריאל חרר (סופר ומגיה סת״ם)",
     nameEn: "Ariel Harar (sofer & magiah)",
@@ -46,27 +50,11 @@ export const FEATURED_TESTIMONIALS: TestimonialVideo[] = [
     featured: true,
   },
   {
-    id: "sharabi",
-    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021783/WhatsApp_Video_2026-10-25_at_20.49.30.mp4",
-    duration: "1:25",
-    nameHe: "משפחת שרעבי",
-    nameEn: "The Sharabi family",
-    quoteHe:
-      "כתבנו ספר תורה לעילוי נשמת בננו החייל. הרב יגאל נתן לנו יחס משפחתי, מרגש ומקצועי לכל אורך הדרך.",
-    quoteEn:
-      "We commissioned a Sefer Torah for the elevation of our soldier son’s soul. Rabbi Yigal gave us family-like, moving, professional care throughout.",
-    topic: "sefer-torah",
-    orientation: "landscape",
-    featured: true,
-  },
-];
-
-export const MORE_TESTIMONIALS: TestimonialVideo[] = [
-  {
     id: "tziona-iraqi",
-    // Woman speaker — was swapped with Lior’s file
-    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021789/WhatsApp_Video_2026-10-25_at_20.49.29.mp4",
-    duration: "0:48",
+    /** Woman speaker, ~2:44 — do not swap with Lior */
+    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021591/WhatsApp_Video_2026-10-25_at_20.50.30.mp4",
+    youtubeId: "PENDING_TZIONA_IRAQI",
+    duration: "2:44",
     nameHe: "ציונה עיראקי",
     nameEn: "Tziona Iraqi",
     quoteHe:
@@ -75,23 +63,16 @@ export const MORE_TESTIMONIALS: TestimonialVideo[] = [
       "After a painful experience and a sefer that was found pasul elsewhere, we came to Rabbi Yigal. Warm care, remarkable writing, an outstanding person.",
     topic: "sefer-torah",
     orientation: "portrait",
+    featured: true,
   },
-  {
-    id: "yaakov",
-    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021790/WhatsApp_Video_2026-10-25_at_20.51.28.mp4",
-    duration: "1:11",
-    nameHe: "יעקב",
-    nameEn: "Yaakov",
-    quoteHe:
-      "ספר התורה שקנינו לפני 11 וחצי שנים נשאר מושלם. לא נמצאה בו אפילו שגיאה אחת מאז.",
-    quoteEn:
-      "The Sefer Torah we bought 11.5 years ago is still perfect. Not a single error found since.",
-    topic: "sefer-torah",
-    orientation: "portrait",
-  },
+];
+
+/** Carousel — 5 more clients (order fixed to match Avishi’s list). */
+export const MORE_TESTIMONIALS: TestimonialVideo[] = [
   {
     id: "aviv",
     src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021783/WhatsApp_Video_2026-10-25_at_20.51.13.mp4",
+    youtubeId: "PENDING_AVIV",
     duration: "1:17",
     nameHe: "אביב",
     nameEn: "Aviv",
@@ -103,22 +84,52 @@ export const MORE_TESTIMONIALS: TestimonialVideo[] = [
     orientation: "portrait",
   },
   {
+    id: "yaakov",
+    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021790/WhatsApp_Video_2026-10-25_at_20.51.28.mp4",
+    youtubeId: "PENDING_YAAKOV",
+    duration: "1:11",
+    nameHe: "יעקב",
+    nameEn: "Yaakov",
+    quoteHe:
+      "ספר התורה שקנינו לפני 11 וחצי שנים נשאר מושלם. לא נמצאה בו אפילו שגיאה אחת מאז.",
+    quoteEn:
+      "The Sefer Torah we bought 11.5 years ago is still perfect. Not a single error found since.",
+    topic: "sefer-torah",
+    orientation: "portrait",
+  },
+  {
     id: "lior",
-    // Man speaker — was swapped with Tziona’s file
-    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021591/WhatsApp_Video_2026-10-25_at_20.50.30.mp4",
-    duration: "2:44",
+    /** Man speaker, ~0:48 — do not swap with Aviv or Tziona */
+    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021789/WhatsApp_Video_2026-10-25_at_20.49.29.mp4",
+    youtubeId: "PENDING_LIOR",
+    duration: "0:48",
     nameHe: "ליאור",
     nameEn: "Lior",
     quoteHe:
       "הבאתי תפילין לבדיקה — שירות מקצועי, נגיש וזמין מיד גם בשעה שמונה בערב אחרי העבודה.",
     quoteEn:
       "I brought tefillin for checking — professional, accessible, available even at 8pm after work.",
-    topic: "tefillin",
+    topic: "service",
     orientation: "portrait",
+  },
+  {
+    id: "sharabi",
+    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021783/WhatsApp_Video_2026-10-25_at_20.49.30.mp4",
+    youtubeId: "PENDING_SHARABI",
+    duration: "1:25",
+    nameHe: "משפחת שרעבי",
+    nameEn: "The Sharabi family",
+    quoteHe:
+      "כתבנו ספר תורה לעילוי נשמת בננו החייל. הרב יגאל נתן לנו יחס משפחתי, מרגש ומקצועי לכל אורך הדרך.",
+    quoteEn:
+      "We commissioned a Sefer Torah for the elevation of our soldier son’s soul. Rabbi Yigal gave us family-like, moving, professional care throughout.",
+    topic: "sefer-torah",
+    orientation: "landscape",
   },
   {
     id: "shul-community",
     src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021787/WhatsApp_Video_2026-10-25_at_20.49.31.mp4",
+    youtubeId: "PENDING_SHUL",
     duration: "2:20",
     nameHe: "לקוח קהילת בית הכנסת",
     nameEn: "Synagogue community client",
