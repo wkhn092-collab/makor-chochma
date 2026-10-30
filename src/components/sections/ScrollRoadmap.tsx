@@ -89,6 +89,18 @@ export function ScrollRoadmap({ copy }: Props) {
   const rtl = copy.locale === "he";
   const pathDesktop = rtl ? PATH_DESKTOP_RTL : PATH_DESKTOP_LTR;
 
+  /** Loose access — `as const` + `in` narrows optional focus/srcMd to `never` in build. */
+  type CraftVisual = {
+    src: string;
+    srcMd?: string;
+    focus?: string;
+    focusMd?: string;
+    thumbFocus?: string;
+    thumbFocusMd?: string;
+  };
+  const visual = (img: (typeof craftImgs)[number]): CraftVisual =>
+    img as CraftVisual;
+
   const applyLayout = useCallback(() => {
     const path = pathRef.current;
     const progress = progressRef.current;
@@ -312,7 +324,7 @@ export function ScrollRoadmap({ copy }: Props) {
           >
             {/* Mobile crop — locked */}
             <Image
-              src={img.src}
+              src={visual(img).src}
               alt=""
               fill
               sizes="100vw"
@@ -320,15 +332,12 @@ export function ScrollRoadmap({ copy }: Props) {
               quality={92}
               className="select-none object-cover contrast-[1.06] saturate-[1.05] md:hidden"
               style={{
-                objectPosition:
-                  "focus" in img && img.focus ? img.focus : "50% 50%",
+                objectPosition: visual(img).focus ?? "50% 50%",
               }}
             />
             {/* Desktop crop / optional landscape src — mobile untouched */}
             <Image
-              src={
-                "srcMd" in img && img.srcMd ? img.srcMd : img.src
-              }
+              src={visual(img).srcMd ?? visual(img).src}
               alt=""
               fill
               sizes="100vw"
@@ -337,11 +346,7 @@ export function ScrollRoadmap({ copy }: Props) {
               className="hidden select-none object-cover contrast-[1.08] saturate-[1.06] brightness-[1.04] md:block"
               style={{
                 objectPosition:
-                  "focusMd" in img && img.focusMd
-                    ? img.focusMd
-                    : "focus" in img && img.focus
-                      ? img.focus
-                      : "50% 50%",
+                  visual(img).focusMd ?? visual(img).focus ?? "50% 50%",
               }}
             />
           </div>
@@ -432,7 +437,7 @@ export function ScrollRoadmap({ copy }: Props) {
                   >
                     <span className="relative block aspect-[16/11] w-full bg-[#1a1816]">
                       <Image
-                        src={img.src}
+                        src={visual(img).src}
                         alt=""
                         fill
                         sizes="220px"
@@ -440,18 +445,14 @@ export function ScrollRoadmap({ copy }: Props) {
                         className="object-cover md:hidden"
                         style={{
                           objectPosition:
-                            "thumbFocus" in img && img.thumbFocus
-                              ? img.thumbFocus
-                              : "focus" in img && img.focus
-                                ? img.focus
-                                : "50% 50%",
+                            visual(img).thumbFocus ??
+                            visual(img).focus ??
+                            "50% 50%",
                           filter: on ? "none" : "brightness(0.88)",
                         }}
                       />
                       <Image
-                        src={
-                          "srcMd" in img && img.srcMd ? img.srcMd : img.src
-                        }
+                        src={visual(img).srcMd ?? visual(img).src}
                         alt=""
                         fill
                         sizes="220px"
@@ -459,13 +460,10 @@ export function ScrollRoadmap({ copy }: Props) {
                         className="hidden object-cover md:block"
                         style={{
                           objectPosition:
-                            "thumbFocusMd" in img && img.thumbFocusMd
-                              ? img.thumbFocusMd
-                              : "focusMd" in img && img.focusMd
-                                ? img.focusMd
-                                : "thumbFocus" in img && img.thumbFocus
-                                  ? img.thumbFocus
-                                  : "50% 50%",
+                            visual(img).thumbFocusMd ??
+                            visual(img).focusMd ??
+                            visual(img).thumbFocus ??
+                            "50% 50%",
                           filter: on ? "none" : "brightness(0.9)",
                         }}
                       />
