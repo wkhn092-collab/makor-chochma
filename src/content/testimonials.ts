@@ -122,9 +122,9 @@ export const MORE_TESTIMONIALS: TestimonialVideo[] = [
     nameHe: "ליאור",
     nameEn: "Lior",
     quoteHe:
-      "הבאתי תפילין לבדיקה — שירות מקצועי, נגיש וזמין מיד גם בשעה שמונה בערב אחרי העבודה.",
+      "הבאתי תפילין לבדיקה. שירות מקצועי, נגיש וזמין מיד גם בשעה שמונה בערב אחרי העבודה.",
     quoteEn:
-      "I brought tefillin for checking — professional, accessible, available even at 8pm after work.",
+      "I brought tefillin for checking. Professional, accessible, available even at 8pm after work.",
     topic: "tefillin",
     orientation: "portrait",
   },
