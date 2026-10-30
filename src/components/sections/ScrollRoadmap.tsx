@@ -316,7 +316,12 @@ export function ScrollRoadmap({ copy }: Props) {
               fill
               sizes="100vw"
               priority={i === 0}
-              className="select-none object-cover object-center"
+              quality={92}
+              className="select-none object-cover contrast-[1.06] saturate-[1.05]"
+              style={{
+                objectPosition:
+                  "focus" in img && img.focus ? img.focus : "50% 50%",
+              }}
             />
           </div>
         ))}
@@ -324,7 +329,7 @@ export function ScrollRoadmap({ copy }: Props) {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(18,16,14,0.55) 0%, rgba(18,16,14,0.28) 38%, rgba(18,16,14,0.2) 55%, rgba(18,16,14,0.72) 100%)",
+              "linear-gradient(180deg, rgba(18,16,14,0.42) 0%, rgba(18,16,14,0.18) 38%, rgba(18,16,14,0.12) 55%, rgba(18,16,14,0.65) 100%)",
           }}
         />
       </div>
@@ -397,15 +402,22 @@ export function ScrollRoadmap({ copy }: Props) {
                     aria-current={on ? "step" : undefined}
                     aria-label={`${s.n} ${s.title}`}
                   >
-                    <span className="relative block aspect-[16/11] w-full">
+                    <span className="relative block aspect-[16/11] w-full bg-[#1a1816]">
                       <Image
                         src={img.src}
                         alt=""
                         fill
-                        sizes="180px"
+                        sizes="220px"
+                        quality={90}
                         className="object-cover"
                         style={{
-                          filter: on ? "none" : "brightness(0.75)",
+                          objectPosition:
+                            "thumbFocus" in img && img.thumbFocus
+                              ? img.thumbFocus
+                              : "focus" in img && img.focus
+                                ? img.focus
+                                : "50% 50%",
+                          filter: on ? "none" : "brightness(0.88)",
                         }}
                       />
                       <span
@@ -413,12 +425,12 @@ export function ScrollRoadmap({ copy }: Props) {
                         className="absolute inset-0"
                         style={{
                           background:
-                            "linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.72) 100%)",
+                            "linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.55) 100%)",
                         }}
                       />
                       {/* Title always above the bottom strip */}
                       <span className="absolute inset-x-0 bottom-6 px-1 text-center sm:px-2 md:bottom-9">
-                        <span className="block truncate text-[0.5625rem] font-bold leading-tight text-white sm:text-micro md:text-caption">
+                        <span className="block truncate text-[0.5625rem] font-bold leading-tight text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)] sm:text-micro md:text-caption">
                           {s.title}
                         </span>
                       </span>

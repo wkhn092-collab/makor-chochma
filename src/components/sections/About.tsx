@@ -35,16 +35,14 @@ export function About({ copy }: Props) {
             alt={photoAlt}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover object-[50%_35%] md:[filter:brightness(0.97)_saturate(0.9)_sepia(0.18)_hue-rotate(-8deg)]"
+            className="object-cover md:[filter:brightness(0.97)_saturate(0.9)_sepia(0.12)_hue-rotate(-6deg)]"
+            style={{ objectPosition: "50% 12%" }}
             priority={false}
           />
           <div
             aria-hidden
             className="absolute inset-0 bg-gradient-to-t from-parchment/55 via-transparent to-parchment/25 md:from-parchment/70 md:via-transparent md:to-parchment/20"
           />
-          <span className="absolute top-3 start-3 z-10 rounded-sm bg-parchment/90 px-2 py-0.5 text-micro text-bronze backdrop-blur-sm md:top-4 md:start-4">
-            {copy.hero.simulation}
-          </span>
 
           {/* Bottom strip — phone + desktop (full photo, no side rail) */}
           <aside className="absolute inset-x-0 bottom-0 z-10 border-t border-ink/10 bg-parchment/90 backdrop-blur-md">

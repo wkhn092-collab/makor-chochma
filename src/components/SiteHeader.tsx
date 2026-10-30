@@ -201,54 +201,77 @@ export function SiteHeader({ copy }: Props) {
         </div>
       </header>
 
-      {/* Mobile full-screen overlay — above sticky/WA, below header controls */}
+      {/* Mobile left drawer — physical left (dir=ltr shell) so RTL page won't flip it */}
       <div
-        id={panelId}
-        role="dialog"
-        aria-modal="true"
-        aria-label={copy.nav.openMenu}
-        hidden={!menuOpen}
         className={clsx(
-          "fixed inset-0 z-[60] flex h-[100dvh] max-h-[100dvh] flex-col bg-parchment md:hidden",
+          "fixed inset-0 z-[60] md:hidden",
           menuOpen ? "pointer-events-auto" : "pointer-events-none",
         )}
+        aria-hidden={!menuOpen}
+        dir="ltr"
       >
-        <div className="flex min-h-0 flex-1 flex-col px-5 pt-[4.75rem]">
-          <p className="text-caption font-semibold tracking-caption-wide text-bronze uppercase">
-            {copy.locale === "he" ? "תפריט" : "Menu"}
-          </p>
-          <nav aria-label="Mobile" className="mt-4 flex flex-col">
-            {links.map((l, i) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                ref={(el) => {
-                  linksRef.current[i] = el;
-                }}
-                onClick={closeMenu}
-                className="font-display border-b border-stone/45 py-4 text-[1.5rem] font-bold leading-snug tracking-[-0.02em] text-ink first:border-t first:border-stone/45"
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
+        <button
+          type="button"
+          tabIndex={menuOpen ? 0 : -1}
+          aria-label={copy.nav.closeMenu}
+          className={clsx(
+            "absolute inset-0 bg-ink/40 transition-opacity duration-300",
+            menuOpen ? "opacity-100" : "opacity-0",
+          )}
+          style={{ transitionTimingFunction: EASE_EXPO }}
+          onClick={closeMenu}
+        />
+        <div
+          id={panelId}
+          role="dialog"
+          aria-modal={menuOpen}
+          aria-label={copy.nav.openMenu}
+          dir={copy.locale === "he" ? "rtl" : "ltr"}
+          className="absolute top-0 bottom-0 flex h-[100dvh] max-h-[100dvh] w-[min(18.5rem,82vw)] flex-col bg-parchment shadow-[8px_0_32px_rgba(26,24,20,0.18)] transition-transform duration-300"
+          style={{
+            left: 0,
+            right: "auto",
+            transform: menuOpen ? "translateX(0)" : "translateX(-100%)",
+            transitionTimingFunction: EASE_EXPO,
+          }}
+        >
+          <div className="flex min-h-0 flex-1 flex-col px-5 pt-[4.75rem]">
+            <p className="text-caption font-semibold tracking-caption-wide text-bronze uppercase">
+              {copy.locale === "he" ? "תפריט" : "Menu"}
+            </p>
+            <nav aria-label="Mobile" className="mt-4 flex flex-col">
+              {links.map((l, i) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  ref={(el) => {
+                    linksRef.current[i] = el;
+                  }}
+                  onClick={closeMenu}
+                  className="font-display border-b border-stone/45 py-3.5 text-[1.25rem] font-bold leading-snug tracking-[-0.02em] text-ink first:border-t first:border-stone/45"
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
 
-        <div className="shrink-0 border-t border-stone/50 bg-parchment-deep px-4 pt-3.5 pb-[max(0.85rem,env(safe-area-inset-bottom))]">
-          <a
-            href={telHref}
-            data-analytics="phone_click"
-            onClick={closeMenu}
-            className="btn-primary w-full !min-h-12 text-base"
-          >
-            {copy.nav.ctaCall}
-            <span className="ms-2 font-semibold opacity-80" dir="ltr">
-              <bdi>{SITE.phoneDisplay}</bdi>
-            </span>
-          </a>
-          <p className="mt-2.5 text-center text-xs text-bronze">
-            {copy.locale === "he" ? SITE.hoursHe : SITE.hoursEn}
-          </p>
+          <div className="shrink-0 border-t border-stone/50 bg-parchment-deep px-4 pt-3.5 pb-[max(0.85rem,env(safe-area-inset-bottom))]">
+            <a
+              href={telHref}
+              data-analytics="phone_click"
+              onClick={closeMenu}
+              className="btn-primary w-full !min-h-12 text-base"
+            >
+              {copy.nav.ctaCall}
+              <span className="ms-2 font-semibold opacity-80" dir="ltr">
+                <bdi>{SITE.phoneDisplay}</bdi>
+              </span>
+            </a>
+            <p className="mt-2.5 text-center text-xs text-bronze">
+              {copy.locale === "he" ? SITE.hoursHe : SITE.hoursEn}
+            </p>
+          </div>
         </div>
       </div>
     </>

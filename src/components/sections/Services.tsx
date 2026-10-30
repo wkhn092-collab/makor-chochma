@@ -85,6 +85,7 @@ export function Services({ copy }: Props) {
                       "relative aspect-[4/5] w-[3.25rem] overflow-hidden rounded-sm sm:w-[5.5rem]",
                       (item.id === "tefillin" ||
                         item.id === "mezuzot" ||
+                        item.id === "megillot" ||
                         item.id === "pitum") &&
                         "bg-white",
                     )}
@@ -99,6 +100,7 @@ export function Services({ copy }: Props) {
                           "transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
                           item.id === "tefillin" ||
                             item.id === "mezuzot" ||
+                            item.id === "megillot" ||
                             item.id === "pitum"
                             ? "object-contain"
                             : "object-cover",

@@ -3,7 +3,6 @@ import Link from "next/link";
 import type { Copy } from "@/content/copy";
 import { SITE } from "@/content/site";
 import { SITE_IMAGES } from "@/content/images";
-import { SimulationBadge } from "@/components/ui/SimulationBadge";
 
 type Props = { copy: Copy };
 
@@ -39,12 +38,8 @@ export function SiteFooter({ copy }: Props) {
             alt=""
             fill
             sizes="100vw"
-            className="object-cover object-[50%_28%] [filter:brightness(0.9)_saturate(0.88)_sepia(0.2)_hue-rotate(-6deg)]"
+            className="object-cover object-[45%_35%] [filter:brightness(0.9)_saturate(0.88)_sepia(0.16)_hue-rotate(-6deg)]"
             aria-hidden
-          />
-          <SimulationBadge
-            label={copy.hero.simulation}
-            className="start-4 top-4 z-10 md:start-6 md:top-6"
           />
           {/* Warm parchment/gold wash — matches site, less chalky white */}
           <div

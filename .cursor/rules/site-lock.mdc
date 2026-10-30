@@ -1,15 +1,25 @@
 ---
-description: Site lock + craft/roadmap lawyer-parity lock
+description: Site lock — mobile locked; craft lock; ask before mobile edits
 alwaysApply: true
 ---
 
 # Site lock — מכון מקור חכמה
 
-## Hard lock — craft roadmap (user-fixed for mobile)
+## Hard lock — mobile version (user-locked)
+**Mobile is locked.** Do not change mobile layout, spacing, typography, images, drawers, craft mobile pin, or any CSS/JS that affects the phone viewport unless Avishi **explicitly unlocks mobile** or confirms after you ask.
+
+When a request *might* touch mobile (shared components, `images.ts`, Hero, Header, craft, global CSS):
+1. **Stop and ask** Avishi whether to apply it on mobile too
+2. Only edit after he answers **מאשר** / confirms
+3. Prefer desktop-only fixes (`md:` / `lg:` / media queries) so mobile stays untouched
+
+Desktop work is allowed. Prefer `md:`+ overrides; do not regress the locked mobile look.
+
+## Hard lock — craft roadmap
 **Never edit** `src/components/sections/ScrollRoadmap.tsx` or the `#craft` roadmap UI unless Avishi explicitly names that element and asks to change it.
 
 ## General rule
-Only change what Avishi asks for in that message. Prefer small, section-by-section mobile fixes. No drive-by refactors.
+Only change what Avishi asks for in that message. Prefer small, section-by-section fixes. No drive-by refactors.
 
 Allowed without a change request:
 - Answer questions
@@ -20,7 +30,7 @@ Allowed without a change request:
 Forbidden unless he clearly says to do it:
 - Commits, pushes, deploys
 - Dependency or config changes
-- Touching the locked roadmap element
+- Touching locked mobile or locked roadmap
 
 ## Craft / ScrollRoadmap — נעול (lawyer parity)
 

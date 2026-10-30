@@ -45,9 +45,6 @@ export function Faq({ copy }: Props) {
                   aria-hidden
                   className="absolute inset-0 bg-gradient-to-t from-parchment/70 via-transparent to-transparent"
                 />
-                <span className="absolute bottom-3 start-3 rounded-sm bg-parchment/90 px-2 py-0.5 text-micro text-bronze backdrop-blur-sm">
-                  {copy.hero.simulation}
-                </span>
               </div>
               <p className="font-display text-sm font-semibold text-ink">{copy.faq.sidePhotoCaption}</p>
               <ul className="space-y-3 border-t border-stone/80 pt-4">
@@ -147,9 +144,6 @@ export function Faq({ copy }: Props) {
                   sizes="(max-width: 640px) 100vw, 50vw"
                   className="object-cover object-[50%_40%]"
                 />
-                <span className="absolute bottom-2 start-2 rounded-sm bg-parchment/90 px-2 py-0.5 text-micro text-bronze">
-                  {copy.hero.simulation}
-                </span>
               </div>
               <div className="flex flex-col justify-center gap-3 rounded-[var(--radius-md)] border border-stone/80 bg-surface/60 p-4 shadow-contact">
                 <p className="font-display text-sm font-semibold text-ink">{copy.faq.sideTrustTitle}</p>

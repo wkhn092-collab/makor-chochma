@@ -73,40 +73,47 @@ export function Hero({ copy }: Props) {
       aria-labelledby="hero-title"
       className="mc-hero-stage relative isolate flex min-h-[calc(100svh-var(--mc-header-h)+4.5rem)] flex-col overflow-hidden text-ink"
     >
-      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+      <div
+        className="pointer-events-none absolute inset-0 -z-10"
+        aria-hidden="true"
+        style={{ backgroundColor: "#1a1816" }}
+      >
+        {/* One full-bleed photo — no blur twin under it */}
         <Image
           src={SITE_IMAGES.hero.src}
           alt=""
           fill
           priority
           fetchPriority="high"
-          quality={95}
+          quality={100}
           sizes="100vw"
-          className="object-cover object-[52%_28%] brightness-[1.12] contrast-[1.1] saturate-[1.08] md:object-[50%_32%] md:brightness-[1.1] md:contrast-[1.12]"
+          className="object-cover contrast-[1.08] saturate-[1.08]"
+          style={{ objectPosition: "45% 18%" }}
         />
-        {/* Soft top veil for headline + bottom fade into parchment */}
+        {/* Soft top veil for headline + bottom wash under the fan */}
         <div
-          className="absolute inset-x-0 top-0 h-[42%] md:h-[36%]"
+          className="absolute inset-x-0 top-0 h-[34%] md:h-[28%]"
           style={{
             background:
-              "linear-gradient(180deg, rgba(247,244,239,0.72) 0%, rgba(247,244,239,0.35) 45%, transparent 100%)",
+              "linear-gradient(180deg, rgba(247,244,239,0.62) 0%, rgba(247,244,239,0.22) 55%, transparent 100%)",
           }}
         />
         <div
-          className="absolute inset-x-0 bottom-0 h-[28%] md:h-[22%]"
+          className="absolute inset-x-0 bottom-0 h-[36%] md:h-[30%]"
           style={{
             background:
-              "linear-gradient(180deg, transparent 0%, rgba(247,244,239,0.35) 55%, rgba(247,244,239,0.7) 100%)",
+              "linear-gradient(180deg, transparent 0%, rgba(247,244,239,0.45) 45%, rgba(247,244,239,0.88) 100%)",
           }}
         />
       </div>
 
       <span className="sr-only">{heroAlt}</span>
-      <span className="pointer-events-none absolute bottom-3 start-3 z-30 rounded-sm bg-parchment/90 px-1.5 py-0.5 text-tag text-bronze backdrop-blur-sm md:bottom-4 md:start-4">
-        {copy.hero.simulation}
-      </span>
 
-      <div className="relative z-30 mx-auto flex w-full max-w-[1180px] shrink-0 flex-col px-4 pt-[calc(var(--mc-header-h)+0.55rem)] sm:px-6 sm:pt-[calc(var(--mc-header-h)+0.35rem)]">
+      {/* Copy sits at the kippah — not floating above the head */}
+      <div
+        className="relative z-30 mx-auto flex w-full max-w-[1180px] shrink-0 flex-col px-4 sm:px-6"
+        style={{ paddingTop: "calc(var(--mc-header-h) + 4.25rem)" }}
+      >
         <div className="flex flex-col items-center text-center [text-shadow:0_1px_18px_rgb(247_244_239/0.95),0_0_2px_rgb(247_244_239/1)]">
           <p
             className="mc-hero-in text-label font-semibold tracking-[0.06em] text-bronze"

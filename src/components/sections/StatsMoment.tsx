@@ -119,11 +119,11 @@ export function StatsMoment({ copy }: Props) {
       <div aria-hidden className="absolute inset-0 -z-10">
         <div data-stats-bg className="absolute inset-0 will-change-transform">
           <Image
-            src="/images/megillah-yad-v6.jpg"
+            src="/images/sofer/sofer-04.jpg"
             alt=""
             fill
             sizes="100vw"
-            className="scale-110 object-cover object-[50%_40%] brightness-[1.12] saturate-[1.06] md:[filter:brightness(0.95)_saturate(0.88)_contrast(1.04)_sepia(0.22)_hue-rotate(-6deg)]"
+            className="scale-110 object-cover object-[50%_35%] brightness-[1.08] saturate-[1.02] md:[filter:brightness(0.95)_saturate(0.88)_contrast(1.04)_sepia(0.18)_hue-rotate(-6deg)]"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-parchment/80 via-parchment/50 to-parchment/90 md:from-parchment/72 md:via-parchment/55 md:to-parchment-deep/92" />

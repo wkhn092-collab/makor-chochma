@@ -20,7 +20,7 @@ export function QuoteBand({ copy }: Props) {
     >
       <div aria-hidden className="absolute inset-0">
         <Image
-          src="/images/craft/02-ink.jpg"
+          src="/images/sofer/sofer-15.jpg"
           alt=""
           fill
           sizes="100vw"

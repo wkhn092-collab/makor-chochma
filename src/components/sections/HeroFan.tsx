@@ -7,8 +7,10 @@ type FanCardData = {
   src: string;
   titleHe: string;
   titleEn: string;
-  /** Tailwind object-* classes — always include object-cover or object-contain */
-  focus: string;
+  /** object-cover | object-contain */
+  fit: "cover" | "contain";
+  /** CSS object-position — face / product crop */
+  position?: string;
   /** White-bg product stills — photo well stays white even on dark chrome */
   product?: boolean;
 };
@@ -26,15 +28,15 @@ const FAN = [
 ] as const;
 
 const FAN_CARDS: FanCardData[] = [
-  { src: SITE_IMAGES.craft[0]!.src, titleHe: "שיחת ייעוץ", titleEn: "Consultation", focus: "object-cover object-center" },
-  { src: SITE_IMAGES.craft[1]!.src, titleHe: "קלף ודיו", titleEn: "Ink & parchment", focus: "object-cover object-[center_40%]" },
-  { src: SITE_IMAGES.craft[2]!.src, titleHe: "הגהה", titleEn: "Proofing", focus: "object-cover object-center" },
-  { src: SITE_IMAGES.portfolio[0]!.src, titleHe: "תפילין", titleEn: "Tefillin", focus: "object-contain object-center", product: true },
-  { src: SITE_IMAGES.hero.src, titleHe: "מקור חכמה", titleEn: "Makor Chochma", focus: "object-cover object-[center_28%]" },
-  { src: SITE_IMAGES.portfolio[1]!.src, titleHe: "מזוזות", titleEn: "Mezuzot", focus: "object-contain object-center", product: true },
-  { src: SITE_IMAGES.portfolio[2]!.src, titleHe: "מגילות", titleEn: "Megillot", focus: "object-cover object-center" },
-  { src: SITE_IMAGES.portfolio[3]!.src, titleHe: "ספרי תורה", titleEn: "Sifrei Torah", focus: "object-cover object-center" },
-  { src: SITE_IMAGES.craft[3]!.src, titleHe: "פגישה באלעד", titleEn: "Meeting in Elad", focus: "object-cover object-[center_40%]" },
+  { src: SITE_IMAGES.craft[0]!.src, titleHe: "שיחת ייעוץ", titleEn: "Consultation", fit: "cover", position: SITE_IMAGES.craft[0]!.thumbFocus },
+  { src: SITE_IMAGES.craft[1]!.src, titleHe: "קלף ודיו", titleEn: "Ink & parchment", fit: "cover", position: SITE_IMAGES.craft[1]!.thumbFocus },
+  { src: SITE_IMAGES.craft[2]!.src, titleHe: "הגהה", titleEn: "Proofing", fit: "cover", position: SITE_IMAGES.craft[2]!.thumbFocus },
+  { src: SITE_IMAGES.portfolio[0]!.src, titleHe: "תפילין", titleEn: "Tefillin", fit: "contain", product: true },
+  { src: SITE_IMAGES.hero.src, titleHe: "מקור חכמה", titleEn: "Makor Chochma", fit: "cover", position: "45% 14%" },
+  { src: SITE_IMAGES.portfolio[1]!.src, titleHe: "מזוזות", titleEn: "Mezuzot", fit: "contain", product: true },
+  { src: SITE_IMAGES.portfolio[2]!.src, titleHe: "מגילות", titleEn: "Megillot", fit: "contain", product: true },
+  { src: SITE_IMAGES.portfolio[3]!.src, titleHe: "ספרי תורה", titleEn: "Sifrei Torah", fit: "cover" },
+  { src: SITE_IMAGES.craft[3]!.src, titleHe: "פגישה באלעד", titleEn: "Meeting in Elad", fit: "cover", position: SITE_IMAGES.craft[3]!.thumbFocus },
 ];
 
 function FanCard({
@@ -82,7 +84,8 @@ function FanCard({
           quality={78}
           loading="lazy"
           sizes="(max-width: 639px) 16vw, (max-width: 767px) 28vw, 14vw"
-          className={card.focus}
+          className={card.fit === "contain" ? "object-contain" : "object-cover"}
+          style={{ objectPosition: card.position ?? "50% 50%" }}
         />
       </div>
     </article>

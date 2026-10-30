@@ -1,12 +1,13 @@
 /**
- * Real craft photography until the client supplies own assets.
- * Always show with the "הדמיה" badge.
+ * Client photography — הרב יגאל עמרני / מכון מקור חכמה.
+ * Entries with `real: true` must NOT show the «הדמיה» badge.
  */
 export const SITE_IMAGES = {
   hero: {
-    src: "/images/hero-real-v3.jpg",
-    altHe: "ארון קודש עם ספרי תורה מעוטרים — צילום אמיתי להמחשה",
-    altEn: "Holy Ark with ornate Torah scrolls — real illustrative photo",
+    src: "/images/sofer/hero-main.jpg",
+    altHe: "הרב יגאל עמרני — סופר סת״ם כותב על קלף בסדנה",
+    altEn: "Rabbi Yigal Amarani — sofer stam writing on parchment in the atelier",
+    real: true,
   },
   portfolio: [
     {
@@ -14,78 +15,96 @@ export const SITE_IMAGES = {
       src: "/images/product-tefillin-silver-v1.png",
       altHe: "תפילין רש״י עם לוחיות כסף — צילום מוצר להמחשה",
       altEn: "Rashi tefillin with silver plaques — product photo",
+      real: false,
     },
     {
       id: "mezuzot",
       src: "/images/product-mezuzah-klaf-v1.png",
-      altHe: "קלף מזוזה בכתיבת סת״ם — צילום מוצר להמחשה",
-      altEn: "Mezuzah parchment in Stam script — product photo",
+      altHe: "קלף מזוזה בכתיבת יד — צילום מוצר להמחשה",
+      altEn: "Handwritten mezuzah klaf — product photo",
+      real: false,
     },
     {
       id: "megillot",
       src: "/images/product-megillah-v1.png",
-      altHe: "מגילת אסתר פתוחה על בד בהיר — צילום מוצר להמחשה",
-      altEn: "Open Megillat Esther on light cloth — product photo",
+      altHe: "מגילה בכתיבת יד על קלף — צילום מוצר להמחשה",
+      altEn: "Handwritten megillah on parchment — product photo",
+      real: false,
     },
     {
       id: "sifrei-torah",
-      src: "/images/sefer-sephardi-final-v6.jpg",
-      altHe: "ספר תורה ספרדי בתיק כסף על בד בהיר — צילום להמחשה",
-      altEn: "Sephardic Sefer Torah in silver tik on light cloth — illustrative photo",
+      src: "/images/sofer/sofer-02.jpg",
+      altHe: "ספר תורה פתוח — הסופר מצביע על הכתב",
+      altEn: "Open Sefer Torah — the sofer pointing at the text",
+      real: true,
     },
   ],
-  /** Pitum HaKetoret — handwritten klaf (NOT spices) */
+  /** Pitum — temporary parchment still until institute photo arrives */
   ketoret: {
-    src: "/images/product-mezuzah-klaf-v1.png",
-    altHe: "קלף בכתיבת סת״ם — צילום מוצר להמחשה",
-    altEn: "Handwritten Stam parchment — product photo",
+    src: "/images/product-pitum-v1.jpg",
+    altHe: "פיטום הקטורת על קלף — צילום להמחשה",
+    altEn: "Pitum HaKetoret on parchment — illustrative photo",
+    real: false,
   },
-  /** About photo — bright full Sephardi tik (not dark museum crop) */
+  /** About / lead — clear face portrait (not the gift-table crop) */
   about: {
-    src: "/images/about-lcp.webp",
-    altHe: "ספר תורה ספרדי בתיק כסף על בד בהיר — צילום להמחשה",
-    altEn: "Sephardic Sefer Torah in silver tik on light cloth — illustrative photo",
+    src: "/images/sofer/sofer-17.jpg",
+    altHe: "הרב יגאל עמרני — סופר סת״ם במכון מקור חכמה, אלעד",
+    altEn: "Rabbi Yigal Amarani — sofer stam at Makor Chochma, Elad",
+    real: true,
   },
-  /** FAQ side visual — open megillah */
   faqSide: {
-    src: "/images/product-megillah-v1.png",
-    altHe: "מגילה פתוחה — צילום מוצר להמחשה",
-    altEn: "Open megillah — product photo",
+    src: "/images/sofer/sofer-16.jpg",
+    altHe: "הגהה על הקלף — יד הסופר על האותיות",
+    altEn: "Proofing on the parchment — the sofer’s hand on the letters",
+    real: true,
   },
-  /** Footer “הצעד הבא” full-bleed background */
   footerCta: {
-    src: "/images/footer-cta-bg-v1.jpg",
-    altHe: "ארון קודש עם ספרי תורה — צילום להמחשה",
-    altEn: "Holy Ark with Torah scrolls — illustrative photo",
+    src: "/images/sofer/sofer-11.jpg",
+    altHe: "הסופר בסדנה — כתיבה על קלף באור העבודה",
+    altEn: "The sofer in the atelier — writing on parchment under work lights",
+    real: true,
   },
   craft: [
     {
       id: "consult",
-      /** שיחה על מה שצריך — טלפון + ספר על השולחן */
-      src: "/images/craft/01-consult.jpg",
-      altHe: "שיחת ייעוץ — טלפון וספר על שולחן העבודה (צילום להמחשה)",
-      altEn: "Consultation call — phone and sefer on the desk (illustrative photo)",
+      /** שיחה — פנים ברורות מול המצלמה */
+      src: "/images/sofer/sofer-17.jpg",
+      altHe: "שיחת ייעוץ — הרב יגאל מוכן לדבר על מה שצריך",
+      altEn: "Consultation — Rabbi Yigal ready to talk about what you need",
+      real: true,
+      focus: "50% 16%",
+      thumbFocus: "50% 14%",
     },
     {
       id: "ink",
-      /** קלף ודיו ביד — כתיבה ידנית בקולמוס */
-      src: "/images/hero-sofer-quill-v2.png",
-      altHe: "קלף ודיו ביד — סופר כותב בקולמוס על קלף (צילום אמיתי)",
-      altEn: "Parchment and ink by hand — sofer writing with a quill (real photo)",
+      /** קלף ודיו — כתיבה על הקלף, לא זום על האוזן */
+      src: "/images/sofer/sofer-15.jpg",
+      altHe: "קלף ודיו ביד — הסופר כותב על הקלף",
+      altEn: "Parchment and ink by hand — the sofer writing on the klaf",
+      real: true,
+      focus: "48% 42%",
+      thumbFocus: "50% 40%",
     },
     {
       id: "proof",
-      /** הגהה וליווי — בדיקת אותיות על הקלף */
-      src: "/images/klaf-detail-v5.jpg",
-      altHe: "הגהה — יד מצביעה ובודקת כתב על הקלף (צילום אמיתי)",
-      altEn: "Proofing — yad checking the script on parchment (real photo)",
+      /** הגהה — יד על האותיות */
+      src: "/images/sofer/sofer-16.jpg",
+      altHe: "הגהה — בדיקת אותיות על הקלף",
+      altEn: "Proofing — checking letters on the parchment",
+      real: true,
+      focus: "50% 45%",
+      thumbFocus: "50% 42%",
     },
     {
       id: "meeting",
-      /** פגישה באלעד — מגיעים לסדנה / סוגרים פנים אל פנים */
-      src: "/images/craft/04-meeting.jpg",
-      altHe: "פגישה באלעד — כניסה לסדנת הסופר (צילום להמחשה)",
-      altEn: "Meeting in Elad — entering the sofer’s study (illustrative photo)",
+      /** פגישה באלעד — הסדנה בבירור */
+      src: "/images/sofer/sofer-11.jpg",
+      altHe: "פגישה באלעד — הסופר בסדנה באור העבודה",
+      altEn: "Meeting in Elad — the sofer in the atelier under work lights",
+      real: true,
+      focus: "42% 28%",
+      thumbFocus: "45% 24%",
     },
   ],
 } as const;
