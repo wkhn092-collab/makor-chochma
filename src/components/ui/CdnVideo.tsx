@@ -29,7 +29,8 @@ const FRAME: Record<"sm" | "md" | "lg", Record<Orientation, string>> = {
     landscape: "aspect-video w-full",
   },
   lg: {
-    portrait: "aspect-[3/4] w-full max-w-[280px] mx-auto",
+    // Mobile keeps capped frame; desktop fills the column (a bit larger)
+    portrait: "aspect-[3/4] w-full max-w-[280px] mx-auto md:max-w-none",
     landscape: "aspect-video w-full",
   },
 };

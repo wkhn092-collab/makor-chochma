@@ -56,7 +56,7 @@ function TestimonialCard({
         <h3
           className={
             isLarge
-              ? "font-display text-base font-bold leading-snug text-ink md:text-lg"
+              ? "font-display text-base font-bold leading-snug text-ink md:text-xl"
               : "font-display text-sm font-bold leading-snug text-ink md:text-base"
           }
         >
@@ -65,7 +65,7 @@ function TestimonialCard({
         <blockquote
           className={
             isLarge
-              ? "text-sm font-semibold leading-relaxed text-ink/85"
+              ? "text-sm font-semibold leading-relaxed text-ink/85 md:text-base"
               : "line-clamp-3 text-xs font-semibold leading-relaxed text-ink/85 md:text-sm"
           }
         >
@@ -96,13 +96,13 @@ export function Testimonials({ copy }: Props) {
       id="testimonials"
       className="relative z-0 overflow-x-clip bg-parchment-deep/40 py-16 md:py-20"
     >
-      <div className="relative z-0 mx-auto max-w-6xl px-4 md:px-6">
+      <div className="relative z-0 mx-auto max-w-6xl px-4 md:max-w-7xl md:px-6">
         {/* No Reveal/InkReveal here — GSAP left cards at opacity 0 after craft sticky */}
-        <h2 className="font-display max-w-3xl text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-snug text-ink">
+        <h2 className="font-display max-w-3xl text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-snug text-ink md:max-w-4xl">
           {copy.testimonials.h2}
         </h2>
 
-        <div className="relative z-0 mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-10">
+        <div className="relative z-0 mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-10 md:gap-12">
           {FEATURED_TESTIMONIALS.map((item) => (
             <div key={item.id} className="relative z-0 w-full min-w-0">
               <TestimonialCard
@@ -144,7 +144,7 @@ export function Testimonials({ copy }: Props) {
 
           <div
             ref={scrollerRef}
-            className="relative z-0 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="relative z-0 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:gap-5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             tabIndex={0}
             role="region"
             aria-label={copy.testimonials.moreTitle}
@@ -153,7 +153,7 @@ export function Testimonials({ copy }: Props) {
               <div
                 key={item.id}
                 data-carousel-card
-                className={`w-[min(70vw,200px)] shrink-0 snap-start sm:w-[200px] ${
+                className={`w-[min(70vw,200px)] shrink-0 snap-start sm:w-[200px] md:w-[240px] ${
                   playingId === item.id ? "z-30" : "z-0"
                 }`}
               >
