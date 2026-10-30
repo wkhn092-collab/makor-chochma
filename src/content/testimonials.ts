@@ -2,7 +2,7 @@
  * Video testimonials — Cloudinary MP4 (remote) until YouTube IDs arrive.
  * Replace `youtubeId` when ready; UI prefers YouTube embed when set.
  *
- * Keep each video file paired with the matching speaker + quote (by face).
+ * Order is shared mobile+desktop (RTL: first item = right / top).
  */
 export type TestimonialTopic = "tefillin" | "sefer-torah" | "peer" | "service";
 
@@ -32,14 +32,13 @@ export const TOPIC_LABEL: Record<
   service: { he: "שירות ובדיקה", en: "Service & checking" },
 };
 
-/** Featured — Ariel + Tziona (top grid). Videos matched by face on mobile+desktop. */
+/** Featured — Ariel (right/top) then Sharabi (left/below). */
 export const FEATURED_TESTIMONIALS: TestimonialVideo[] = [
   {
     id: "ariel-harar",
-    // Sofer (man) — was wrongly on the couple clip
-    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021783/WhatsApp_Video_2026-10-25_at_20.49.30.mp4",
+    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021780/WhatsApp_Video_2026-10-25_at_20.49.49.mp4",
     youtubeId: "PENDING_ARIEL_HARAR",
-    duration: "1:25",
+    duration: "0:43",
     nameHe: "אריאל חרר (סופר ומגיה סת״ם)",
     nameEn: "Ariel Harar (sofer & magiah)",
     quoteHe:
@@ -51,8 +50,29 @@ export const FEATURED_TESTIMONIALS: TestimonialVideo[] = [
     featured: true,
   },
   {
+    id: "sharabi",
+    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021783/WhatsApp_Video_2026-10-25_at_20.49.30.mp4",
+    youtubeId: "PENDING_SHARABI",
+    duration: "1:25",
+    nameHe: "משפחת שרעבי",
+    nameEn: "The Sharabi family",
+    quoteHe:
+      "כתבנו ספר תורה לעילוי נשמת בננו החייל. הרב יגאל נתן לנו יחס משפחתי, מרגש ומקצועי לכל אורך הדרך.",
+    quoteEn:
+      "We commissioned a Sefer Torah for the elevation of our soldier son’s soul. Rabbi Yigal gave us family-like, moving, professional care throughout.",
+    topic: "sefer-torah",
+    orientation: "landscape",
+    featured: true,
+  },
+];
+
+/**
+ * Carousel — same visual order as desktop (RTL: first = right).
+ * Visual L→R: Yaakov → Lior → Aviv → shul → Tziona
+ */
+export const MORE_TESTIMONIALS: TestimonialVideo[] = [
+  {
     id: "tziona-iraqi",
-    // Woman speaker — 20.49.29 (not the 2:44 man clip)
     src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021789/WhatsApp_Video_2026-10-25_at_20.49.29.mp4",
     youtubeId: "PENDING_TZIONA_IRAQI",
     duration: "0:48",
@@ -64,12 +84,22 @@ export const FEATURED_TESTIMONIALS: TestimonialVideo[] = [
       "After a painful experience and a sefer that was found pasul elsewhere, we came to Rabbi Yigal. Warm care, remarkable writing, an outstanding person.",
     topic: "sefer-torah",
     orientation: "portrait",
-    featured: true,
   },
-];
-
-/** Carousel — Aviv, Yaakov, Lior, Sharabi, shul. */
-export const MORE_TESTIMONIALS: TestimonialVideo[] = [
+  {
+    id: "shul-community",
+    // Black hat
+    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021790/WhatsApp_Video_2026-10-25_at_20.51.28.mp4",
+    youtubeId: "PENDING_SHUL",
+    duration: "1:11",
+    nameHe: "לקוח קהילת בית הכנסת",
+    nameEn: "Synagogue community client",
+    quoteHe:
+      "יחס חברי, עניו וסבלני. עבודה מכל הלב עם חיוך שמאיר פנים לכל אחד.",
+    quoteEn:
+      "Friendly, humble, patient care. Wholehearted work with a smile that lights up every face.",
+    topic: "service",
+    orientation: "portrait",
+  },
   {
     id: "aviv",
     src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021783/WhatsApp_Video_2026-10-25_at_20.51.13.mp4",
@@ -85,23 +115,7 @@ export const MORE_TESTIMONIALS: TestimonialVideo[] = [
     orientation: "portrait",
   },
   {
-    id: "yaakov",
-    // White beard — was mislabeled as shul
-    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021787/WhatsApp_Video_2026-10-25_at_20.49.31.mp4",
-    youtubeId: "PENDING_YAAKOV",
-    duration: "2:20",
-    nameHe: "יעקב",
-    nameEn: "Yaakov",
-    quoteHe:
-      "ספר התורה שקנינו לפני 11 וחצי שנים נשאר מושלם. לא נמצאה בו אפילו שגיאה אחת מאז.",
-    quoteEn:
-      "The Sefer Torah we bought 11.5 years ago is still perfect. Not a single error found since.",
-    topic: "sefer-torah",
-    orientation: "portrait",
-  },
-  {
     id: "lior",
-    // Man speaker — 20.50.30 (~2:44)
     src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021591/WhatsApp_Video_2026-10-25_at_20.50.30.mp4",
     youtubeId: "PENDING_LIOR",
     duration: "2:44",
@@ -115,33 +129,18 @@ export const MORE_TESTIMONIALS: TestimonialVideo[] = [
     orientation: "portrait",
   },
   {
-    id: "sharabi",
-    // Couple on couch — was wrongly under Ariel
-    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021780/WhatsApp_Video_2026-10-25_at_20.49.49.mp4",
-    youtubeId: "PENDING_SHARABI",
-    duration: "0:43",
-    nameHe: "משפחת שרעבי",
-    nameEn: "The Sharabi family",
+    id: "yaakov",
+    // White beard
+    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021787/WhatsApp_Video_2026-10-25_at_20.49.31.mp4",
+    youtubeId: "PENDING_YAAKOV",
+    duration: "2:20",
+    nameHe: "יעקב",
+    nameEn: "Yaakov",
     quoteHe:
-      "כתבנו ספר תורה לעילוי נשמת בננו החייל. הרב יגאל נתן לנו יחס משפחתי, מרגש ומקצועי לכל אורך הדרך.",
+      "ספר התורה שקנינו לפני 11 וחצי שנים נשאר מושלם. לא נמצאה בו אפילו שגיאה אחת מאז.",
     quoteEn:
-      "We commissioned a Sefer Torah for the elevation of our soldier son’s soul. Rabbi Yigal gave us family-like, moving, professional care throughout.",
+      "The Sefer Torah we bought 11.5 years ago is still perfect. Not a single error found since.",
     topic: "sefer-torah",
-    orientation: "landscape",
-  },
-  {
-    id: "shul-community",
-    // Black hat — was mislabeled as Yaakov
-    src: "https://res.cloudinary.com/ab7zmaca/video/upload/v1793021790/WhatsApp_Video_2026-10-25_at_20.51.28.mp4",
-    youtubeId: "PENDING_SHUL",
-    duration: "1:11",
-    nameHe: "לקוח קהילת בית הכנסת",
-    nameEn: "Synagogue community client",
-    quoteHe:
-      "יחס חברי, עניו וסבלני. עבודה מכל הלב עם חיוך שמאיר פנים לכל אחד.",
-    quoteEn:
-      "Friendly, humble, patient care. Wholehearted work with a smile that lights up every face.",
-    topic: "service",
     orientation: "portrait",
   },
 ];
