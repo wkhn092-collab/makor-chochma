@@ -156,7 +156,7 @@ export function CdnVideo({
           <span className="absolute inset-0 flex items-center justify-center">
             <span
               className={clsx(
-                "flex items-center justify-center rounded-full bg-white/95 text-ink shadow-[0_2px_8px_rgb(0_0_0/0.22)] transition-transform duration-300 hover:scale-105",
+                "shadow-contact flex items-center justify-center rounded-full bg-white/95 text-ink transition-transform duration-300 ease-[cubic-bezier(0.22,1.2,0.36,1)] hover:scale-[1.02]",
                 PLAY[size],
               )}
             >

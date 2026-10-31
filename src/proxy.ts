@@ -2,17 +2,53 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 /**
- * Network boundary (Next 16 `proxy`) — security headers for lead-gen site.
- * CSP stays Report-Only until a stable week in production (BRIEF).
- * Protects: clickjacking, MIME sniff, referrer leaks, basic transport hints.
- * Does NOT protect: app logic bugs, stolen Sanity tokens, or email account takeover.
+ * Network boundary (Next 16 `proxy`) — security headers + CSP Enforce with nonce.
  */
 export function proxy(request: NextRequest) {
-  const response = NextResponse.next();
-
-  /** Nonce reserved for CSP Enforce (Script 5 · 2.15). Still Report-Only + unsafe-inline until launch week. */
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-nonce", nonce);
+
+  const response = NextResponse.next({
+    request: { headers: requestHeaders },
+  });
+
   response.headers.set("x-nonce", nonce);
+
+  const isDev = process.env.NODE_ENV === "development";
+  // Dev needs unsafe-eval for React refresh; production stays nonce-only.
+  const scriptSrc = [
+    "'self'",
+    `'nonce-${nonce}'`,
+    "'strict-dynamic'",
+    ...(isDev ? ["'unsafe-eval'"] : []),
+    "https://challenges.cloudflare.com",
+    "https://www.googletagmanager.com",
+    "https://www.clarity.ms",
+  ].join(" ");
+
+  const csp = [
+    "default-src 'self'",
+    `script-src ${scriptSrc}`,
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: blob: https:",
+    "media-src 'self' blob: https: https://res.cloudinary.com",
+    "font-src 'self' data:",
+    "connect-src 'self' https://challenges.cloudflare.com https://www.google-analytics.com https://analytics.google.com https://www.clarity.ms https://*.clarity.ms https://*.api.sanity.io",
+    "frame-src https://challenges.cloudflare.com https://maps.google.com https://www.google.com",
+    "worker-src 'self' blob:",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'none'",
+    "object-src 'none'",
+    "upgrade-insecure-requests",
+  ]
+    .join("; ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  response.headers.set("Content-Security-Policy", csp);
 
   response.headers.set("X-Frame-Options", "DENY");
   response.headers.set("X-Content-Type-Options", "nosniff");
@@ -29,7 +65,6 @@ export function proxy(request: NextRequest) {
     "max-age=63072000; includeSubDomains; preload",
   );
 
-  // Never cache HTML shell as shared user content (leads are via POST actions)
   const path = request.nextUrl.pathname;
   if (path.startsWith("/api/")) {
     response.headers.set(

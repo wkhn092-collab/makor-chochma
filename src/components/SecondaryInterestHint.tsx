@@ -6,6 +6,7 @@ import {
   interestLabel,
   type InterestId,
 } from "@/content/site";
+import { track } from "@/lib/track";
 import { useLeadUi } from "@/store/lead-ui";
 
 type Props = {
@@ -41,13 +42,11 @@ export function SecondaryInterestHint({ copy, primary, className }: Props) {
 
   function onToggle(next: boolean) {
     setSecondaryInterest(next ? pair : null);
-    if (typeof window !== "undefined" && "gtag" in window) {
-      (window as unknown as { gtag: (...a: unknown[]) => void }).gtag(
-        "event",
-        "secondary_interest_toggle",
-        { primary: interest, secondary: pair, enabled: next },
-      );
-    }
+    track("secondary_interest_toggle", {
+      primary: interest,
+      secondary: pair,
+      enabled: next ? "1" : "0",
+    });
   }
 
   return (

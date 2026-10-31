@@ -6,6 +6,8 @@ import { INTERESTS, interestLabel, SITE, type InterestId } from "@/content/site"
 import { useLeadUi } from "@/store/lead-ui";
 import { submitLead } from "@/actions/submit-lead";
 import { SecondaryInterestHint } from "@/components/SecondaryInterestHint";
+import { useNonce } from "@/components/NonceProvider";
+import { track } from "@/lib/track";
 import { waPrefill, whatsappUrl } from "@/lib/whatsapp";
 import clsx from "clsx";
 
@@ -28,6 +30,7 @@ declare global {
 type Props = { copy: Copy };
 
 export function LeadForm({ copy }: Props) {
+  const nonce = useNonce();
   const interest = useLeadUi((s) => s.interest);
   const secondaryInterest = useLeadUi((s) => s.secondaryInterest);
   const setInterest = useLeadUi((s) => s.setInterest);
@@ -60,9 +63,10 @@ export function LeadForm({ copy }: Props) {
     const s = document.createElement("script");
     s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
     s.async = true;
+    if (nonce) s.setAttribute("nonce", nonce);
     s.onload = mount;
     document.body.appendChild(s);
-  }, [siteKey]);
+  }, [siteKey, nonce]);
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -92,16 +96,14 @@ export function LeadForm({ copy }: Props) {
         setPhone("");
         setEmail("");
         setSecondaryInterest(null);
-        if (typeof window !== "undefined" && "gtag" in window) {
-          (window as unknown as { gtag: (...a: unknown[]) => void }).gtag(
-            "event",
-            "lead_submit",
-            {
-              interest: selected,
-              secondary_interest: secondary ?? undefined,
-            },
-          );
-        }
+        track("generate_lead", {
+          interest: selected,
+          secondary_interest: secondary ?? undefined,
+        });
+        track("lead_submit", {
+          interest: selected,
+          secondary_interest: secondary ?? undefined,
+        });
         return;
       }
       if (result.code === "validation" && result.field === "phone") {
@@ -289,7 +291,7 @@ export function LeadForm({ copy }: Props) {
           : "A short call, no obligation · ~15 min · we’ll get back to you"}
       </p>
 
-      <p className="text-xs text-bronze">
+      <p className="text-xs leading-relaxed text-bronze">
         {copy.form.privacy}{" "}
         <a
           href={copy.locale === "he" ? "/privacy" : "/en/privacy"}
@@ -297,7 +299,7 @@ export function LeadForm({ copy }: Props) {
         >
           {copy.form.privacyLink}
         </a>
-        .
+        . {copy.form.privacyMarketing}
       </p>
 
       <a

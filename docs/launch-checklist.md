@@ -39,7 +39,7 @@
 - [x] Lighthouse מובייל (localhost) — LCP 1.3s · CLS 0 · a11y 100 · `docs/web-vitals-baseline.md`
 - [x] a11y Lighthouse @ mobile (localhost) — `docs/a11y-baseline.md` · axe על פרוד אחרי deploy
 - [ ] Lighthouse חוזר מול URL הפרוד אחרי deploy של התיקונים
-- [ ] CSP Report-Only → Enforce עם nonce (`x-nonce` מ־`proxy.ts`) אחרי ~שבוע יציב
+- [x] CSP Enforce עם nonce (`Content-Security-Policy` + `x-nonce` מ־`proxy.ts`)
 - [ ] החלפת תמונות הדמיה בצילומי לקוח
 - [ ] GMB קישור אם יש דירוג אמיתי
 - [ ] 2FA ספקים — `docs/ops-security-checklist.md`

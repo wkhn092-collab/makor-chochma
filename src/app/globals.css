@@ -15,7 +15,8 @@
 
   /* Type */
   --ink: #1a1814;
-  --bronze: #6b6560;
+  /* Darker bronze for WCAG AA on parchment (~4.5:1+) */
+  --bronze: #5c5650;
 
   /* Lines */
   --stone: #e4dfd6;
@@ -24,6 +25,8 @@
   --gold: #c9a962;
   --gold-soft: #d4b87a;
   --gold-deep: #a8883f;
+  /* Gold for small type on parchment (WCAG AA) */
+  --gold-ink: #8a7030;
 
   /* CTA = near-black (luxury audit winners), not brown */
   --accent: #0a0a0a;
@@ -36,9 +39,19 @@
   --radius-md: 4px;
   --shadow-contact:
     0 1px 0 rgb(26 24 20 / 0.04),
-    0 10px 28px rgb(26 24 20 / 0.06);
+    0 8px 20px rgb(26 24 20 / 0.05),
+    0 24px 48px rgb(26 24 20 / 0.07);
+  --shadow-float:
+    0 1px 0 rgb(26 24 20 / 0.05),
+    0 12px 28px rgb(26 24 20 / 0.08),
+    0 32px 64px rgb(26 24 20 / 0.1);
+  --shadow-gold-cta:
+    0 1px 0 rgb(26 24 20 / 0.06),
+    0 10px 24px rgb(201 169 98 / 0.28),
+    0 22px 48px rgb(201 169 98 / 0.18);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-spring: cubic-bezier(0.22, 1.2, 0.36, 1);
   --tracking-display: -0.02em;
   --background: var(--parchment);
   --foreground: var(--ink);
@@ -141,6 +154,18 @@ body {
   box-shadow: var(--shadow-contact);
 }
 
+/* Small gold labels on light surfaces — keep decorative gold on dark/hero */
+.text-caption.text-gold,
+.text-label.text-gold,
+.text-tag.text-gold,
+.text-micro.text-gold {
+  color: var(--gold-ink);
+}
+
+.shadow-float {
+  box-shadow: var(--shadow-float);
+}
+
 .glass-bar {
   background: color-mix(in srgb, var(--parchment) 88%, transparent);
   backdrop-filter: blur(14px) saturate(1.05);
@@ -168,19 +193,18 @@ body {
   font-size: 1rem;
   text-align: center;
   touch-action: manipulation;
-  box-shadow:
-    0 1px 0 rgb(26 24 20 / 0.06),
-    0 14px 36px rgb(201 169 98 / 0.35);
+  box-shadow: var(--shadow-gold-cta);
   transition:
     background-color 220ms var(--ease-out-expo),
-    transform 220ms var(--ease-out-expo),
-    box-shadow 280ms var(--ease-out-expo);
+    transform 280ms var(--ease-spring),
+    box-shadow 320ms var(--ease-out-expo);
 }
 .btn-primary:hover {
   background: var(--gold-soft);
   box-shadow:
     0 1px 0 rgb(26 24 20 / 0.06),
-    0 18px 44px rgb(201 169 98 / 0.42);
+    0 14px 32px rgb(201 169 98 / 0.34),
+    0 28px 56px rgb(201 169 98 / 0.2);
 }
 .btn-primary:active {
   transform: scale(0.97);
@@ -204,9 +228,10 @@ body {
   -webkit-backdrop-filter: blur(8px);
   touch-action: manipulation;
   transition:
-    background-color 180ms linear,
-    border-color 180ms linear,
-    transform 220ms var(--ease-out-expo);
+    background-color 220ms var(--ease-out-expo),
+    border-color 220ms var(--ease-out-expo),
+    transform 280ms var(--ease-spring),
+    box-shadow 320ms var(--ease-out-expo);
 }
 .btn-secondary:hover {
   background: rgb(255 255 255 / 0.85);

@@ -26,7 +26,14 @@ function memoryLimitOk(key: string): boolean {
 export async function rateLimitOk(key: string): Promise<boolean> {
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  const isProd = process.env.NODE_ENV === "production";
+
   if (!url || !token) {
+    if (isProd) {
+      // Soft-fail open only when explicitly allowed; otherwise memory (better than nothing)
+      // but log loud — distributed bypass risk without Upstash.
+      console.error("[rate-limit] UPSTASH missing in production — using in-memory fallback");
+    }
     return memoryLimitOk(key);
   }
 
@@ -43,6 +50,10 @@ export async function rateLimitOk(key: string): Promise<boolean> {
     return success;
   } catch (err) {
     console.error("[rate-limit:upstash]", err);
+    if (isProd) {
+      // Fail closed on Redis errors in production — avoid silent flood
+      return false;
+    }
     return memoryLimitOk(key);
   }
 }

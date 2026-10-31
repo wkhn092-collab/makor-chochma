@@ -13,22 +13,22 @@
 | אין WebGL | `docs/3d-module.md` |
 | FPS scroll | `docs/perf-motion-baseline.md` avg 60 |
 
-## מדידת מעבדה (28.10.2026)
+## מדידת מעבדה
 
 ```bash
 npx lighthouse http://localhost:3000/ --form-factor=mobile --only-categories=performance,accessibility
 npx lighthouse https://makor-chochma.vercel.app/ --form-factor=mobile --only-categories=performance
 ```
 
-| מדד | יעד | localhost (אחרי תיקונים) | prod Vercel (לפני פריסת תיקונים) |
-|---|---|---|---|
-| LCP | &lt; 1.5s | **1.3s** ✅ | 3.4s ⚠️ (פריסה ישנה + throttle) |
-| CLS | &lt; 0.05 | **0** ✅ | 0 ✅ |
-| FCP | — | 1.4s-ish | 1.4s |
-| Performance score | — | 0.66 | 0.66 |
-| INP (שדה) | &lt; 100ms | ⬜ למדוד ב־CrUX / field | ⬜ |
-| JS transfer (gzip) | &lt; 150KB initial | ⬜ Network panel בפרוד | ⬜ |
+| מדד | יעד | localhost 28.10 | localhost 30.10 (אחרי CSP Enforce) | prod Vercel |
+|---|---|---|---|---|
+| LCP | &lt; 1.5s | **1.3s** ✅ | **2.1s** ⚠️ (מעבדה + TBT) | 3.4s ⚠️ (ישן) |
+| CLS | &lt; 0.05 | **0** ✅ | **0** ✅ | 0 ✅ |
+| FCP | — | 1.4s-ish | 1.1s | 1.4s |
+| Performance score | — | 66 | 60 | 66 |
+| TBT | — | — | ~5.7s (GSAP/dev throttle) | — |
+| INP (שדה) | &lt; 100ms | ⬜ CrUX | ⬜ | ⬜ |
 
-**הערה:** ציון Performance 66 במעבדה מושפע מ־TBT (GSAP/motion). LCP+CLS על localhost עומדים ביעד. אחרי deploy — להריץ שוב מול URL הפרוד ולעדכן עמודה.
+**הערה:** CLS יציב. LCP במעבדה רגיש ל־mobile throttle + GSAP TBT; אחרי deploy לפרוד להריץ שוב בלי `next dev`. Dev console גם דיווח LCP על תמונת fan — לוודא ש־Hero נשאר `priority` בפרוד.
 
 עד למדידת שדה INP: שערי LCP/CLS מקומיים ✅ · INP + אימות פרוד = שער Go-Live.

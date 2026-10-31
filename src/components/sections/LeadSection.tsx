@@ -16,12 +16,12 @@ export function LeadSection({ copy }: Props) {
   const telHref = `tel:+${SITE.phoneE164}`;
   const steps = isHe
     ? [
-        { n: "01", t: "שיחה", d: "מבינים מה מתאים — בלי לחץ." },
+        { n: "01", t: "שיחה", d: "מבהירים מה מתאים." },
         { n: "02", t: "פגישה באלעד", d: "אם זה מתאים, סוגרים פנים אל פנים." },
         { n: "03", t: "כתיבה וליווי", d: "מההזמנה עד שהסת״ם אצלכם." },
       ]
     : [
-        { n: "01", t: "A call", d: "We clarify what fits — no pressure." },
+        { n: "01", t: "A call", d: "We clarify what fits." },
         { n: "02", t: "Meeting in Elad", d: "If it’s a fit, we close face to face." },
         { n: "03", t: "Writing & guidance", d: "From order until the Stam is with you." },
       ];

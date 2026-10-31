@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { StickyCta } from "@/components/StickyCta";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { Analytics } from "@/components/Analytics";
+import { AnalyticsCapture } from "@/components/AnalyticsCapture";
 import { ConsentBanner } from "@/components/ConsentBanner";
 import { LocaleHtml } from "@/components/LocaleHtml";
 import { SiteMotion } from "@/components/motion/SiteMotion";
@@ -22,6 +23,7 @@ export function SiteChrome({ locale, children }: Props) {
       <LocaleHtml locale={locale} />
       <SkipLink locale={locale} />
       <Analytics />
+      <AnalyticsCapture />
       <ConsentBanner locale={locale} />
       <SiteHeader copy={copy} />
       <main id="main" tabIndex={-1} className="pt-20">

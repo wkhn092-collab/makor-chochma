@@ -141,12 +141,14 @@ export function Hero({ copy }: Props) {
             >
               {copy.hero.h1}
             </span>
-            <span
-              className="mc-hero-in mc-hero-accent mt-1 block"
-              style={{ "--d": "260ms" } as CSSProperties}
-            >
-              <bdi>{SITE.yearsExperience}</bdi> {copy.hero.h1YearsSuffix}
-            </span>
+            {copy.hero.h1YearsSuffix ? (
+              <span
+                className="mc-hero-in mc-hero-accent mt-1 block"
+                style={{ "--d": "260ms" } as CSSProperties}
+              >
+                <bdi>{SITE.yearsExperience}</bdi> {copy.hero.h1YearsSuffix}
+              </span>
+            ) : null}
           </h1>
 
           <p
@@ -157,7 +159,7 @@ export function Hero({ copy }: Props) {
           </p>
 
           <div
-            className="mc-hero-in pointer-events-auto mt-3 flex w-full max-w-sm justify-center sm:mt-3.5 sm:max-w-md [text-shadow:none]"
+            className="mc-hero-in pointer-events-auto mt-3 flex w-full max-w-sm flex-col items-center gap-2 sm:mt-3.5 sm:max-w-md [text-shadow:none]"
             style={{ "--d": "560ms" } as CSSProperties}
           >
             <a
@@ -168,6 +170,12 @@ export function Hero({ copy }: Props) {
             >
               {copy.hero.ctaPrimary}
             </a>
+            <p className="text-center text-[0.75rem] font-medium leading-snug text-ink/75 sm:text-[0.8rem]">
+              {copy.hero.micro}
+            </p>
+            <p className="mt-0.5 hidden max-w-[36ch] text-center text-[0.75rem] leading-snug text-ink/65 md:block">
+              {copy.hero.valueLine}
+            </p>
           </div>
         </div>
       </div>

@@ -65,13 +65,20 @@ export function WhyUs({ copy }: Props) {
           </div>
         </Reveal>
 
+        <Reveal delay={0.12} y={10}>
+          <p className="mt-6 max-w-2xl text-sm font-medium leading-relaxed text-ink/80">
+            {copy.whyUs.proof}
+          </p>
+        </Reveal>
+
         <Reveal delay={0.14} y={12}>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a href={telHref} data-analytics="phone_click" className="btn-primary w-full sm:w-auto">
               {copy.whyUs.cta}
             </a>
             <Link
               href={`${p}/contact`}
+              data-analytics="why_us_form"
               className="btn-secondary w-full text-center sm:w-auto"
             >
               {copy.whyUs.ctaSecondary}

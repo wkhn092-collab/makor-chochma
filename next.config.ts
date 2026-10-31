@@ -1,21 +1,6 @@
 import type { NextConfig } from "next";
 
-const cspReportOnly = [
-  "default-src 'self'",
-  // Report-Only: no unsafe-eval. unsafe-inline remains until nonce Enforce (BRIEF).
-  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com https://www.clarity.ms",
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https:",
-  "media-src 'self' blob: https: https://res.cloudinary.com",
-  "font-src 'self' data:",
-  "connect-src 'self' https://challenges.cloudflare.com https://www.google-analytics.com https://www.clarity.ms https://*.api.sanity.io https://api.resend.com",
-  "frame-src https://challenges.cloudflare.com https://maps.google.com https://www.google.com",
-  "worker-src 'self' blob:",
-  "base-uri 'self'",
-  "form-action 'self'",
-  "frame-ancestors 'none'",
-].join("; ");
-
+/** CSP Enforce lives in `src/proxy.ts` (nonce per request). */
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 let siteHost = "localhost:3000";
 try {
@@ -70,10 +55,6 @@ const nextConfig: NextConfig = {
           {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=(), payment=()",
-          },
-          {
-            key: "Content-Security-Policy-Report-Only",
-            value: cspReportOnly,
           },
         ],
       },

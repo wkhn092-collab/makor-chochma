@@ -89,7 +89,7 @@ export function YoutubeEmbed({
       >
         <span className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent" />
         <span className="absolute inset-0 flex items-center justify-center">
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gold text-ink shadow-lg transition-transform group-hover:scale-105">
+          <span className="shadow-contact flex h-11 w-11 items-center justify-center rounded-full bg-gold text-ink transition-transform duration-300 ease-[cubic-bezier(0.22,1.2,0.36,1)] group-hover:scale-[1.02]">
             <svg viewBox="0 0 24 24" className="ms-0.5 h-4 w-4 fill-current" aria-hidden>
               <path d="M8 5v14l11-7z" />
             </svg>

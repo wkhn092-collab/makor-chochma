@@ -101,9 +101,11 @@ export function About({ copy }: Props) {
                     <p className="text-sm font-semibold text-ink md:text-[0.95rem]">
                       {copy.locale === "he" ? c.he : c.en}
                     </p>
-                    <p className="mt-1 text-caption tracking-wide text-ink/45">
-                      {copy.about.certPending}
-                    </p>
+                    {copy.about.certPending ? (
+                      <p className="mt-1 text-caption tracking-wide text-ink/45">
+                        {copy.about.certPending}
+                      </p>
+                    ) : null}
                   </div>
                 </div>
               </Reveal>

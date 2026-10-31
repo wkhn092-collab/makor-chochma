@@ -29,23 +29,24 @@ export function getCopy(locale: Locale) {
     },
     hero: {
       eyebrow: isHe ? `${SITE.brand} · אלעד` : `${SITE.brandEn} · Elad`,
-      // Full range · ≤8 words · N23: name what is sold
-      h1: isHe
-        ? "סת״ם שנכתב אצל הסופר"
-        : "Stam written by the sofer",
-      h1YearsSuffix: isHe ? "שנה על הקלף" : "years on the parchment",
-      // Backs H1 with cert names + funnel (copy-deck / anti-AI 1.29)
+      // Recommended CRO hook — years only in h2 (no duplicate)
+      h1: isHe ? "לא קונים סת״ם בלחיצה" : "Don’t buy stam with a click",
+      h1YearsSuffix: isHe ? "" : "",
       h2: isHe
-        ? `מוסמך משמרת סת״ם ויד רפאל · ${SITE.yearsExperience} שנה. שיחה בלי התחייבות, ואז פגישה באלעד.`
-        : `Mishmeret Stam & Yad Rafael · ${SITE.yearsExperience} years. A no-obligation call, then meet in Elad.`,
+        ? `${SITE.yearsExperience} שנה על הקלף, משמרת סת״ם ויד רפאל. שיחה עם הסופר, ואז פגישה באלעד.`
+        : `${SITE.yearsExperience} years on the parchment, Mishmeret Stam & Yad Rafael. Talk to the sofer, then meet in Elad.`,
       ctaPrimary: isHe ? "לתיאום שיחה" : "Book a call",
       ctaCall: isHe ? "התקשרו עכשיו" : "Call now",
       ctaSecondary: isHe
         ? "וואטסאפ להרב יגאל"
         : "WhatsApp Rabbi Yigal",
       micro: isHe
-        ? `${SITE.yearsExperience} שנה על הקלף · שיחה לפני שסוגרים`
-        : `${SITE.yearsExperience} years on the parchment · a call before you close`,
+        ? "שיחה בלי התחייבות · כ־15 דק׳ · אלעד"
+        : "No-obligation call · ~15 min · Elad",
+      /** Concrete value under CTA — what the call delivers */
+      valueLine: isHe
+        ? "בשיחה מבהירים הידור ומחיר — בלי עגלה ובלי לחץ לסגור"
+        : "On the call we clarify hidur and price — no cart, no pressure to close",
       simulation: isHe ? "צילום להמחשה" : "Stock photo",
     },
     trust: isHe
@@ -60,9 +61,7 @@ export function getCopy(locale: Locale) {
         ? "הסת״ם מגיע מהסופר שכותב אותו, עם שם, ובשיחה לפני שסוגרים."
         : "The stam comes from the sofer who writes it, with a name, and a call before you close.",
       yearsLabel: isHe ? "שנות כתיבה" : "years of writing",
-      certPending: isHe
-        ? "תמונת תעודה תתווסף כשתסופק. כרגע מצוין השם בלבד."
-        : "Certificate image will be added when provided",
+      certPending: isHe ? "" : "",
     },
     /** Wedge — us vs anonymous online buy (no competitor names) */
     whyUs: {
@@ -71,8 +70,8 @@ export function getCopy(locale: Locale) {
         ? "לקנות סת״ם בלחיצה, או לדעת מי כותב"
         : "Buy stam with a click, or know who writes",
       lead: isHe
-        ? "באתרים רבים קונים סת״ם כמו מוצר בעגלה. כאן מתחילים משיחה עם מי שכותב: תפילין, מזוזה, מגילה או ספר תורה."
-        : "On many sites you buy stam like a cart product. Here you start with a call to the person who writes: tefillin, mezuzah, megillah or Sefer Torah.",
+        ? "באתרים רבים קונים סת״ם כמו מוצר בעגלה. כאן מתחילים משיחה עם מי שכותב: תפילין, מזוזה, מגילה או ספר תורה — ומקבלים בהירות על הידור ומחיר לפני שסוגרים."
+        : "On many sites you buy stam like a cart product. Here you start with a call to the person who writes: tefillin, mezuzah, megillah or Sefer Torah — and get clarity on hidur and price before you close.",
       themLabel: isHe ? "קנייה אונליין טיפוסית" : "Typical online purchase",
       usLabel: isHe ? "מכון מקור חכמה" : "Makor Chochma",
       rows: isHe
@@ -88,6 +87,9 @@ export function getCopy(locale: Locale) {
             { them: "Pressure to close remotely", us: "Meet in Elad, face to face" },
             { them: "“Mehudar” with no magiah named", us: "Mishmeret Stam & Yad Rafael · trains sofrim" },
           ],
+      proof: isHe
+        ? "מה מקבלים בשיחה: מי כותב · רמת הידור · טווח מחיר · האם פגישה באלעד מתאימה"
+        : "What the call covers: who writes · hidur level · price range · whether an Elad meeting fits",
       cta: isHe ? "התקשרו עכשיו" : "Call now",
       ctaSecondary: isHe ? "השאירו פרטים" : "Leave your details",
     },
@@ -100,8 +102,8 @@ export function getCopy(locale: Locale) {
     craft: {
       h2: isHe ? "משיחה עד סת״ם ביד" : "From a call to stam in hand",
       lead: isHe
-        ? "גללו והמסלול נצבע בזהב. כל שלב מחליף את הסיפור למעלה."
-        : "Scroll and the path fills in gold. Each stage rewrites the story above.",
+        ? "ארבעה שלבים, מסופר על הקלף."
+        : "Four stages, told on the parchment.",
       cta: isHe ? "השאירו פרטים" : "Leave your details",
       steps: isHe
         ? [
@@ -230,7 +232,7 @@ export function getCopy(locale: Locale) {
           ],
     },
     form: {
-      h2: isHe ? "בואו נתחיל משיחה" : "Let’s start with a call",
+      h2: isHe ? "שיחה קצרה. בלי התחייבות." : "A short call. No obligation.",
       lead: isHe
         ? "שם וטלפון. נחזור לתיאום שיחה על תפילין, מזוזות, מגילה, ספר תורה או פיטום, ואם מתאים גם לפגישה באלעד."
         : "Name and phone. We’ll call about tefillin, mezuzot, megillah, Sefer Torah or Pitum, then meet in Elad if it fits.",
@@ -272,9 +274,12 @@ export function getCopy(locale: Locale) {
         ? "נשלחו יותר מדי פניות. נסו שוב בעוד כמה דקות."
         : "Too many requests. Try again in a few minutes.",
       privacy: isHe
-        ? "השליחה מהווה הסכמה ליצירת קשר לפי"
-        : "Sending means you agree to be contacted per our",
+        ? "השליחה מהווה הסכמה ליצירת קשר חוזר לתיאום שיחת ייעוץ (טלפון / וואטסאפ), לפי"
+        : "Submitting means you agree we may contact you to schedule a consultation (phone / WhatsApp), per our",
       privacyLink: isHe ? "מדיניות הפרטיות" : "Privacy Policy",
+      privacyMarketing: isHe
+        ? "לא נשלח דיוור פרסומי המוני בלי הסכמה נפרדת."
+        : "We will not send bulk marketing without separate consent.",
       maps: isHe ? "פתיחה בגוגל מפות" : "Open in Google Maps",
       turnstileMissing: isHe
         ? "טופס פעיל במצב פיתוח ללא Turnstile"
@@ -288,8 +293,8 @@ export function getCopy(locale: Locale) {
     portfolio: {
       h2: isHe ? "מה יוצא מהסדנה" : "What leaves the atelier",
       lead: isHe
-        ? "תפילין, מזוזות, מגילות וספרי תורה. צילומים להמחשה עד שיגיעו תמונות מהמכון."
-        : "Tefillin, mezuzot, megillot and Sifrei Torah. Illustrative photos until the institute’s own arrive.",
+        ? "תפילין, מזוזות, מגילות וספרי תורה מהסדנה."
+        : "Tefillin, mezuzot, megillot and Sifrei Torah from the atelier.",
       items: isHe
         ? [
             { title: "תפילין", blurb: "פרשיות בכתיבת הסופר, רש״י או ר״ת, בשיחה" },
@@ -317,7 +322,7 @@ export function getCopy(locale: Locale) {
       ? "שלום הרב יגאל, הגעתי מהאתר של מכון מקור חכמה ואשמח לשיחה על סת״ם."
       : "Hello Rabbi Yigal, I found Makor Chochma online and would like to talk about stam.",
     footer: {
-      miniH2: isHe ? "בואו נדבר" : "Let’s talk",
+      miniH2: isHe ? "רוצים סת״ם? מתחילים בשיחה." : "Want stam? Start with a call.",
       miniLead: isHe
         ? "שיחה קצרה על מה שצריך: תפילין, מזוזות, מגילה, ספר תורה או פיטום, ואם מתאים גם פגישה באלעד."
         : "A short call about what you need: tefillin, mezuzot, megillah, Sefer Torah or Pitum, then Elad if it fits.",
@@ -359,16 +364,18 @@ export function getCopy(locale: Locale) {
       title: isHe ? "מדיניות הפרטיות" : "Privacy Policy",
       body: isHe
         ? [
-            "אנחנו אוספים שם מלא, מספר טלפון ובחירת תחום עניין כששולחים את טופס יצירת הקשר, כדי לחזור אליכם לתיאום שיחת ייעוץ ופגישה.",
+            "אנחנו אוספים שם מלא, מספר טלפון ובחירת תחום עניין כששולחים את טופס יצירת הקשר, כדי לחזור אליכם לתיאום שיחת ייעוץ ופגישה (טלפון / וואטסאפ).",
             `המידע נשלח אל ${SITE.email} ונשמר אצל מפעיל האתר לטיפול בפניות. הוא לא נמכר לצדדים שלישיים.`,
+            "לא נשלח דיוור פרסומי המוני על בסיס הטופס בלי הסכמה נפרדת ומפורשת.",
             "שירותי תשתית (אירוח, שליחת מייל ואנטי־בוט) עשויים לעבד נתונים טכניים לפי מדיניות הספק.",
             "כלי אנליטיקס (GA4 / Clarity) נטענים רק אחרי שתאשרו מדידה בבאנר ההסכמה. אפשר לסרב.",
             `למחיקת פרטים או לשאלות: ${SITE.email} או ${SITE.phoneDisplay}.`,
             "האתר מיועד ליצירת קשר בלבד. אין רכישה דרכו.",
           ]
         : [
-            "We collect your full name, phone number, and interest topic when you submit the contact form, so we can call you back for a consultation and meeting.",
+            "We collect your full name, phone number, and interest topic when you submit the contact form, so we can call you back for a consultation and meeting (phone / WhatsApp).",
             `Data is emailed to ${SITE.email} and retained by the site operator to handle inquiries. It is not sold to third parties.`,
+            "We will not send bulk marketing from this form without separate, explicit consent.",
             "Infrastructure providers (hosting, email, bot protection) may process technical data under their policies.",
             "Analytics (GA4 / Clarity) load only after you accept measurement in the consent banner. You may decline.",
             `To request deletion or ask questions: ${SITE.email} or ${SITE.phoneDisplay}.`,

@@ -3,6 +3,7 @@ import "server-only";
 /**
  * Exact host match for Server Actions — reject cross-site forged posts.
  * Compares hostname only (no substring includes).
+ * localhost is allowed only outside production.
  */
 export function assertSameOrigin(
   headerList: Headers,
@@ -25,9 +26,11 @@ export function assertSameOrigin(
       /* ignore bad SITE_URL */
     }
   }
-  // Local dev
-  allowed.add("localhost");
-  allowed.add("127.0.0.1");
+
+  if (process.env.NODE_ENV !== "production") {
+    allowed.add("localhost");
+    allowed.add("127.0.0.1");
+  }
 
   function hostFromUrl(raw: string | null): string | null {
     if (!raw) return null;
@@ -43,13 +46,11 @@ export function assertSameOrigin(
     return allowed.has(originHost) ? { ok: true } : { ok: false };
   }
 
-  // Some browsers omit Origin on same-site navigations — fall back to Referer
   const refHost = hostFromUrl(referer);
   if (refHost) {
     return allowed.has(refHost) ? { ok: true } : { ok: false };
   }
 
-  // No Origin/Referer in production → reject (CSRF surface)
   if (process.env.NODE_ENV === "production") return { ok: false };
   return { ok: true };
 }

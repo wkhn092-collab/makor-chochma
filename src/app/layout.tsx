@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Assistant, Frank_Ruhl_Libre } from "next/font/google";
+import { NonceProvider } from "@/components/NonceProvider";
 import { SkipLinkHost } from "@/components/SkipLinkHost";
 import "./globals.css";
 
@@ -41,12 +43,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const h = await headers();
+  const nonce = h.get("x-nonce") ?? undefined;
+
   return (
     <html lang="he" dir="rtl" className={`${assistant.variable} ${frank.variable} h-full`}>
       <body className="min-h-full font-body antialiased">
-        <SkipLinkHost />
-        {children}
+        <NonceProvider nonce={nonce}>
+          <SkipLinkHost />
+          {children}
+        </NonceProvider>
       </body>
     </html>
   );

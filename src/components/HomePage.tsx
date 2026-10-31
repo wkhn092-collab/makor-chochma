@@ -16,6 +16,7 @@ import { Testimonials } from "@/components/sections/Testimonials";
 import { Faq } from "@/components/sections/Faq";
 import { LeadSection } from "@/components/sections/LeadSection";
 import { Analytics } from "@/components/Analytics";
+import { AnalyticsCapture } from "@/components/AnalyticsCapture";
 import { ConsentBanner } from "@/components/ConsentBanner";
 import { SectionTracker } from "@/components/SectionTracker";
 import { LocaleHtml } from "@/components/LocaleHtml";
@@ -30,6 +31,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <LocaleHtml locale={locale} />
       <JsonLd locale={locale} faqs={copy.faq.items} />
       <Analytics />
+      <AnalyticsCapture />
       <ConsentBanner locale={locale} />
       <Suspense fallback={null}>
         <PromoBanner locale={locale} />

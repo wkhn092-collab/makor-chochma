@@ -6,7 +6,8 @@ export const SITE = {
   businessId: "9878745",
   contactName: "הרב יגאל עמרני",
   contactNameEn: "Rabbi Yigal Amarani",
-  phoneDisplay: "054-846-2387",
+  /** Non-breaking hyphens so the number never wraps mid-digit */
+  phoneDisplay: "054\u2011846\u20112387",
   phoneE164: "972548462387",
   email: "y0548462387@gmail.com",
   addressHe: "רח׳ רבי יוסי בן קיסמא 43 (קומת חניה), אלעד",
