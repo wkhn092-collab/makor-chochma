@@ -53,7 +53,7 @@ export const leadSchema = z
     interest: interestEnum.default("general"),
     secondaryInterest: interestEnum.optional().nullable(),
     locale: z.enum(["he", "en"]),
-    turnstileToken: z.string().max(2048).optional(),
+    turnstileToken: z.string().max(8192).optional(),
     /** Honeypot — must stay empty */
     companyWebsite: z.string().max(200).optional().default(""),
   })

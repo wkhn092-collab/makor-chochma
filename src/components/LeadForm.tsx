@@ -44,6 +44,7 @@ export function LeadForm({ copy }: Props) {
   const [pending, startTransition] = useTransition();
   const widgetRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
+  const tokenRef = useRef<string | undefined>(undefined);
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
   useEffect(() => {
@@ -52,8 +53,14 @@ export function LeadForm({ copy }: Props) {
       if (!window.turnstile || !widgetRef.current || widgetId.current) return;
       widgetId.current = window.turnstile.render(widgetRef.current, {
         sitekey: siteKey,
-        callback: (t) => setToken(t),
-        "expired-callback": () => setToken(undefined),
+        callback: (t) => {
+          tokenRef.current = t;
+          setToken(t);
+        },
+        "expired-callback": () => {
+          tokenRef.current = undefined;
+          setToken(undefined);
+        },
       });
     };
     if (window.turnstile) {
@@ -79,6 +86,11 @@ export function LeadForm({ copy }: Props) {
       secondaryInterest && secondaryInterest !== selected
         ? secondaryInterest
         : undefined;
+    const cfInput = form.querySelector<HTMLInputElement>(
+      'input[name="cf-turnstile-response"]',
+    );
+    const turnstileToken =
+      tokenRef.current || token || cfInput?.value || undefined;
     startTransition(async () => {
       const result = await submitLead({
         name,
@@ -87,7 +99,7 @@ export function LeadForm({ copy }: Props) {
         interest: selected,
         secondaryInterest: secondary ?? null,
         locale: copy.locale,
-        turnstileToken: token,
+        turnstileToken,
         companyWebsite: honeypot,
       });
       if (result.ok) {
@@ -112,6 +124,8 @@ export function LeadForm({ copy }: Props) {
         setError(copy.form.errorEmail);
       } else if (result.code === "bot") {
         setError(copy.form.errorBot);
+        tokenRef.current = undefined;
+        setToken(undefined);
         window.turnstile?.reset(widgetId.current ?? undefined);
       } else if (result.code === "rate") {
         setError(copy.form.errorRate);

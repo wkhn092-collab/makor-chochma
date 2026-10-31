@@ -8,13 +8,18 @@ import "server-only";
 export function assertSameOrigin(
   headerList: Headers,
 ): { ok: true } | { ok: false } {
-  const host = headerList.get("x-forwarded-host") || headerList.get("host");
+  const rawHost = headerList.get("x-forwarded-host") || headerList.get("host");
   const origin = headerList.get("origin");
   const referer = headerList.get("referer");
 
-  if (!host) return { ok: false };
+  if (!rawHost) return { ok: false };
 
-  const hostName = host.split(":")[0]?.toLowerCase();
+  // Vercel may send comma-separated forwarded hosts — take the first
+  const hostName = rawHost
+    .split(",")[0]
+    ?.trim()
+    .split(":")[0]
+    ?.toLowerCase();
   if (!hostName) return { ok: false };
 
   const allowed = new Set<string>([hostName]);
