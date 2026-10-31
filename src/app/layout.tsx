@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     // Static path + version query — busts WhatsApp/iMessage caches
     images: [
       {
-        url: "/og.jpg?v=5",
+        url: "/og-wa-v6.jpg",
         width: 1200,
         height: 1200,
         alt: "מכון מקור חכמה",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "מכון מקור חכמה · אלעד",
     description: "סת״ם אצל הסופר · שיחת ייעוץ ופגישה באלעד",
-    images: ["/og.jpg?v=5"],
+    images: ["/og-wa-v6.jpg"],
   },
   icons: {
     icon: [{ url: "/logo.jpg", type: "image/jpeg" }],
