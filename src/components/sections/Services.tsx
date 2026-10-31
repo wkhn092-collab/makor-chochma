@@ -16,6 +16,7 @@ const SERVICE_VISUAL: Partial<Record<InterestId, string>> = {
   tefillin: SITE_IMAGES.portfolio[0]!.src,
   mezuzot: SITE_IMAGES.portfolio[1]!.src,
   megillot: SITE_IMAGES.portfolio[2]!.src,
+  "sefer-torah": SITE_IMAGES.portfolio[3]!.src,
   pitum: SITE_IMAGES.ketoret.src,
 };
 

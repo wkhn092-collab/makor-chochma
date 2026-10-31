@@ -5,6 +5,7 @@ export const interestEnum = z.enum([
   "tefillin",
   "mezuzot",
   "megillot",
+  "sefer-torah",
   "pitum",
   "general",
 ]);

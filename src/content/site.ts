@@ -27,6 +27,7 @@ export type InterestId =
   | "tefillin"
   | "mezuzot"
   | "megillot"
+  | "sefer-torah"
   | "pitum"
   | "general";
 
@@ -67,6 +68,15 @@ export const INTERESTS: {
     ctaEn: "Choose megillot",
   },
   {
+    id: "sefer-torah",
+    he: "ספר תורה",
+    en: "Sefer Torah",
+    blurbHe: "ספר תורה בכתיבת הסופר, לקהילה ולמשפחה — מבהירים הידור ולוח זמנים בשיחה.",
+    blurbEn: "A Sefer Torah written by the sofer, for a community or family — hidur and timeline on the call.",
+    ctaHe: "לבחור ספר תורה",
+    ctaEn: "Choose Sefer Torah",
+  },
+  {
     id: "pitum",
     he: "פיטום הקטורת",
     en: "Pitum HaKetoret",
@@ -95,6 +105,7 @@ export const INTEREST_PAIRS: Partial<Record<InterestId, InterestId>> = {
   mezuzot: "tefillin",
   megillot: "pitum",
   pitum: "megillot",
+  // High-ticket — no soft push pair
 };
 
 export function getSecondaryPair(
