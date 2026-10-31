@@ -24,22 +24,26 @@ const frank = Frank_Ruhl_Libre({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: {
-    default: "מכון מקור חכמה | סופר סת״ם מוסמך · אלעד",
+    default: "מכון מקור חכמה · אלעד",
     template: "%s | מכון מקור חכמה",
   },
-  description:
-    "סופר סת״ם עם 32 שנות ניסיון, מוסמך משמרת סת״ם ויד רפאל. שיחת ייעוץ ואז פגישה באלעד.",
+  description: "סת״ם אצל הסופר · שיחת ייעוץ ופגישה באלעד",
   openGraph: {
     type: "website",
     locale: "he_IL",
     siteName: "מכון מקור חכמה",
+    title: "מכון מקור חכמה · אלעד",
+    description: "סת״ם אצל הסופר · שיחת ייעוץ ופגישה באלעד",
   },
   twitter: {
     card: "summary_large_image",
+    title: "מכון מקור חכמה · אלעד",
+    description: "סת״ם אצל הסופר · שיחת ייעוץ ופגישה באלעד",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [{ url: "/logo.jpg", type: "image/jpeg" }],
     apple: "/logo.jpg",
+    shortcut: "/logo.jpg",
   },
 };
 

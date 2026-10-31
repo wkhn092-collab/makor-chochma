@@ -9,11 +9,11 @@ export function getCopy(locale: Locale) {
     dir: isHe ? ("rtl" as const) : ("ltr" as const),
     meta: {
       title: isHe
-        ? `${SITE.brand} | סת״ם אצל הסופר · אלעד`
-        : `${SITE.brandEn} | Stam by the sofer · Elad`,
+        ? `${SITE.brand} · אלעד`
+        : `${SITE.brandEn} · Elad`,
       description: isHe
-        ? `תפילין, מזוזות, מגילות, ספרי תורה ופיטום הקטורת בכתיבת הרב יגאל עמרני. ${SITE.yearsExperience} שנה, מוסמך משמרת סת״ם ויד רפאל. שיחה לפני שסוגרים, ופגישה באלעד.`
-        : `Tefillin, mezuzot, megillot, Sifrei Torah and Pitum HaKetoret by Rabbi Yigal Amarani. ${SITE.yearsExperience} years, Mishmeret Stam & Yad Rafael. Call first, then meet in Elad.`,
+        ? "סת״ם אצל הסופר · שיחת ייעוץ ופגישה באלעד"
+        : "Stam by the sofer · Consult call, then meet in Elad",
     },
     nav: {
       about: isHe ? "אודות" : "About",
