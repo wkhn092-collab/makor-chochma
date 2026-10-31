@@ -1,32 +1,58 @@
 import "server-only";
 
+export type TurnstileVerifyResult = {
+  ok: boolean;
+  errors?: string[];
+};
+
+function cleanSecret(raw: string | undefined): string | undefined {
+  if (!raw) return undefined;
+  // Trim whitespace and accidental pasted "\n" / quotes from Vercel UI
+  return raw
+    .trim()
+    .replace(/^["']|["']$/g, "")
+    .replace(/\\n$/g, "")
+    .replace(/\r?\n/g, "")
+    .trim();
+}
+
 export async function verifyTurnstile(
   token: string | undefined,
   _ip?: string | null,
-): Promise<boolean> {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
+): Promise<TurnstileVerifyResult> {
+  const secret = cleanSecret(process.env.TURNSTILE_SECRET_KEY);
+  const siteKey = cleanSecret(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+
   if (!secret) {
-    // Dev / unset: allow only when site key also missing
-    if (!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) return true;
-    return false;
+    if (!siteKey) return { ok: true };
+    console.error("[turnstile] TURNSTILE_SECRET_KEY missing/empty after clean");
+    return { ok: false, errors: ["missing-input-secret"] };
   }
-  if (!token) {
+  if (!token?.trim()) {
     console.error("[turnstile] missing token");
-    return false;
+    return { ok: false, errors: ["missing-input-response"] };
+  }
+
+  if (siteKey && secret === siteKey) {
+    console.error("[turnstile] secret equals site key — keys swapped");
+    return { ok: false, errors: ["secret-equals-sitekey"] };
   }
 
   const body = new URLSearchParams();
   body.set("secret", secret);
-  body.set("response", token);
-  // Omit remoteip — mismatched/proxy IPs cause false failures on Vercel
+  body.set("response", token.trim());
 
   const res = await fetch(
     "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-    { method: "POST", body, headers: { "content-type": "application/x-www-form-urlencoded" } },
+    {
+      method: "POST",
+      body,
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+    },
   );
   if (!res.ok) {
     console.error("[turnstile] siteverify HTTP", res.status);
-    return false;
+    return { ok: false, errors: [`http-${res.status}`] };
   }
   const data = (await res.json()) as {
     success?: boolean;
@@ -34,6 +60,7 @@ export async function verifyTurnstile(
   };
   if (!data.success) {
     console.error("[turnstile] siteverify failed", data["error-codes"] ?? data);
+    return { ok: false, errors: data["error-codes"] ?? ["unknown"] };
   }
-  return Boolean(data.success);
+  return { ok: true };
 }

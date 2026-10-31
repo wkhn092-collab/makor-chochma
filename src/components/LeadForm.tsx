@@ -44,7 +44,10 @@ export function LeadForm({ copy }: Props) {
   const widgetRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
   const tokenRef = useRef<string | undefined>(undefined);
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim().replace(
+    /\\n$/g,
+    "",
+  );
 
   useEffect(() => {
     if (!siteKey || !widgetRef.current) return;
@@ -127,7 +130,9 @@ export function LeadForm({ copy }: Props) {
         setToken(undefined);
         window.turnstile?.reset(widgetId.current ?? undefined);
       } else if (result.code === "turnstile" || result.code === "bot") {
-        setError(copy.form.errorTurnstile);
+        const detail =
+          "detail" in result && result.detail ? ` (${result.detail})` : "";
+        setError(`${copy.form.errorTurnstile}${detail}`);
         tokenRef.current = undefined;
         setToken(undefined);
         window.turnstile?.reset(widgetId.current ?? undefined);

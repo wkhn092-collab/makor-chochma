@@ -16,6 +16,8 @@ export type SubmitLeadResult =
       ok: false;
       code: "validation" | "bot" | "rate" | "server" | "origin" | "turnstile";
       field?: string;
+      /** Cloudflare siteverify error-codes — for debugging key mismatch */
+      detail?: string;
     };
 
 export async function submitLead(
@@ -73,18 +75,23 @@ export async function submitLead(
     return { ok: false, code: "rate" };
   }
 
-  const turnstileOk = await verifyTurnstile(data.turnstileToken, ip);
-  if (!turnstileOk) {
+  const turnstile = await verifyTurnstile(data.turnstileToken, ip);
+  if (!turnstile.ok) {
     console.error("[lead] turnstile rejected", {
       hasToken: Boolean(data.turnstileToken),
       tokenLen: data.turnstileToken?.length ?? 0,
+      errors: turnstile.errors,
     });
-    return { ok: false, code: "turnstile" };
+    return {
+      ok: false,
+      code: "turnstile",
+      detail: turnstile.errors?.join(",") || undefined,
+    };
   }
 
   try {
     const persisted = await persistLead(data, {
-      turnstilePassed: turnstileOk,
+      turnstilePassed: true,
       userAgent: ua,
     });
     if (!persisted.ok) {
