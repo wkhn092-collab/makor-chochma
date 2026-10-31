@@ -41,8 +41,8 @@ export function getCopy(locale: Locale) {
         ? "וואטסאפ להרב יגאל"
         : "WhatsApp Rabbi Yigal",
       micro: isHe
-        ? "שיחה בלי התחייבות · כ־15 דק׳ · אלעד"
-        : "No-obligation call · ~15 min · Elad",
+        ? "שיחה בלי התחייבות · אלעד"
+        : "No-obligation call · Elad",
       /** Concrete value under CTA — what the call delivers */
       valueLine: isHe
         ? "בשיחה מבהירים הידור ומחיר — בלי עגלה ובלי לחץ לסגור"
@@ -177,7 +177,7 @@ export function getCopy(locale: Locale) {
             },
             {
               q: "איך בוחרים מה מתאים?",
-              a: "כל הזמנה לפי הידור וצרכים: תפילין, מזוזה או ספר תורה. בשיחה קצרה (כ־15 דק׳) מבהירים יחד, ואם מתאים נפגשים באלעד.",
+              a: "כל הזמנה לפי הידור וצרכים: תפילין, מזוזה או ספר תורה. בשיחה קצרה מבהירים יחד, ואם מתאים נפגשים באלעד.",
             },
             {
               q: "למה לא לקנות סת״ם בלחיצה כמו כולם?",
@@ -211,7 +211,7 @@ export function getCopy(locale: Locale) {
             },
             {
               q: "How do you choose what fits?",
-              a: "Every order is by hidur and needs: tefillin, mezuzah or Sefer Torah. On a short call (~15 min) we clarify together, then meet in Elad if it fits.",
+              a: "Every order is by hidur and needs: tefillin, mezuzah or Sefer Torah. On a short call we clarify together, then meet in Elad if it fits.",
             },
             {
               q: "Why not buy stam online like everyone else?",
@@ -249,12 +249,12 @@ export function getCopy(locale: Locale) {
         : "We’ll call to schedule a talk. Prefer now? Call or WhatsApp.",
       successSteps: isHe
         ? [
-            "שיחה קצרה (כ־15 דק׳), בלי התחייבות",
+            "שיחה קצרה, בלי התחייבות",
             "אם מתאים, קובעים פגישה באלעד",
             "הפרטים נסגרים בפגישה באלעד",
           ]
         : [
-            "A short call (~15 min), no obligation",
+            "A short call, no obligation",
             "If it’s a fit, we schedule a meeting in Elad",
             "Details are finalized in the Elad meeting",
           ],

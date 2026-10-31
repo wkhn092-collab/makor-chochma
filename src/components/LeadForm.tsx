@@ -287,8 +287,8 @@ export function LeadForm({ copy }: Props) {
       </button>
       <p className="text-center text-xs leading-relaxed text-bronze">
         {copy.locale === "he"
-          ? "שיחה קצרה, בלי התחייבות · כ־15 דק׳ · נחזור לתיאום"
-          : "A short call, no obligation · ~15 min · we’ll get back to you"}
+          ? "שיחה קצרה, בלי התחייבות · נחזור לתיאום"
+          : "A short call, no obligation · we’ll get back to you"}
       </p>
 
       <p className="text-xs leading-relaxed text-bronze">
