@@ -16,12 +16,17 @@ function cleanSecret(raw: string | undefined): string | undefined {
     .trim();
 }
 
+function runtimeEnv(name: string): string | undefined {
+  // Dynamic key access — prevents Next from inlining a stale/empty value at build time
+  return process.env[name];
+}
+
 export async function verifyTurnstile(
   token: string | undefined,
   _ip?: string | null,
 ): Promise<TurnstileVerifyResult> {
-  const secret = cleanSecret(process.env.TURNSTILE_SECRET_KEY);
-  const siteKey = cleanSecret(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+  const secret = cleanSecret(runtimeEnv("TURNSTILE_SECRET_KEY"));
+  const siteKey = cleanSecret(runtimeEnv("NEXT_PUBLIC_TURNSTILE_SITE_KEY"));
 
   if (!secret) {
     if (!siteKey) return { ok: true };

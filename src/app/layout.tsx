@@ -34,11 +34,22 @@ export const metadata: Metadata = {
     siteName: "מכון מקור חכמה",
     title: "מכון מקור חכמה · אלעד",
     description: "סת״ם אצל הסופר · שיחת ייעוץ ופגישה באלעד",
+    // Static path + version query — busts WhatsApp/iMessage caches
+    images: [
+      {
+        url: "/og.jpg?v=5",
+        width: 1200,
+        height: 1200,
+        alt: "מכון מקור חכמה",
+        type: "image/jpeg",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "מכון מקור חכמה · אלעד",
     description: "סת״ם אצל הסופר · שיחת ייעוץ ופגישה באלעד",
+    images: ["/og.jpg?v=5"],
   },
   icons: {
     icon: [{ url: "/logo.jpg", type: "image/jpeg" }],
