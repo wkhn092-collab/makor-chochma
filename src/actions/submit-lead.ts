@@ -14,7 +14,7 @@ export type SubmitLeadResult =
   | { ok: true }
   | {
       ok: false;
-      code: "validation" | "bot" | "rate" | "server";
+      code: "validation" | "bot" | "rate" | "server" | "origin" | "turnstile";
       field?: string;
     };
 
@@ -31,7 +31,12 @@ export async function submitLead(
   const h = await headers();
   const originCheck = assertSameOrigin(h);
   if (!originCheck.ok) {
-    return { ok: false, code: "bot" };
+    console.error("[lead] origin rejected", {
+      host: h.get("x-forwarded-host") || h.get("host"),
+      origin: h.get("origin"),
+      siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
+    });
+    return { ok: false, code: "origin" };
   }
 
   const parsed = leadSchema.safeParse(raw);
@@ -70,7 +75,11 @@ export async function submitLead(
 
   const turnstileOk = await verifyTurnstile(data.turnstileToken, ip);
   if (!turnstileOk) {
-    return { ok: false, code: "bot" };
+    console.error("[lead] turnstile rejected", {
+      hasToken: Boolean(data.turnstileToken),
+      tokenLen: data.turnstileToken?.length ?? 0,
+    });
+    return { ok: false, code: "turnstile" };
   }
 
   try {

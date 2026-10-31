@@ -56,6 +56,12 @@ export function assertSameOrigin(
     return allowed.has(refHost) ? { ok: true } : { ok: false };
   }
 
+  // Next.js Server Actions sometimes omit Origin/Referer; trust same-host + next-action.
+  const nextAction = headerList.get("next-action");
+  if (nextAction && allowed.has(hostName)) {
+    return { ok: true };
+  }
+
   if (process.env.NODE_ENV === "production") return { ok: false };
   return { ok: true };
 }

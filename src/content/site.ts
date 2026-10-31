@@ -100,13 +100,8 @@ export const INTERESTS: {
  * Soft cross-sell pairs for lead CRO (optional secondary interest).
  * `general` has no pair — no push.
  */
-export const INTEREST_PAIRS: Partial<Record<InterestId, InterestId>> = {
-  tefillin: "mezuzot",
-  mezuzot: "tefillin",
-  megillot: "pitum",
-  pitum: "megillot",
-  // High-ticket — no soft push pair
-};
+/** Soft cross-sell disabled — kept empty by request. */
+export const INTEREST_PAIRS: Partial<Record<InterestId, InterestId>> = {};
 
 export function getSecondaryPair(
   interest: InterestId | null | undefined,

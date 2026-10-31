@@ -5,7 +5,6 @@ import type { Copy } from "@/content/copy";
 import { INTERESTS, type InterestId } from "@/content/site";
 import { SITE_IMAGES } from "@/content/images";
 import { useLeadUi } from "@/store/lead-ui";
-import { SecondaryInterestHint } from "@/components/SecondaryInterestHint";
 import { Reveal } from "@/motion/Reveal";
 import { InkReveal } from "@/components/motion/InkReveal";
 import clsx from "clsx";
@@ -158,10 +157,6 @@ export function Services({ copy }: Props) {
             );
           })}
         </ul>
-
-        {interest && interest !== "general" ? (
-          <SecondaryInterestHint copy={copy} className="mt-5 flex cursor-pointer items-start gap-3 rounded-[var(--radius-md)] border border-stone/70 bg-surface/70 px-3.5 py-3 text-sm text-ink/80" />
-        ) : null}
 
         <p className="mt-6 text-sm text-bronze">{copy.services.hint}</p>
       </div>

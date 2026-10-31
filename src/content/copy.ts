@@ -270,6 +270,12 @@ export function getCopy(locale: Locale) {
       errorBot: isHe
         ? "אימות האבטחה נכשל. רעננו את העמוד ונסו שוב."
         : "Security check failed. Refresh and try again.",
+      errorOrigin: isHe
+        ? "שגיאת אבטחת מקור. רעננו את העמוד (Ctrl+Shift+R) ונסו שוב."
+        : "Origin security error. Hard-refresh and try again.",
+      errorTurnstile: isHe
+        ? "אימות Cloudflare נכשל בשרת. רעננו ונסו שוב. אם חוזר — בדקו Secret Key ב־Vercel."
+        : "Cloudflare check failed on the server. Refresh and retry. If it persists, re-check the Secret Key in Vercel.",
       errorRate: isHe
         ? "נשלחו יותר מדי פניות. נסו שוב בעוד כמה דקות."
         : "Too many requests. Try again in a few minutes.",

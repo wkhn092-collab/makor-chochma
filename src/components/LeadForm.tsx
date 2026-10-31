@@ -5,7 +5,6 @@ import type { Copy } from "@/content/copy";
 import { INTERESTS, interestLabel, SITE, type InterestId } from "@/content/site";
 import { useLeadUi } from "@/store/lead-ui";
 import { submitLead } from "@/actions/submit-lead";
-import { SecondaryInterestHint } from "@/components/SecondaryInterestHint";
 import { useNonce } from "@/components/NonceProvider";
 import { track } from "@/lib/track";
 import { waPrefill, whatsappUrl } from "@/lib/whatsapp";
@@ -122,8 +121,13 @@ export function LeadForm({ copy }: Props) {
         setError(copy.form.errorPhone);
       } else if (result.code === "validation" && result.field === "email") {
         setError(copy.form.errorEmail);
-      } else if (result.code === "bot") {
-        setError(copy.form.errorBot);
+      } else if (result.code === "origin") {
+        setError(copy.form.errorOrigin);
+        tokenRef.current = undefined;
+        setToken(undefined);
+        window.turnstile?.reset(widgetId.current ?? undefined);
+      } else if (result.code === "turnstile" || result.code === "bot") {
+        setError(copy.form.errorTurnstile);
         tokenRef.current = undefined;
         setToken(undefined);
         window.turnstile?.reset(widgetId.current ?? undefined);
@@ -275,7 +279,6 @@ export function LeadForm({ copy }: Props) {
             </option>
           ))}
         </select>
-        <SecondaryInterestHint copy={copy} primary={interest ?? "general"} />
       </div>
 
       {siteKey ? (
